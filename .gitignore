@@ -1,0 +1,5 @@
+#ambiente virtual
+venv/
+
+#configurações do banco de dados
+.env
