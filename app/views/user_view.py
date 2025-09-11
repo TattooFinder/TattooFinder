@@ -16,8 +16,7 @@ def register():
     if User.query.filter_by(email=data["email"]).first():
         return jsonify({"error": "Email já cadastrado"}), 400
     
-    hashed_password =
-    generate_password_hash(data["senha"])
+    hashed_password = generate_password_hash(data["senha"])
 
     user = User(nome=data["nome"], email = data["email"],
     senha = hashed_password)
