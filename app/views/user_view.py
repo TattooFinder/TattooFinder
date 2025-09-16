@@ -1,12 +1,11 @@
 from app import db
-from app.models.user import User
+from app.models.user_model import User
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
 
 user_bp = Blueprint("user", __name__)
 
-@user_bp.route("/register", methods["POST"])
-
+@user_bp.route("/register", methods=["POST"])
 def register():
     data = request.json
 
@@ -18,8 +17,7 @@ def register():
     
     hashed_password = generate_password_hash(data["senha"])
 
-    user = User(nome=data["nome"], email = data["email"],
-    senha = hashed_password)
+    user = User(nome=data["nome"], email=data["email"], senha=hashed_password)
     db.session.add(user)
     db.session.commit()
     
