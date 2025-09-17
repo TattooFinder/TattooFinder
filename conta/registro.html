@@ -1,64 +1,94 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="pt-BR">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Registro</title>
   </head>
-
   <body>
     <div id="content">
       <div id="presText">
-
-        <div id="title">
-          Bem vindo ao TattooFinder!
-        </div>
-
+        <div id="title">Bem vindo ao TattooFinder!</div>
         <div id="text">
-          BLA BLA BLA
+          Complete seu cadastro para encontrar os melhores tatuadores ou mostrar
+          seu trabalho.
         </div>
       </div>
-      <form id="loginForm" action="../scripts/checkLogin.py" method="post">
 
-        <div id="nome">
+      <form id="registerForm" action="/register" method="post">
+        <div class="input-group">
           <label for="nome">Como prefere ser chamado:</label>
-          <input type="text" id="nome" name="nome" placeholder="Seu nome" />
+          <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Seu nome"
+            required
+          />
         </div>
 
-        <div id="emailBox">
+        <div class="input-group">
           <label for="email">Seu email favorito:</label>
-          <input type="text" id="email" name="email"
-            placeholder="Seu lindo email aqui" />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Seu lindo email aqui"
+            required
+          />
         </div>
 
-        <div class="passBox">
-          <label for="pass">Aquela senha boa:</label>
-          <input type="pass" id="pass" name="pass"
-            placeholder="Sua senha bem segura aqui" />
+        <div class="input-group">
+          <label for="senha">Aquela senha boa:</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Sua senha bem segura aqui"
+            required
+          />
         </div>
 
-        <div class="passBox">
-          <label for="pass">Agora confirme sua senha:</label>
-          <input type="pass" id="pass2" name="pass2"
-            placeholder="Sua senha bem segura aqui" />
+        <div class="input-group">
+          <label for="confirmar_senha">Agora confirme sua senha:</label>
+          <input
+            type="password"
+            id="confirmar_senha"
+            name="confirmar_senha"
+            placeholder="Sua senha bem segura aqui"
+            required
+          />
+        </div>
+
+        <div id="options">
+          <button type="submit" id="confirmButton">Confirmar</button>
+          <a id="returnButton" href="../index.html"
+            ><button type="button">Retornar</button></a
+          >
         </div>
       </form>
-
-      <div id="options">
-        <div id="confirm">
-          <a id="confirmButton"
-            href="../TattooFinder.html"><button>Confirmar</button></a>
-        </div>
-
-        <div id="return">
-          <a id="returnButton"
-            href="../index.html"><button>Retornar</button></a>
-        </div>
-
-      </div>
     </div>
-  </body>
-  </body>
 
+    <script>
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", function (e) {
+          const senha = document.getElementById("senha").value;
+          const confirmarSenha =
+            document.getElementById("confirmar_senha").value;
+
+          if (senha !== confirmarSenha) {
+            e.preventDefault();
+            alert("As senhas não coincidem!");
+            return false;
+          }
+
+          if (senha.length < 8) {
+            e.preventDefault();
+            alert("A senha deve ter pelo menos 6 caracteres!");
+            return false;
+          }
+        });
+    </script>
+  </body>
 </html>
