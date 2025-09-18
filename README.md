@@ -25,8 +25,6 @@ Projeto de PA2 2025 - Unifor
 
 **Tattoo Finder** é uma plataforma web inovadora desenvolvida para conectar clientes em busca de tatuagens com tatuadores talentosos. O sistema oferece uma experiência personalizada onde usuários podem encontrar profissionais que melhor se adequam ao seu estilo preferido, enquanto tatuadores têm a oportunidade de promover seus trabalhos e expandir seu portfólio.
 
-A plataforma foi construída utilizando tecnologias modernas e eficientes, combinando Python Flask no backend, HTML e CSS no frontend, e SQLAlchemy para integração com banco de dados SQL.
-
 ## 2. Nossa equipe:
 
 A equipe da TF é formada por:
