@@ -2,6 +2,28 @@
 
 Projeto de PA2 2025 - Unifor
 
+## Table of contents
+
+- [Tattoo Finder (TF)](#tattoo-finder-tf)
+  - [Table of contents](#table-of-contents)
+  - [1. O projeto:](#1-o-projeto)
+  - [2. Nossa equipe:](#2-nossa-equipe)
+  - [3. Arquitetura e tecnologias utilizadas:](#3-arquitetura-e-tecnologias-utilizadas)
+    - [3.1 Front-end:](#31-front-end)
+    - [3.2 Back-end:](#32-back-end)
+    - [3.3 Banco de dados:](#33-banco-de-dados)
+  - [4. Banco de dados](#4-banco-de-dados)
+    - [DER:](#der)
+    - [MER:](#mer)
+  - [5. Requisitos funcionais e não funcionais](#5-requisitos-funcionais-e-não-funcionais)
+    - [5.1 Requisitos funcionais:](#51-requisitos-funcionais)
+      - [Para clientes (RF-C):](#para-clientes-rf-c)
+      - [Para Tatuadores (RF-T):](#para-tatuadores-rf-t)
+    - [5.2 Requisitos Não Funcionais](#52-requisitos-não-funcionais)
+      - [Para o Sistema (RN):](#para-o-sistema-rn)
+      - [Segurança (RN-S):](#segurança-rn-s)
+      - [Usabilidade (RN-U):](#usabilidade-rn-u)
+
 ## 1. O projeto:
 
 **Tattoo Finder** é uma plataforma web inovadora desenvolvida para conectar clientes em busca de tatuagens com tatuadores talentosos. O sistema oferece uma experiência personalizada onde usuários podem encontrar profissionais que melhor se adequam ao seu estilo preferido, enquanto tatuadores têm a oportunidade de promover seus trabalhos e expandir seu portfólio.
