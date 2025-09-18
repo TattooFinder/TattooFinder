@@ -1,11 +1,6 @@
 # Tattoo Finder (TF)
 
-Projeto de PA2 2025 - Unifor
-
-## Table of contents
-
 - [Tattoo Finder (TF)](#tattoo-finder-tf)
-  - [Table of contents](#table-of-contents)
   - [1. O projeto:](#1-o-projeto)
   - [2. Nossa equipe:](#2-nossa-equipe)
   - [3. Arquitetura e tecnologias utilizadas:](#3-arquitetura-e-tecnologias-utilizadas)
@@ -23,6 +18,8 @@ Projeto de PA2 2025 - Unifor
       - [Para o Sistema (RN):](#para-o-sistema-rn)
       - [Segurança (RN-S):](#segurança-rn-s)
       - [Usabilidade (RN-U):](#usabilidade-rn-u)
+
+Projeto de PA2 2025 - Unifor
 
 ## 1. O projeto:
 
