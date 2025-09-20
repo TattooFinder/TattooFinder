@@ -3,3 +3,6 @@ venv/
 
 #configurações do banco de dados
 .env
+
+#configurações do vscode
+.vscode/
