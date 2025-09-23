@@ -29,10 +29,10 @@ Projeto de PA2 2025 - Unifor
 
 A equipe da TF é formada por:
 
-- **Leonardo Lima** - SCRUM Master e desenvolvedor front-end
+- **Leonardo Lima** - Gerente de projeto e desenvolvedor front-end
 - **Rodrigo Cabezas** - Desenvolvedor back-end
 - **Renê Rodrigues** - Designer e administrador do banco de dados
-- **Mariana Gonçalves (Lou)** - Diretor criativo e assistente de front-end
+- **Mariana Gonçalves (Lou)** - Diretor criativo, assistente de front-end e gerenciador de PR
 
 ## 3. Arquitetura e tecnologias utilizadas:
 
