@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tattoo Finder - Começo</title>
+  </head>
+
+  <body>
+    <div class="content">
+
+    </div>
+    <script>
+      // First the user gotta choose how they are going to enter our website:
+      // Gotta somehow make each button clean the screen to make the other act
+      // Also gotta make each have an "go back!" button.
+      // The best option for me is to just keep everything existing and hide/show depending on the button pressed
+      // So I'm gonna need lots of element ids and listeners!
+      document.getElementById("").addEventListener("choice", function (e) {
+
+      })
+      document.getElementById("").addEventListener("choice", function (e) {
+
+      })
+      document.getElementById("registerForm").addEventListener("submit", function (e) {
+        const pass = document.getElementById("pass").value;
+        const confirmPass =
+          document.getElementById("confirmPass").value;
+
+        if (pass !== confirmpass) {
+          e.preventDefault();
+          alert("As senhas não coincidem!");
+          return false;
+        }
+
+        if (pass.length < 8) {
+          e.preventDefault();
+          alert("A senha deve ter pelo menos 6 caracteres!");
+          return false;
+        }
+      });
+    </script>
+  </body>
+
+</html>
