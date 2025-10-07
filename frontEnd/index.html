@@ -1,30 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+    <title>Tattoo Finder - Inicial</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+
+  <body>
     <div id="content">
-        <div id="presText">
-          <div id="title">
-            Bem vindo ao TattooFinder!
-          </div>
-          <div>
-            BLA BLA BLA
-          </div>
+      <div id="presText">
+        <div id="title">
+          Bem vindo ao TattooFinder!
         </div>
-    <div id="userChoice">
-      <button id = "tatuador">Tatua</button>
-      <div>ou</div>
-      <button id="cliente">Cliente</button>
+        <div>
+          Somos a solução para achar a tattoo perfeita para você!
+          Por favor, escolha uma das opções abaixo:
+        </div>
+      </div>
+      <div id="userChoice">
+        <select name="tipo" id="userType">
+          <option value="Tatuador">Tatuador</option>
+          <option value="Cliente">Cliente</option>
+        </select>
+      </div>
+
+      <div id="options">
+        <a id="loginButton" href="./conta/login.html"><button>Fazer
+            login</button></a>
+        <a id="registerButton" href="./conta/registro.html"><button>Criar
+            conta</button></a>
+      </div>
+      <div>futuramente adicionar coisas aqui owo parcerias? dinheiro! imagens
+        legais de fundo!!</div>
     </div>
-    <div id="options">
-        <a id="loginButton" href="./conta/login.html"><button>Fazer login</button></a>
-        <a id="registerButton" href="./conta/registro.html"><button>Criar conta</button></a>
-    </div>
-    <div>futuramente adicionar coisas aqui owo parcerias? dinheiro! imagens legais de fundo!!</div>
-    </div>
-</body>
+  </body>
+  <script>
+    const select = document.getElementById('userType');
+    const registerButton = document.getElementById('registerButton');
+
+    select.addEventListener('change', () => {
+      const selectedValue = select.value;
+
+      if (selectedValue === 'Tatuador') {
+        registerButton.href = './conta/registroTatuador.html';
+      } else {
+        // para "Cliente" ou outras opções
+        registerButton.href = './conta/registro.html';
+      }
+    });
+
+    // Opcional: disparar a mudança logo ao carregar a página, para garantir que o link esteja correto
+    window.addEventListener('DOMContentLoaded', () => {
+      select.dispatchEvent(new Event('change'));
+    });
+  </script>
+
 </html>
