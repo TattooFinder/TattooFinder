@@ -1,16 +1,20 @@
-body{
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+.header,
+.topper,
+.botter,
+.footer{
+
 }
 
 .content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .header {
@@ -18,5 +22,31 @@ body{
   align-items: center;
   justify-content: space-between;
   gap: 30px;
-  background-color: green;
+  padding: 8px 10px;
+  background-color: rgb(255, 255, 255);
+  border-bottom: 1px solid black;
+}
+
+button {
+  background-color: white;
+  color: black;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 6px 8px;
+}
+
+button:hover,
+select:hover {
+  background-color: black;
+  color: white;
+}
+
+select {
+  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0);
+  border: 0px;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 6px 8px;
 }
