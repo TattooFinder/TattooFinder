@@ -7,11 +7,16 @@ body {
   vertical-align: baseline;
 }
 
-.header,
-.topper,
-.botter,
-.footer{
+.lefter,
+.righter,
+.center {
+  display: flex;
+  gap: 8px;
+}
 
+.center button {
+  width: 200px;
+  text-align: start;
 }
 
 .content {
