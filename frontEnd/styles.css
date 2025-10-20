@@ -1,86 +1,72 @@
-      body {
-        margin: 0;
-        padding: 0;
-        border: 0;
-        font-size: 100%;
-        font: inherit;
-        vertical-align: baseline;
-        display: flex;
-        font-family: "Poppins", sans-serif;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        background-color: #f5f5f5;
-      }
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  display: flex;
+  font-family: "Poppins", sans-serif;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #ffffff;
+}
 
-      #content {
-        max-width: 500px;
-        width: 90%;
-        background: #fff;
-        padding: 40px;
-        border-radius: 16px;
-        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
-        position: relative;
-        overflow: hidden;
-      }
-      #title {
-        font-size: 1.8rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-        text-align: center;
-      }
+#content {
+  max-width: 500px;
+  margin: 40px auto;
+  width: 90%;
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  border: 1px solid #1b1b1b;
+  position: relative;
+  overflow: hidden;
+}
+
+#title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
 
 .presText {
-        padding: 20px;
+  padding: 20px;
 }
 
 .input-group {
   margin-bottom: 15px;
 }
 
-      label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 5px;
-      }
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
 
-      input,
-      select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 15px;
-      }
+#options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
 
-      #options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 20px;
-      }
+button {
+  background-color: white;
+  color: #1b1b1b;
+  border: 1px solid #1b1b1b;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
 
-      button {
-        background-color: white;
-        color: #1b1b1b;
-        border: 1px solid #1b1b1b;
-        border-radius: 10px;
-        font-size: 15px;
-        padding: 10px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-      }
-
-      button:hover,
-      select:hover {
-        background-color: #1b1b1b;
-        color: white;
-        transform: translateY(-2px);
-      }
-
-      a {
-        text-decoration: none;
-      }
+a {
+  text-decoration: none;
+}
 
 .presText{
   padding: 30px;
@@ -91,7 +77,7 @@
   font-weight: bold;
   margin-bottom: 10px;
   text-align: center;
-  }
+}
 
 #presText {
   margin-bottom: 0px;
@@ -109,14 +95,7 @@
   text-align: start;
 }
 
-#content {
-  max-width: 500px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-}
+
 
 .header {
   display: flex;
@@ -128,23 +107,23 @@
   border-bottom: 1px solid #1b1b1b;
 }
 
-      button {
-        background-color: white;
-        color: #1b1b1b;
-        border: 1px solid #1b1b1b;
-        border-radius: 10px;
-        font-size: 15px;
-        padding: 10px;
-        cursor: pointer;
-        transition: all 0.25s ease;
-      }
+button {
+  background-color: white;
+  color: #1b1b1b;
+  border: 1px solid #1b1b1b;
+  border-radius: 10px;
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
 
-      button:hover,
-      select:hover {
-        background-color: #1b1b1b;
-        color: white;
-        transform: translateY(-2px);
-      }
+button:hover,
+select:hover {
+  background-color: #1b1b1b;
+  color: white;
+  transform: translateY(-2px);
+}
 
 select {
   background-color: rgb(255, 255, 255);
@@ -155,76 +134,71 @@ select {
   padding: 6px 8px;
 }
 
-
-
-
-
 .hidden {
   display: none;
-  }
+}
 
-      .input-group {
-        margin-bottom: 15px;
-      }
+.input-group {
+  margin-bottom: 15px;
+}
 
-      label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 5px;
-      }
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
 
-      input,
-      select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-      }
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #1b1b1b;
+  border-radius: 8px;
+}
 
 #options {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
 }
 
 .screen {
-        opacity: 0;
-        transform: translateY(20px) scale(0.97);
-        pointer-events: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-      }
+  opacity: 0;
+  transform: translateY(20px) scale(0.97);
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
 
-      .screen.active {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-        position: relative;
-      }
+.screen.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  position: relative;
+}
 
-      .screen.hidden {
-        display: none;
-      }
+.screen.hidden {
+  display: none;
+}
 
-      /* Fade preto sutil no fundo durante a troca */
-      #content::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at center,
-          rgba(0, 0, 0, 0.06),
-          transparent 70%
-        );
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        pointer-events: none;
-      }
+/* Fade preto sutil no fundo durante a troca */
+#content::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,#1b1b1b,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
 
-      #content.transitioning::before {
-        opacity: 1;
-      }
+#content.transitioning::before {
+  opacity: 1;
+}
