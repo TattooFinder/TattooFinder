@@ -9,5 +9,7 @@ class Feedback(db.Model):
     descricao = db.Column(db.String(100), nullable=False)
     nota_avaliativa = db.Column(db.Integer, nullable=False)
     id_cliente = db.Column(db.Integer, db.ForeignKey('cliente.id_cliente'), nullable=False)
+    id_tatuador = db.Column(db.Integer, db.ForeignKey('tatuador.id_tatuador'), nullable=False)
 
     cliente = db.relationship('Cliente', backref=db.backref('feedbacks', lazy=True))
+    tatuador = db.relationship('Tatuador', backref=db.backref('feedbacks', lazy=True))

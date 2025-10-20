@@ -5,11 +5,26 @@ from app.models.publicacao_model import Publicacao
 from app.models.feedback_model import Feedback
 from app.models.cliente_model import Cliente
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 tatuador_bp = Blueprint("tatuador", __name__, url_prefix="/tatuador")
 
 @tatuador_bp.route("/<int:tatuador_id>", methods=["GET"])
 def get_tatuador(tatuador_id):
+    """
+    Gets a tattoo artist's profile.
+    ---
+    parameters:
+      - name: tatuador_id
+        in: path
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Tattoo artist's profile
+      404:
+        description: Tattoo artist not found
+    """
     tatuador = Tatuador.query.get_or_404(tatuador_id)
 
     telefones = [
@@ -39,14 +54,23 @@ def get_tatuador(tatuador_id):
 
 @tatuador_bp.route("/<int:tatuador_id>/feedback", methods=["GET"])
 def get_tatuador_feedback(tatuador_id):
+    """
+    Gets a tattoo artist's feedback.
+    ---
+    parameters:
+      - name: tatuador_id
+        in: path
+        type: integer
+        required: true
+    responses:
+      200:
+        description: Tattoo artist's feedback
+      404:
+        description: Tattoo artist not found
+    """
     tatuador = Tatuador.query.get_or_404(tatuador_id)
 
-    feedbacks = (
-        db.session.query(Feedback)
-        .join(Cliente, Cliente.id_cliente == Feedback.id_cliente)
-        .filter(Cliente.id_usuario == tatuador.id_usuario)
-        .all()
-    )
+    feedbacks = Feedback.query.filter_by(id_tatuador=tatuador.id_tatuador).all()
 
     results = [
         {
@@ -67,6 +91,23 @@ def get_tatuador_feedback(tatuador_id):
 
 @tatuador_bp.route("/search", methods=["GET"])
 def search_tatuador():
+    """
+    Searches for tattoo artists.
+    ---
+    parameters:
+      - name: nome
+        in: query
+        type: string
+      - name: cidade
+        in: query
+        type: string
+      - name: descricao
+        in: query
+        type: string
+    responses:
+      200:
+        description: A list of tattoo artists
+    """
     nome = request.args.get("nome")
     cidade = request.args.get("cidade")
     descricao = request.args.get("descricao")
@@ -97,8 +138,51 @@ def search_tatuador():
     return jsonify(results), 200
 
 @tatuador_bp.route("/<int:tatuador_id>/edit", methods=["PUT"])
+@jwt_required()
 def edit_tatuador(tatuador_id):
+    """
+    Edits a tattoo artist's profile.
+    ---
+    parameters:
+      - name: tatuador_id
+        in: path
+        type: integer
+        required: true
+      - name: Authorization
+        in: header
+        type: string
+        required: true
+        description: Bearer token
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            nome:
+              type: string
+            cidade:
+              type: string
+            descricao:
+              type: string
+    responses:
+      200:
+        description: Profile updated successfully
+      400:
+        description: Invalid data
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      404:
+        description: Tattoo artist not found
+    """
+    current_user_id = get_jwt_identity()
     tatuador = Tatuador.query.get_or_404(tatuador_id)
+
+    if tatuador.id_usuario != current_user_id:
+        return jsonify({"error": "Não autorizado"}), 403
+
     data = request.json
 
     if not data:
@@ -118,8 +202,47 @@ def edit_tatuador(tatuador_id):
     return jsonify({"message": "Perfil atualizado com sucesso!"}), 200
 
 @tatuador_bp.route("/<int:tatuador_id>/telefone", methods=["POST"])
+@jwt_required()
 def add_telefone_tatuador(tatuador_id):
+    """
+    Adds a phone number to a tattoo artist's profile.
+    ---
+    parameters:
+      - name: tatuador_id
+        in: path
+        type: integer
+        required: true
+      - name: Authorization
+        in: header
+        type: string
+        required: true
+        description: Bearer token
+      - name: body
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            numero:
+              type: string
+    responses:
+      201:
+        description: Phone number added successfully
+      400:
+        description: Invalid phone number
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      404:
+        description: Tattoo artist not found
+    """
+    current_user_id = get_jwt_identity()
     tatuador = Tatuador.query.get_or_404(tatuador_id)
+
+    if tatuador.id_usuario != current_user_id:
+        return jsonify({"error": "Não autorizado"}), 403
+
     data = request.json
 
     if not data or not data.get("numero"):
@@ -132,7 +255,41 @@ def add_telefone_tatuador(tatuador_id):
     return jsonify({"message": "Telefone adicionado com sucesso!"}), 201
 
 @tatuador_bp.route("/<int:tatuador_id>/telefone/<string:numero>", methods=["DELETE"])
+@jwt_required()
 def delete_telefone_tatuador(tatuador_id, numero):
+    """
+    Deletes a phone number from a tattoo artist's profile.
+    ---
+    parameters:
+      - name: tatuador_id
+        in: path
+        type: integer
+        required: true
+      - name: numero
+        in: path
+        type: string
+        required: true
+      - name: Authorization
+        in: header
+        type: string
+        required: true
+        description: Bearer token
+    responses:
+      200:
+        description: Phone number deleted successfully
+      401:
+        description: Unauthorized
+      403:
+        description: Forbidden
+      404:
+        description: Tattoo artist or phone number not found
+    """
+    current_user_id = get_jwt_identity()
+    tatuador = Tatuador.query.get_or_404(tatuador_id)
+
+    if tatuador.id_usuario != current_user_id:
+        return jsonify({"error": "Não autorizado"}), 403
+
     telefone = TelefoneTatuador.query.filter_by(id_tatuador=tatuador_id, numero=numero).first_or_404()
     db.session.delete(telefone)
     db.session.commit()

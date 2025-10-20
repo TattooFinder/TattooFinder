@@ -37,7 +37,9 @@ data_publicacao date not null,
 descricao varchar(100) not null,
 nota_avaliativa int not null,
 id_cliente int not null,
-foreign key (id_cliente) references cliente(id_cliente)
+id_tatuador int not null,
+foreign key (id_cliente) references cliente(id_cliente),
+foreign key (id_tatuador) references tatuador(id_tatuador)
 );
 
 create table tatuador(

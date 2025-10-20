@@ -1,6 +1,8 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_jwt_extended import JWTManager
+from flasgger import Swagger
 
 db = SQLAlchemy()
 
@@ -15,8 +17,11 @@ def create_app():
     
     app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    app.config["JWT_SECRET_KEY"] = "super-secret"
 
     db.init_app(app)
+    jwt = JWTManager(app)
+    swagger = Swagger(app)
 
     from app.views.user_view import user_bp
     from app.views.main_view import main_bp
