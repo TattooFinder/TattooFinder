@@ -1,363 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tattoo Finder - Inicial</title>
+    <title>Tattoo Finder - Página principal</title>
     <link rel="stylesheet" href="./styles.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Black+Ops+One&display=swap");
-      .muted-link {
-        font-size: 0.9rem;
-        text-align: center;
-        margin-top: 8px;
-      }
-      .muted-link a {
-        color: inherit;
-        text-decoration: underline;
-        cursor: pointer;
-      }
-      .hint {
-        font-size: 0.9rem;
-        opacity: 0.85;
-      }
     </style>
   </head>
 
   <body>
-    <div id="content">
-      <div id="homeScreen" class="screen active">
-        <div id="presText" class="presText">
-          <div id="title">Bem vindo ao TattooFinder!</div>
-          <div>
-            Somos a solução para achar a tattoo perfeita para você! Escolha qual
-            opção mais se encaixa com seu perfil:
-          </div>
+    <div class="content">
+      <div class="header">
+        <div class="lefter">
+          <button>Logo</button>
+          <button>Informações</button>
+          <button>Suporte</button>
+          <button>Estilos</button>
         </div>
-        <div id="userChoice">
-          <select name="tipo" id="userType">
-            <option value="Cliente">Cliente</option>
-            <option value="Tatuador">Tatuador</option>
+
+        <div class="center">
+          <button>Pesquisar</button>
+        </div>
+
+        <div class="righter">
+          <select name="linguas" id="linguas">
+            <option value="Português">Português (Brasil)</option>
+            <option value="Ingles">Inglês (Canadá)</option>
+            <option value="Espanhol">Espanhol (México)</option>
           </select>
-        </div>
-        <div id="options">
-          <button id="loginButton">Fazer login</button>
-          <button id="registerButton">Criar conta</button>
+          <button id="perfilBtn">Perfil</button>
         </div>
       </div>
-      <div id="loginScreen" class="screen hidden">
-        <div id="presText" class="presText">
-          <div id="title">Login</div>
-          <div>Entre na sua conta para acessar recursos exclusivos.</div>
-        </div>
-        <form id="loginForm">
-          <div class="input-group">
-            <label for="loginEmail">Email:</label>
-            <input
-              type="email"
-              id="loginEmail"
-              placeholder="Seu lindo email aqui"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="loginSenha">Senha:</label>
-            <input
-              type="password"
-              id="loginSenha"
-              placeholder="Sua senha bem segura aqui"
-              required
-            />
-          </div>
-          <div id="options">
-            <button type="submit">Entrar</button>
-            <button type="button" id="backHome1">Retornar</button>
-          </div>
-          <div class="muted-link">
-            <a id="forgotLink">Esqueci minha senha</a>
-          </div>
-        </form>
+    
+
+      <div class="topper">
+        <div class="lefter"></div>
+        <div class="righter"></div>
       </div>
-      <div id="registerClientScreen" class="screen hidden">
-        <div id="presText" class="presText">
-          <div id="title">Cadastro de Cliente</div>
-          <div>
-            Complete seu cadastro para encontrar os melhores tatuadores.
-          </div>
-        </div>
-        <form id="registerClientForm">
-          <div class="input-group">
-            <label for="clientNome">Nome:</label>
-            <input
-              type="text"
-              id="clientNome"
-              placeholder="Seu nome"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="clientEmail">Email:</label>
-            <input
-              type="email"
-              id="clientEmail"
-              placeholder="Seu email"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="clientSenha">Senha:</label>
-            <input
-              type="password"
-              id="clientSenha"
-              placeholder="Sua senha"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="clientConfirmar">Confirmar senha:</label>
-            <input
-              type="password"
-              id="clientConfirmar"
-              placeholder="Repita sua senha"
-              required
-            />
-          </div>
-          <div id="options">
-            <button type="submit">Confirmar</button>
-            <button type="button" id="backHome2">Retornar</button>
-          </div>
-        </form>
+
+      <div class="botter">
+        <div class="lefter"></div>
+        <div class="righter"></div>
       </div>
-      <div id="registerArtistScreen" class="screen hidden">
-        <div id="presText" class="presText">
-          <div id="title">Cadastro de Tatuador</div>
-          <div>Complete seu cadastro e mostre seu trabalho!</div>
-        </div>
-        <form id="registerArtistForm">
-          <div class="input-group">
-            <label for="artistNome">Nome:</label>
-            <input
-              type="text"
-              id="artistNome"
-              placeholder="Seu nome"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistEstilo">Estilo principal:</label>
-            <input
-              type="text"
-              id="artistEstilo"
-              placeholder="Ex: Realismo, Tribal..."
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistCNPJ">CNPJ:</label>
-            <input
-              type="text"
-              id="artistCNPJ"
-              placeholder="Seu CNPJ"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistEmail">Email:</label>
-            <input
-              type="email"
-              id="artistEmail"
-              placeholder="Seu email"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistSenha">Senha:</label>
-            <input
-              type="password"
-              id="artistSenha"
-              placeholder="Sua senha"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistConfirmar">Confirmar senha:</label>
-            <input
-              type="password"
-              id="artistConfirmar"
-              placeholder="Repita sua senha"
-              required
-            />
-          </div>
-          <div id="options">
-            <button type="submit">Confirmar</button>
-            <button type="button" id="backHome3">Retornar</button>
-          </div>
-        </form>
-      </div>
-      <div id="forgotScreen" class="screen hidden">
-        <div class="presText">
-          <div id="title">Recuperar senha</div>
-          <div class="hint">
-            Informe seu e-mail para receber o link de redefinição.
-          </div>
-        </div>
-        <form id="forgotForm">
-          <div class="input-group">
-            <label for="forgotEmail">Email:</label>
-            <input
-              type="email"
-              id="forgotEmail"
-              placeholder="Seu email"
-              required
-            />
-          </div>
-          <div id="options">
-            <button type="submit">Enviar link</button>
-            <button type="button" id="forgotBack">Voltar</button>
-            <button type="button" id="openResetDirect">Debug</button>
-          </div>
-        </form>
-      </div>
-      <div id="forgotSentScreen" class="screen hidden">
-        <div class="presText">
-          <div id="title">E-mail enviado com sucesso</div>
-          <h3>
-            Verifique o e-mail que a TattooFinder enviou para a recuperação de
-            sua senha.
-          </h3>
-          <div><h4>Verifique sua caixa de spam caso necessário.</h4></div>
-        </div>
-        <div id="options">
-          <button type="button" id="forgotSentBack">Voltar ao login</button>
-        </div>
-      </div>
-      <div id="resetScreen" class="screen hidden">
-        <div class="presText">
-          <div id="title">Alteração de senha</div>
-          <h3>Defina sua nova senha para continuar.</h3>
-          <div><h4>Dica: use pelo menos 8 caracteres.</h4></div>
-        </div>
-        <form id="resetForm">
-          <div class="input-group">
-            <label for="newPass">Senha nova:</label>
-            <input type="password" id="newPass" required />
-          </div>
-          <div class="input-group">
-            <label for="newPassConfirm">Confirme sua senha nova:</label>
-            <input type="password" id="newPassConfirm" required />
-          </div>
-          <div id="options">
-            <button type="submit">Confirmar senha</button>
-            <button type="button" id="resetBack">Voltar</button>
-          </div>
-        </form>
+
+      <div class="footer">
+        <div class="lefter"></div>
+        <div class="righter"></div>
       </div>
     </div>
+    </body>
     <script>
-      const screens = document.querySelectorAll(".screen");
-      const home = document.getElementById("homeScreen");
-      const login = document.getElementById("loginScreen");
-      const regClient = document.getElementById("registerClientScreen");
-      const regArtist = document.getElementById("registerArtistScreen");
-      const forgot = document.getElementById("forgotScreen");
-      const forgotSent = document.getElementById("forgotSentScreen");
-      const reset = document.getElementById("resetScreen");
-      const userType = document.getElementById("userType");
-      const loginBtn = document.getElementById("loginButton");
-      const registerBtn = document.getElementById("registerButton");
-      const backBtns = document.querySelectorAll("[id^='backHome']");
-      function show(target) {
-        screens.forEach((el) => {
-          el.classList.remove("active");
-          el.classList.add("hidden");
-        });
-        target.classList.remove("hidden");
-        setTimeout(() => target.classList.add("active"), 10);
-      }
-      function showById(id) {
-        show(document.getElementById(id));
-      }
-      loginBtn.addEventListener("click", () => show(login));
-      registerBtn.addEventListener("click", () => {
-        if (userType.value === "Tatuador") show(regArtist);
-        else show(regClient);
+      document.getElementById("perfilBtn").addEventListener("click", () => {
+        window.location.href = "account.html";
       });
-      backBtns.forEach((b) => b.addEventListener("click", () => show(home)));
-      function validarSenhas(s, c) {
-        if (s !== c) {
-          alert("As senhas não coincidem!");
-          return false;
-        }
-        if (s.length < 8) {
-          alert("A senha deve ter pelo menos 8 caracteres!");
-          return false;
-        }
-        return true;
-      }
-      document
-        .getElementById("registerClientForm")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          if (!validarSenhas(clientSenha.value, clientConfirmar.value)) return;
-          alert("Cadastro de cliente enviado com sucesso!");
-          show(home);
-        });
-      document
-        .getElementById("registerArtistForm")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          if (!validarSenhas(artistSenha.value, artistConfirmar.value)) return;
-          alert("Cadastro de tatuador enviado com sucesso!");
-          show(home);
-        });
-      document.getElementById("loginForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = loginEmail.value;
-        const senha = loginSenha.value;
-        if (!email || !senha) return alert("Preencha todos os campos!");
-        if (!email.includes("@")) return alert("Email inválido!");
-        alert("Login realizado com sucesso!");
-        show(home);
-      });
-      document.getElementById("forgotLink").addEventListener("click", () => {
-        const emailLogin = document.getElementById("loginEmail").value || "";
-        document.getElementById("forgotEmail").value = emailLogin;
-        show(forgot);
-      });
-      document
-        .getElementById("forgotBack")
-        .addEventListener("click", () => show(login));
-      document.getElementById("forgotForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const email = document.getElementById("forgotEmail").value.trim();
-        if (!email || !email.includes("@"))
-          return alert("Informe um e-mail válido.");
-        show(forgotSent);
-      });
-      document
-        .getElementById("forgotSentBack")
-        .addEventListener("click", () => show(login));
-      document
-        .getElementById("openResetDirect")
-        .addEventListener("click", () => show(reset));
-      document.getElementById("resetForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const s1 = document.getElementById("newPass").value;
-        const s2 = document.getElementById("newPassConfirm").value;
-        if (!validarSenhas(s1, s2)) return;
-        alert("Senha redefinida com sucesso! Faça login novamente.");
-        show(login);
-      });
-      document
-        .getElementById("resetBack")
-        .addEventListener("click", () => show(login));
-      (function bootFromURL() {
-        const params = new URLSearchParams(location.search);
-        if (params.get("resetToken")) {
-          show(reset);
-        }
-      })();
     </script>
-  </body>
 </html>

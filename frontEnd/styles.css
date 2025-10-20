@@ -13,6 +13,23 @@ body {
   background-color: #ffffff;
 }
 
+.muted-link {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.muted-link a {
+color: inherit;
+text-decoration: underline;
+cursor: pointer;
+}
+
+.hint {
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
 #content {
   max-width: 500px;
   margin: 40px auto;
@@ -95,16 +112,21 @@ a {
   text-align: start;
 }
 
-
-
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #ffffff;
+  border-bottom: 1px solid #1b1b1b;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 30px;
-  padding: 8px 10px;
-  background-color: rgb(255, 255, 255);
-  border-bottom: 1px solid #1b1b1b;
+  padding: 8px 20px; 
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 button {
