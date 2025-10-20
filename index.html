@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,9 +9,8 @@
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
     </style>
   </head>
-
-  <body>
-    <div class="content">
+  <body style="height:auto; align-items:flex-start; justify-content:stretch;">
+    <div class="content" style="width:100%; min-height:100vh; box-sizing:border-box; padding-top:56px;">
       <div class="header">
         <div class="lefter">
           <button>Logo</button>
@@ -19,11 +18,9 @@
           <button>Suporte</button>
           <button>Estilos</button>
         </div>
-
         <div class="center">
           <button>Pesquisar</button>
         </div>
-
         <div class="righter">
           <select name="linguas" id="linguas">
             <option value="Português">Português (Brasil)</option>
@@ -33,7 +30,6 @@
           <button id="perfilBtn">Perfil</button>
         </div>
       </div>
-    
 
       <div class="topper">
         <div class="lefter"></div>
@@ -45,7 +41,7 @@
         <div class="righter"></div>
       </div>
 
-      <div class="footer">
+      <div class="footer" style="border-top:1px solid #1b1b1b; padding:16px 20px; display:flex; justify-content:space-between;">
         <div class="lefter"></div>
         <div class="righter">
           <div>Fale conosco!</div>
@@ -53,10 +49,26 @@
         </div>
       </div>
     </div>
-    </body>
-    <script>
-      document.getElementById("perfilBtn").addEventListener("click", () => {
-        window.location.href = "./frontEnd/account.html";
-      });
-    </script>
+
+<script>
+  function slideTransition(url) {
+    const slide = document.createElement("div");
+    slide.classList.add("page-slide");
+    document.body.appendChild(slide);
+
+    void slide.offsetWidth;
+    slide.classList.add("active");
+
+    setTimeout(() => {
+      window.location.href = url;
+    }, 700);
+  }
+
+  const perfilBtn = document.getElementById("perfilBtn");
+  perfilBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    slideTransition("./frontEnd/account.html");
+  });
+</script>
+  </body>
 </html>
