@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tattoo Finder - Login</title>
+  </head>
+
+  <body>
+    <div id="content">
+      <div id="presText">
+        <div id="title">Bem vindo ao TattooFinder!</div>
+        <div>Entre na sua conta para acessar recursos exclusivos.</div>
+      </div>
+
+      <form id="loginForm" action="/login" method="post">
+        <div class="input-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Seu lindo email aqui"
+            required
+          />
+        </div>
+
+        <div class="input-group">
+          <label for="senha">Senha:</label>
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Sua senha bem segura aqui"
+            required
+          />
+        </div>
+
+        <div id="options">
+          <button type="submit" id="confirmButton">Entrar</button>
+          <a id="forgorbutton" href="/"
+            ><button type="button">Esqueci minha senha</button></a
+          >
+          <a id="returnButton" href="/"
+            ><button type="button">Retornar</button></a
+          >
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          const email = document.getElementById("email").value;
+          const senha = document.getElementById("senha").value;
+
+          // cade o email e a senha
+          if (!email || !senha) {
+            e.preventDefault();
+            alert("Por favor, preencha todos os campos!");
+            return false;
+          }
+
+          // cade o arroban
+          if (!email.includes("@")) {
+            e.preventDefault();
+            alert("Por favor, insira um email válido!");
+            return false;
+          }
+        });
+    </script>
+  </body>
+</html>
