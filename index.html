@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./frontEnd/styles.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
     </style>
@@ -47,13 +47,16 @@
 
       <div class="footer">
         <div class="lefter"></div>
-        <div class="righter"></div>
+        <div class="righter">
+          <div>Fale conosco!</div>
+          <div><a>tattooFinder@gmail.com</a></div>
+        </div>
       </div>
     </div>
     </body>
     <script>
       document.getElementById("perfilBtn").addEventListener("click", () => {
-        window.location.href = "account.html";
+        window.location.href = "./frontEnd/account.html";
       });
     </script>
 </html>
