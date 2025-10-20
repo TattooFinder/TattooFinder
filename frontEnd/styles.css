@@ -107,6 +107,13 @@ a {
   gap: 8px;
 }
 
+.righter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
 .center button {
   width: 200px;
   text-align: start;
