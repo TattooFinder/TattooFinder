@@ -6,3 +6,6 @@ venv/
 
 #configurações do vscode
 .vscode/
+
+#arquivos pycache
+__pycache__/

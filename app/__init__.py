@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 def create_app():
-    app = Flask(__name__, template_folder="../templates")
+    app = Flask(__name__, template_folder="../frontEnd")
 
     # Configura a URI do banco de dados a partir das variáveis de ambiente
     db_host = os.getenv("DB_HOST")
@@ -20,7 +20,17 @@ def create_app():
 
     from app.views.user_view import user_bp
     from app.views.main_view import main_bp
+    from app.views.cliente_view import cliente_bp
+    from app.views.tatuador_view import tatuador_bp
+    from app.views.publicacao_view import publicacao_bp
+    from app.views.tag_view import tag_bp
+    from app.views.feedback_view import feedback_bp
     app.register_blueprint(user_bp)
     app.register_blueprint(main_bp)
+    app.register_blueprint(cliente_bp)
+    app.register_blueprint(tatuador_bp)
+    app.register_blueprint(publicacao_bp)
+    app.register_blueprint(tag_bp)
+    app.register_blueprint(feedback_bp)
 
     return app
