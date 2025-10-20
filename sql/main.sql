@@ -3,13 +3,13 @@ use tf_db;
 
 create table usuario(
 id_usuario int not null auto_increment primary key,
-nome varchar(20) not null
+email varchar(20) not null
+senha varchar(20) not null,
 );
 
 create table cliente(
 id_cliente int not null auto_increment primary key,
 nome varchar(20) not null,
-email varchar(20) not null,
 cidade varchar(20) not null,
 id_usuario int not null,
 foreign key (id_usuario) references usuario(id_usuario)
@@ -44,7 +44,6 @@ create table tatuador(
 id_tatuador int not null auto_increment primary key,
 descricao varchar(100) null,
 nome varchar(20) not null,
-email varchar(20) not null,
 cidade varchar(20) not null,
 id_usuario int not null,
 foreign key (id_usuario) references usuario(id_usuario)
