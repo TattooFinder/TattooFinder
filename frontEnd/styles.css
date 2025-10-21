@@ -18,17 +18,9 @@ body {
   text-align: center;
   margin-top: 8px;
 }
+.muted-link a { color: inherit; text-decoration: underline; cursor: pointer; }
 
-.muted-link a {
-color: inherit;
-text-decoration: underline;
-cursor: pointer;
-}
-
-.hint {
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
+.hint { font-size: 0.9rem; opacity: 0.85; }
 
 #content {
   max-width: 500px;
@@ -214,20 +206,45 @@ select {
   display: none;
 }
 
-/* Fade preto sutil no fundo durante a troca */
 #content::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at center,#1b1b1b,
-    transparent 70%
-  );
+  background: radial-gradient(circle at center, #1b1b1b, transparent 70%);
   opacity: 0;
   transition: opacity 0.5s ease;
   pointer-events: none;
 }
+#content.transitioning::before { opacity: 1; }
 
-#content.transitioning::before {
-  opacity: 1;
+.page-slide {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+  display: flex;
+  background: white;
+  z-index: 9999;
+  transform: translateX(0);
+  transition: transform 0.7s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.page-slide::before,
+.page-slide::after {
+  content: "";
+  flex: 1;
+  background: #ffffff;
+}
+
+/* animação: as duas “páginas” se movem para a esquerda */
+.page-slide.active {
+  transform: translateX(-50%);
+}
+
+.page-slide.reverse {
+  transform: translateX(-50%);
+}
+.page-slide.reverse.active {
+  transform: translateX(0);
 }
