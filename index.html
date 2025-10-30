@@ -1,74 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="./frontEnd/styles.css" />
+    <link rel="stylesheet" href="./stylesIndex.css" />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
   </head>
-  <body style="height:auto; align-items:flex-start; justify-content:stretch;">
-    <div class="content" style="width:100%; min-height:100vh; box-sizing:border-box; padding-top:56px;">
-      <div class="header">
-        <div class="lefter">
-          <button>Logo</button>
-          <button>Informações</button>
-          <button>Suporte</button>
-          <button>Estilos</button>
-        </div>
-        <div class="center">
-          <button>Pesquisar</button>
-        </div>
-        <div class="righter">
-          <select name="linguas" id="linguas">
-            <option value="Português">Português (Brasil)</option>
-            <option value="Ingles">Inglês (Canadá)</option>
-            <option value="Espanhol">Espanhol (México)</option>
-          </select>
-          <button id="perfilBtn">Perfil</button>
-        </div>
-      </div>
 
+  <body>
+    <div class="header">
+      <div class="lefter">
+        <button>Início</button>
+        <button>Informações</button>
+        <button>Suporte</button>
+        <button>Estilos</button>
+      </div>
+      <div class="center">
+        <form id="searchForm" action="/search" method="get">
+          <input type="search" id="searchQuery" name="q" placeholder="Pesquisar">
+          <button type="submit"><img src="./frontEnd/pics/search.png"></button>
+        </form>
+      </div>
+      <div class="righter">
+        <select name="linguas" id="linguas">
+          <option value="Português">Português (Brasil)</option>
+          <option value="Ingles">Inglês (Canadá)</option>
+          <option value="Espanhol">Espanhol (México)</option>
+        </select>
+        <a href="./frontEnd/account.html"><button>Perfil</button></a>
+      </div>
+    </div>
+    <div class="midder">
       <div class="topper">
-        <div class="lefter"></div>
-        <div class="righter"></div>
+        <div class="carousel">
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+          <div class="card"><a><img src=""></a></div>
+        </div>
       </div>
-
       <div class="botter">
         <div class="lefter"></div>
         <div class="righter"></div>
       </div>
-
-      <div class="footer" style="border-top:1px solid #1b1b1b; padding:16px 20px; display:flex; justify-content:space-between;">
-        <div class="lefter"></div>
-        <div class="righter">
-          <div>Fale conosco!</div>
-          <div><a>tattooFinder@gmail.com</a></div>
-        </div>
+    </div>
+    <div class="footer">
+      <div class="lefter"></div>
+      <div class="righter">
+        <div>Fale conosco!</div>
+        <div><a>tattooFinder@gmail.com</a></div>
       </div>
     </div>
 
-<script>
-  function slideTransition(url) {
-    const slide = document.createElement("div");
-    slide.classList.add("page-slide");
-    document.body.appendChild(slide);
 
-    void slide.offsetWidth;
-    slide.classList.add("active");
+    <script>
 
-    setTimeout(() => {
-      window.location.href = url;
-    }, 700);
-  }
-
-  const perfilBtn = document.getElementById("perfilBtn");
-  perfilBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    slideTransition("./frontEnd/account.html");
-  });
-</script>
+    </script>
   </body>
+
 </html>
