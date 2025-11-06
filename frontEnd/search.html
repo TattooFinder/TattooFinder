@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="./stylesUser.css" />
+    <link rel="stylesheet" href="./frontEnd/styles.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
     </style>
@@ -14,7 +15,7 @@
     <div class="content">
       <div class="header">
         <div class="lefter">
-          <button>Logo</button>
+          <button>Início</button>
           <button>Informações</button>
           <button>Suporte</button>
           <button>Estilos</button>
@@ -25,25 +26,38 @@
         <div class="righter">
           <select name="linguas" id="linguas">
             <option value="Português">Português (Brasil)</option>
-            <option value="Ingles">Inglês(Canada)</option>
-            <option value="Espanhol">Espanhol(Mexico)</option>
+            <option value="Ingles">Inglês (Canadá)</option>
+            <option value="Espanhol">Espanhol (México)</option>
           </select>
-          <button>Entrar</button>
-          <button>Criar</button>
+          <button id="perfilBtn">Perfil</button>
         </div>
       </div>
+
       <div class="topper">
-        <div class="lefter"></div>
-        <div class="righter"></div>
+        <div class="center"></div>
       </div>
+
       <div class="botter">
         <div class="lefter"></div>
         <div class="righter"></div>
       </div>
+
       <div class="footer">
         <div class="lefter"></div>
-        <div class="righter"></div>
+        <div class="righter">
+          <div>Fale conosco!</div>
+          <div><a>tattooFinder@gmail.com</a></div>
+        </div>
       </div>
     </div>
+
+    <script>
+      const perfilBtn = document.getElementById("perfilBtn");
+      perfilBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        slideTransition("./frontEnd/account.html");
+      });
+    </script>
   </body>
+
 </html>
