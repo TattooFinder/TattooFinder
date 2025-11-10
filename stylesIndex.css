@@ -101,8 +101,8 @@ a {
 }
 
 .welcome-buttons .btn-primary:hover {
-  background-color: #4d4d4d;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #1b1b1b;
 }
 
 .welcome-buttons .btn-secondary {
@@ -112,7 +112,8 @@ a {
 }
 
 .welcome-buttons .btn-secondary:hover {
-  background-color: #f0f0f0;
+  background-color: #1b1b1b;
+  color: #ffffff;
 }
 
 .carousel-container {
