@@ -1,25 +1,13 @@
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flasgger import Swagger
-
-db = SQLAlchemy()
 
 def create_app():
     app = Flask(__name__, template_folder="../frontEnd")
 
-    # Configura a URI do banco de dados a partir das variáveis de ambiente
-    db_host = os.getenv("DB_HOST")
-    db_user = os.getenv("DB_USER")
-    db_password = os.getenv("DB_PASSWORD")
-    db_name = os.getenv("DB_NAME")
-    
-    app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql+pymysql://{db_user}:{db_password}@{db_host}/{db_name}"
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["JWT_SECRET_KEY"] = "super-secret"
 
-    db.init_app(app)
     jwt = JWTManager(app)
     swagger = Swagger(app)
 

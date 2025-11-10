@@ -1,9 +1,4 @@
-from app import db
-from app.models.tatuador_model import Tatuador
-from app.models.telefone_tatuador_model import TelefoneTatuador
-from app.models.publicacao_model import Publicacao
-from app.models.feedback_model import Feedback
-from app.models.cliente_model import Cliente
+from app.db import fetch_all, fetch_one, execute_query
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
@@ -13,75 +8,50 @@ tatuador_bp = Blueprint("tatuador", __name__, url_prefix="/tatuador")
 def get_tatuador(tatuador_id):
     """
     Gets a tattoo artist's profile.
-    ---
-    parameters:
-      - name: tatuador_id
-        in: path
-        type: integer
-        required: true
-    responses:
-      200:
-        description: Tattoo artist's profile
-      404:
-        description: Tattoo artist not found
     """
-    tatuador = Tatuador.query.get_or_404(tatuador_id)
+    query_tatuador = "SELECT id_tatuador, nome, cidade, descricao FROM tatuador WHERE id_tatuador = %s"
+    tatuador = fetch_one(query_tatuador, (tatuador_id,))
 
-    telefones = [
-        telefone.numero for telefone in tatuador.telefones
-    ]
+    if not tatuador:
+        return jsonify({"error": "Tatuador não encontrado"}), 404
 
-    publicacoes = [
-        {
-            "id": publicacao.id_publicacao,
-            "titulo": publicacao.titulo,
-            "data_publicacao": publicacao.data_publicacao.isoformat(),
-            "descricao": publicacao.descricao
-        }
-        for publicacao in tatuador.publicacoes
-    ]
+    query_telefones = "SELECT numero FROM telefone_tatuador WHERE id_tatuador = %s"
+    telefones = fetch_all(query_telefones, (tatuador_id,))
+    tatuador['telefones'] = [tel['numero'] for tel in telefones]
 
-    result = {
-        "id": tatuador.id_tatuador,
-        "nome": tatuador.nome,
-        "cidade": tatuador.cidade,
-        "descricao": tatuador.descricao,
-        "telefones": telefones,
-        "publicacoes": publicacoes
-    }
+    query_publicacoes = "SELECT id_publicacao, titulo, data_publicacao, descricao FROM publicacao WHERE id_tatuador = %s"
+    publicacoes = fetch_all(query_publicacoes, (tatuador_id,))
+    tatuador['publicacoes'] = publicacoes
 
-    return jsonify(result), 200
+    return jsonify(tatuador), 200
 
 @tatuador_bp.route("/<int:tatuador_id>/feedback", methods=["GET"])
 def get_tatuador_feedback(tatuador_id):
     """
     Gets a tattoo artist's feedback.
-    ---
-    parameters:
-      - name: tatuador_id
-        in: path
-        type: integer
-        required: true
-    responses:
-      200:
-        description: Tattoo artist's feedback
-      404:
-        description: Tattoo artist not found
     """
-    tatuador = Tatuador.query.get_or_404(tatuador_id)
+    query_tatuador = "SELECT id_tatuador FROM tatuador WHERE id_tatuador = %s"
+    if not fetch_one(query_tatuador, (tatuador_id,)):
+        return jsonify({"error": "Tatuador não encontrado"}), 404
 
-    feedbacks = Feedback.query.filter_by(id_tatuador=tatuador.id_tatuador).all()
+    query = """
+        SELECT f.id_feedback, f.titulo, f.data_publicacao, f.descricao, f.nota_avaliativa, c.id_cliente, c.nome AS cliente_nome
+        FROM feedback f
+        JOIN cliente c ON f.id_cliente = c.id_cliente
+        WHERE f.id_tatuador = %s
+    """
+    feedbacks = fetch_all(query, (tatuador_id,))
 
     results = [
         {
-            "id": feedback.id_feedback,
-            "titulo": feedback.titulo,
-            "data_publicacao": feedback.data_publicacao.isoformat(),
-            "descricao": feedback.descricao,
-            "nota_avaliativa": feedback.nota_avaliativa,
+            "id": feedback['id_feedback'],
+            "titulo": feedback['titulo'],
+            "data_publicacao": feedback['data_publicacao'].isoformat(),
+            "descricao": feedback['descricao'],
+            "nota_avaliativa": feedback['nota_avaliativa'],
             "cliente": {
-                "id": feedback.cliente.id_cliente,
-                "nome": feedback.cliente.nome
+                "id": feedback['id_cliente'],
+                "nome": feedback['cliente_nome']
             }
         }
         for feedback in feedbacks
@@ -93,111 +63,73 @@ def get_tatuador_feedback(tatuador_id):
 def search_tatuador():
     """
     Searches for tattoo artists.
-    ---
-    parameters:
-      - name: nome
-        in: query
-        type: string
-      - name: cidade
-        in: query
-        type: string
-      - name: descricao
-        in: query
-        type: string
-    responses:
-      200:
-        description: A list of tattoo artists
     """
     nome = request.args.get("nome")
     cidade = request.args.get("cidade")
     descricao = request.args.get("descricao")
 
-    query = Tatuador.query
+    query = "SELECT id_tatuador, nome, cidade, descricao FROM tatuador WHERE 1=1"
+    params = []
 
     if nome:
-        query = query.filter(Tatuador.nome.ilike(f"%{nome}%"))
+        query += " AND nome LIKE %s"
+        params.append(f"%{nome}%")
     
     if cidade:
-        query = query.filter(Tatuador.cidade.ilike(f"%{cidade}%"))
+        query += " AND cidade LIKE %s"
+        params.append(f"%{cidade}%")
 
     if descricao:
-        query = query.filter(Tatuador.descricao.ilike(f"%{descricao}%"))
+        query += " AND descricao LIKE %s"
+        params.append(f"%{descricao}%")
 
-    tatuadores = query.all()
+    tatuadores = fetch_all(query, tuple(params))
 
-    results = [
-        {
-            "id": tatuador.id_tatuador,
-            "nome": tatuador.nome,
-            "cidade": tatuador.cidade,
-            "descricao": tatuador.descricao
-        }
-        for tatuador in tatuadores
-    ]
-
-    return jsonify(results), 200
+    return jsonify(tatuadores), 200
 
 @tatuador_bp.route("/<int:tatuador_id>/edit", methods=["PUT"])
 @jwt_required()
 def edit_tatuador(tatuador_id):
     """
     Edits a tattoo artist's profile.
-    ---
-    parameters:
-      - name: tatuador_id
-        in: path
-        type: integer
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            nome:
-              type: string
-            cidade:
-              type: string
-            descricao:
-              type: string
-    responses:
-      200:
-        description: Profile updated successfully
-      400:
-        description: Invalid data
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Tattoo artist not found
     """
     current_user_id = get_jwt_identity()
-    tatuador = Tatuador.query.get_or_404(tatuador_id)
+    
+    query_auth = "SELECT id_usuario FROM tatuador WHERE id_tatuador = %s"
+    tatuador_auth = fetch_one(query_auth, (tatuador_id,))
+    
+    if not tatuador_auth:
+        return jsonify({"error": "Tatuador não encontrado"}), 404
 
-    if tatuador.id_usuario != current_user_id:
+    if tatuador_auth['id_usuario'] != current_user_id:
         return jsonify({"error": "Não autorizado"}), 403
 
     data = request.json
-
     if not data:
         return jsonify({"error": "Dados inválidos"}), 400
 
+    update_fields = []
+    params = []
+    
     if "nome" in data:
-        tatuador.nome = data["nome"]
+        update_fields.append("nome = %s")
+        params.append(data["nome"])
     
     if "cidade" in data:
-        tatuador.cidade = data["cidade"]
+        update_fields.append("cidade = %s")
+        params.append(data["cidade"])
 
     if "descricao" in data:
-        tatuador.descricao = data["descricao"]
+        update_fields.append("descricao = %s")
+        params.append(data["descricao"])
 
-    db.session.commit()
+    if not update_fields:
+        return jsonify({"error": "Nenhum campo para atualizar"}), 400
+
+    query_update = f"UPDATE tatuador SET {', '.join(update_fields)} WHERE id_tatuador = %s"
+    params.append(tatuador_id)
+    
+    execute_query(query_update, tuple(params))
 
     return jsonify({"message": "Perfil atualizado com sucesso!"}), 200
 
@@ -206,41 +138,16 @@ def edit_tatuador(tatuador_id):
 def add_telefone_tatuador(tatuador_id):
     """
     Adds a phone number to a tattoo artist's profile.
-    ---
-    parameters:
-      - name: tatuador_id
-        in: path
-        type: integer
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            numero:
-              type: string
-    responses:
-      201:
-        description: Phone number added successfully
-      400:
-        description: Invalid phone number
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Tattoo artist not found
     """
     current_user_id = get_jwt_identity()
-    tatuador = Tatuador.query.get_or_404(tatuador_id)
+    
+    query_auth = "SELECT id_usuario FROM tatuador WHERE id_tatuador = %s"
+    tatuador_auth = fetch_one(query_auth, (tatuador_id,))
 
-    if tatuador.id_usuario != current_user_id:
+    if not tatuador_auth:
+        return jsonify({"error": "Tatuador não encontrado"}), 404
+
+    if tatuador_auth['id_usuario'] != current_user_id:
         return jsonify({"error": "Não autorizado"}), 403
 
     data = request.json
@@ -248,9 +155,8 @@ def add_telefone_tatuador(tatuador_id):
     if not data or not data.get("numero"):
         return jsonify({"error": "Número de telefone inválido"}), 400
 
-    telefone = TelefoneTatuador(id_tatuador=tatuador.id_tatuador, numero=data["numero"])
-    db.session.add(telefone)
-    db.session.commit()
+    query_insert = "INSERT INTO telefone_tatuador (id_tatuador, numero) VALUES (%s, %s)"
+    execute_query(query_insert, (tatuador_id, data["numero"]))
 
     return jsonify({"message": "Telefone adicionado com sucesso!"}), 201
 
@@ -259,39 +165,19 @@ def add_telefone_tatuador(tatuador_id):
 def delete_telefone_tatuador(tatuador_id, numero):
     """
     Deletes a phone number from a tattoo artist's profile.
-    ---
-    parameters:
-      - name: tatuador_id
-        in: path
-        type: integer
-        required: true
-      - name: numero
-        in: path
-        type: string
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-    responses:
-      200:
-        description: Phone number deleted successfully
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Tattoo artist or phone number not found
     """
     current_user_id = get_jwt_identity()
-    tatuador = Tatuador.query.get_or_404(tatuador_id)
+    
+    query_auth = "SELECT id_usuario FROM tatuador WHERE id_tatuador = %s"
+    tatuador_auth = fetch_one(query_auth, (tatuador_id,))
 
-    if tatuador.id_usuario != current_user_id:
+    if not tatuador_auth:
+        return jsonify({"error": "Tatuador não encontrado"}), 404
+
+    if tatuador_auth['id_usuario'] != current_user_id:
         return jsonify({"error": "Não autorizado"}), 403
 
-    telefone = TelefoneTatuador.query.filter_by(id_tatuador=tatuador_id, numero=numero).first_or_404()
-    db.session.delete(telefone)
-    db.session.commit()
+    query_delete = "DELETE FROM telefone_tatuador WHERE id_tatuador = %s AND numero = %s"
+    execute_query(query_delete, (tatuador_id, numero))
 
     return jsonify({"message": "Telefone removido com sucesso!"}), 200

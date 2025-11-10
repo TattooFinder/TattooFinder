@@ -1,6 +1,4 @@
-from app import db
-from app.models.feedback_model import Feedback
-from app.models.cliente_model import Cliente
+from app.db import execute_query, fetch_one
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 import datetime
@@ -12,36 +10,6 @@ feedback_bp = Blueprint("feedback", __name__, url_prefix="/feedback")
 def create_feedback():
     """
     Creates a new feedback.
-    ---
-    parameters:
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            titulo:
-              type: string
-            descricao:
-              type: string
-            nota_avaliativa:
-              type: integer
-            id_tatuador:
-              type: integer
-    responses:
-      201:
-        description: Feedback created successfully
-      400:
-        description: Invalid data
-      401:
-        description: Unauthorized
-      404:
-        description: Client not found
     """
     current_user_id = get_jwt_identity()
     data = request.json
@@ -49,19 +17,18 @@ def create_feedback():
     if not data or not data.get("titulo") or not data.get("descricao") or not data.get("nota_avaliativa") or not data.get("id_tatuador"):
         return jsonify({"error": "Dados inválidos"}), 400
 
-    cliente = Cliente.query.filter_by(id_usuario=current_user_id).first_or_404()
+    query_cliente = "SELECT id_cliente FROM cliente WHERE id_usuario = %s"
+    cliente = fetch_one(query_cliente, (current_user_id,))
 
-    feedback = Feedback(
-        titulo=data["titulo"],
-        descricao=data["descricao"],
-        nota_avaliativa=data["nota_avaliativa"],
-        id_cliente=cliente.id_cliente,
-        id_tatuador=data["id_tatuador"],
-        data_publicacao=datetime.date.today()
-    )
+    if not cliente:
+        return jsonify({"error": "Cliente não encontrado"}), 404
 
-    db.session.add(feedback)
-    db.session.commit()
+    query_insert = """
+        INSERT INTO feedback (titulo, descricao, nota_avaliativa, id_cliente, id_tatuador, data_publicacao)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    params = (data["titulo"], data["descricao"], data["nota_avaliativa"], cliente["id_cliente"], data["id_tatuador"], datetime.date.today())
+    execute_query(query_insert, params)
 
     return jsonify({"message": "Feedback criado com sucesso!"}), 201
 
@@ -70,63 +37,47 @@ def create_feedback():
 def edit_feedback(feedback_id):
     """
     Edits a feedback.
-    ---
-    parameters:
-      - name: feedback_id
-        in: path
-        type: integer
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            titulo:
-              type: string
-            descricao:
-              type: string
-            nota_avaliativa:
-              type: integer
-    responses:
-      200:
-        description: Feedback updated successfully
-      400:
-        description: Invalid data
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Feedback not found
     """
     current_user_id = get_jwt_identity()
-    feedback = Feedback.query.get_or_404(feedback_id)
-    cliente = Cliente.query.filter_by(id_usuario=current_user_id).first_or_404()
+    
+    query_feedback = "SELECT id_cliente FROM feedback WHERE id_feedback = %s"
+    feedback = fetch_one(query_feedback, (feedback_id,))
 
-    if feedback.id_cliente != cliente.id_cliente:
+    if not feedback:
+        return jsonify({"error": "Feedback não encontrado"}), 404
+
+    query_cliente = "SELECT id_cliente FROM cliente WHERE id_usuario = %s"
+    cliente = fetch_one(query_cliente, (current_user_id,))
+
+    if not cliente or feedback['id_cliente'] != cliente['id_cliente']:
         return jsonify({"error": "Não autorizado"}), 403
 
     data = request.json
-
     if not data:
         return jsonify({"error": "Dados inválidos"}), 400
 
+    update_fields = []
+    params = []
+    
     if "titulo" in data:
-        feedback.titulo = data["titulo"]
+        update_fields.append("titulo = %s")
+        params.append(data["titulo"])
     
     if "descricao" in data:
-        feedback.descricao = data["descricao"]
+        update_fields.append("descricao = %s")
+        params.append(data["descricao"])
 
     if "nota_avaliativa" in data:
-        feedback.nota_avaliativa = data["nota_avaliativa"]
+        update_fields.append("nota_avaliativa = %s")
+        params.append(data["nota_avaliativa"])
 
-    db.session.commit()
+    if not update_fields:
+        return jsonify({"error": "Nenhum campo para atualizar"}), 400
+
+    query_update = f"UPDATE feedback SET {', '.join(update_fields)} WHERE id_feedback = %s"
+    params.append(feedback_id)
+    
+    execute_query(query_update, tuple(params))
 
     return jsonify({"message": "Feedback atualizado com sucesso!"}), 200
 
@@ -135,35 +86,22 @@ def edit_feedback(feedback_id):
 def delete_feedback(feedback_id):
     """
     Deletes a feedback.
-    ---
-    parameters:
-      - name: feedback_id
-        in: path
-        type: integer
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-    responses:
-      200:
-        description: Feedback deleted successfully
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Feedback not found
     """
     current_user_id = get_jwt_identity()
-    feedback = Feedback.query.get_or_404(feedback_id)
-    cliente = Cliente.query.filter_by(id_usuario=current_user_id).first_or_404()
+    
+    query_feedback = "SELECT id_cliente FROM feedback WHERE id_feedback = %s"
+    feedback = fetch_one(query_feedback, (feedback_id,))
 
-    if feedback.id_cliente != cliente.id_cliente:
+    if not feedback:
+        return jsonify({"error": "Feedback não encontrado"}), 404
+
+    query_cliente = "SELECT id_cliente FROM cliente WHERE id_usuario = %s"
+    cliente = fetch_one(query_cliente, (current_user_id,))
+
+    if not cliente or feedback['id_cliente'] != cliente['id_cliente']:
         return jsonify({"error": "Não autorizado"}), 403
 
-    db.session.delete(feedback)
-    db.session.commit()
+    query_delete = "DELETE FROM feedback WHERE id_feedback = %s"
+    execute_query(query_delete, (feedback_id,))
 
     return jsonify({"message": "Feedback removido com sucesso!"}), 200
