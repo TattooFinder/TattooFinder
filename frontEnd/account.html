@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,21 +40,13 @@
         <form id="loginForm">
           <div class="input-group">
             <label for="loginEmail">Email:</label>
-            <input
-              type="email"
-              id="loginEmail"
-              placeholder="Seu lindo email aqui"
-              required
-            />
+            <input type="email" id="loginEmail"
+              placeholder="Seu lindo email aqui" required />
           </div>
           <div class="input-group">
             <label for="loginSenha">Senha:</label>
-            <input
-              type="password"
-              id="loginSenha"
-              placeholder="Sua senha bem segura aqui"
-              required
-            />
+            <input type="password" id="loginSenha"
+              placeholder="Sua senha bem segura aqui" required />
           </div>
           <div id="options">
             <button type="submit">Entrar</button>
@@ -74,39 +67,23 @@
         <form id="registerClientForm">
           <div class="input-group">
             <label for="clientNome">Nome:</label>
-            <input
-              type="text"
-              id="clientNome"
-              placeholder="Seu nome"
-              required
-            />
+            <input type="text" id="clientNome" placeholder="Seu nome"
+              required />
           </div>
           <div class="input-group">
             <label for="clientEmail">Email:</label>
-            <input
-              type="email"
-              id="clientEmail"
-              placeholder="Seu email"
-              required
-            />
+            <input type="email" id="clientEmail" placeholder="Seu email"
+              required />
           </div>
           <div class="input-group">
             <label for="clientSenha">Senha:</label>
-            <input
-              type="password"
-              id="clientSenha"
-              placeholder="Sua senha"
-              required
-            />
+            <input type="password" id="clientSenha" placeholder="Sua senha"
+              required />
           </div>
           <div class="input-group">
             <label for="clientConfirmar">Confirmar senha:</label>
-            <input
-              type="password"
-              id="clientConfirmar"
-              placeholder="Repita sua senha"
-              required
-            />
+            <input type="password" id="clientConfirmar"
+              placeholder="Repita sua senha" required />
           </div>
           <div id="options">
             <button type="submit">Confirmar</button>
@@ -122,126 +99,93 @@
         <form id="registerArtistForm">
           <div class="input-group">
             <label for="artistNome">Nome:</label>
-            <input
-              type="text"
-              id="artistNome"
-              placeholder="Seu nome"
-              required
-            />
+            <input type="text" id="artistNome" placeholder="Seu nome"
+              required />
           </div>
-          <div class="input-group">
-            <label for="artistEstilo">Estilo principal:</label>
-            <input
-              type="text"
-              id="artistEstilo"
-              placeholder="Ex: Realismo, Tribal..."
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistCNPJ">CNPJ:</label>
-            <input
-              type="text"
-              id="artistCNPJ"
-              placeholder="Seu CNPJ"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistEmail">Email:</label>
-            <input
-              type="email"
-              id="artistEmail"
-              placeholder="Seu email"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistSenha">Senha:</label>
-            <input
-              type="password"
-              id="artistSenha"
-              placeholder="Sua senha"
-              required
-            />
-          </div>
-          <div class="input-group">
-            <label for="artistConfirmar">Confirmar senha:</label>
-            <input
-              type="password"
-              id="artistConfirmar"
-              placeholder="Repita sua senha"
-              required
-            />
-          </div>
-          <div id="options">
-            <button type="submit">Confirmar</button>
-            <button type="button" id="backHome3">Retornar</button>
-          </div>
-        </form>
       </div>
-      <div id="forgotScreen" class="screen hidden">
-        <div class="presText">
-          <div id="title">Recuperar senha</div>
-          <div class="hint">
-            Informe seu e-mail para receber o link de redefinição.
-          </div>
+      <div class="input-group">
+        <label for="artistCidade">Cidade:</label>
+        <input type="text" id="artistCidade" placeholder="Sua cidade"
+          required />
+      </div>
+      <div class="input-group">
+        <label for="artistEmail">Email:</label>
+        <input type="email" id="artistEmail" placeholder="Seu email" required />
+      </div>
+      <div class="input-group">
+        <label for="artistSenha">Senha:</label>
+        <input type="password" id="artistSenha" placeholder="Sua senha"
+          required />
+      </div>
+      <div class="input-group">
+        <label for="artistConfirmar">Confirmar senha:</label>
+        <input type="password" id="artistConfirmar"
+          placeholder="Repita sua senha" required />
+      </div>
+      <div id="options">
+        <button type="submit">Confirmar</button>
+        <button type="button" id="backHome3">Retornar</button>
+      </div>
+      </form>
+    </div>
+    <div id="forgotScreen" class="screen hidden">
+      <div class="presText">
+        <div id="title">Recuperar senha</div>
+        <div class="hint">
+          Informe seu e-mail para receber o link de redefinição.
         </div>
-        <form id="forgotForm">
-          <div class="input-group">
-            <label for="forgotEmail">Email:</label>
-            <input
-              type="email"
-              id="forgotEmail"
-              placeholder="Seu email"
-              required
-            />
-          </div>
-          <div id="options">
-            <button type="submit">Enviar link</button>
-            <button type="button" id="forgotBack">Voltar</button>
-            <button type="button" id="openResetDirect">Debug</button>
-          </div>
-        </form>
       </div>
-      <div id="forgotSentScreen" class="screen hidden">
-        <div class="presText">
-          <div id="title">E-mail enviado com sucesso</div>
-          <h3>
-            Verifique o e-mail que a TattooFinder enviou para a recuperação de
-            sua senha.
-          </h3>
-          <div>
-            <h4>Verifique sua caixa de spam caso necessário.</h4>
-          </div>
+      <form id="forgotForm">
+        <div class="input-group">
+          <label for="forgotEmail">Email:</label>
+          <input type="email" id="forgotEmail" placeholder="Seu email"
+            required />
         </div>
         <div id="options">
-          <button type="button" id="forgotSentBack">Voltar ao login</button>
+          <button type="submit">Enviar link</button>
+          <button type="button" id="forgotBack">Voltar</button>
+          <button type="button" id="openResetDirect">Debug</button>
+        </div>
+      </form>
+    </div>
+    <div id="forgotSentScreen" class="screen hidden">
+      <div class="presText">
+        <div id="title">E-mail enviado com sucesso</div>
+        <h3>
+          Verifique o e-mail que a TattooFinder enviou para a recuperação de
+          sua senha.
+        </h3>
+        <div>
+          <h4>Verifique sua caixa de spam caso necessário.</h4>
         </div>
       </div>
-      <div id="resetScreen" class="screen hidden">
-        <div class="presText">
-          <div id="title">Alteração de senha</div>
-          <h3>Defina sua nova senha para continuar.</h3>
-          <div>
-            <h4>Dica: use pelo menos 8 caracteres.</h4>
-          </div>
-        </div>
-        <form id="resetForm">
-          <div class="input-group">
-            <label for="newPass">Senha nova:</label>
-            <input type="password" id="newPass" required />
-          </div>
-          <div class="input-group">
-            <label for="newPassConfirm">Confirme sua senha nova:</label>
-            <input type="password" id="newPassConfirm" required />
-          </div>
-          <div id="options">
-            <button type="submit">Confirmar senha</button>
-            <button type="button" id="resetBack">Voltar</button>
-          </div>
-        </form>
+      <div id="options">
+        <button type="button" id="forgotSentBack">Voltar ao login</button>
       </div>
+    </div>
+    <div id="resetScreen" class="screen hidden">
+      <div class="presText">
+        <div id="title">Alteração de senha</div>
+        <h3>Defina sua nova senha para continuar.</h3>
+        <div>
+          <h4>Dica: use pelo menos 8 caracteres.</h4>
+        </div>
+      </div>
+      <form id="resetForm">
+        <div class="input-group">
+          <label for="newPass">Senha nova:</label>
+          <input type="password" id="newPass" required />
+        </div>
+        <div class="input-group">
+          <label for="newPassConfirm">Confirme sua senha nova:</label>
+          <input type="password" id="newPassConfirm" required />
+        </div>
+        <div id="options">
+          <button type="submit">Confirmar senha</button>
+          <button type="button" id="resetBack">Voltar</button>
+        </div>
+      </form>
+    </div>
     </div>
     <script>
       const screens = document.querySelectorAll(".screen");
@@ -349,4 +293,5 @@
       })();
     </script>
   </body>
+
 </html>
