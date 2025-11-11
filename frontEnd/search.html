@@ -1,63 +1,127 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF--8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="./frontEnd/styles.css" />
+    <title>Tattoo Finder - Pesquisa</title>
+    <link rel="stylesheet" href="./stylesIndex.css" />
+    <link rel="stylesheet" href="./search.css" />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
   </head>
-
   <body>
-    <div class="content">
-      <div class="header">
-        <div class="lefter">
-          <button>Início</button>
-          <button>Informações</button>
-          <button>Suporte</button>
-          <button>Estilos</button>
-        </div>
-        <div class="center">
-          <button>Pesquisar</button>
-        </div>
-        <div class="righter">
-          <select name="linguas" id="linguas">
-            <option value="Português">Português (Brasil)</option>
-            <option value="Ingles">Inglês (Canadá)</option>
-            <option value="Espanhol">Espanhol (México)</option>
+    <div class="header">
+      <div class="lefter">
+        <a href="../index.html"><button>Início</button></a>
+        <form id="searchForm" action="./search.html" method="get">
+          <input
+            type="search"
+            id="searchQuery"
+            name="q"
+            placeholder="Pesquisar"
+          />
+          <button type="submit">
+            <img src="./pics/search.png" />
+          </button>
+        </form>
+      </div>
+
+      <div class="righter">
+        <select name="linguas" id="linguas">
+          <option value="Português">Português (Brasil)</option>
+          <option value="Ingles">Inglês (Canadá)</option>
+          <option value="Espanhol">Espanhol (México)</option>
+        </select>
+        <a href="./account.html"><button>Perfil</button></a>
+      </div>
+    </div>
+
+    <div class="search-main-content">
+      <div class="filter-section">
+        <input
+          type="search"
+          id="search-bar-large"
+          name="q"
+          placeholder="Pesquise por artista, estúdio, estilo... ou até mesmo as tags que você imaginar!"
+        />
+        <div class="filters-container">
+          <select name="bairro" id="filter-bairro">
+            <option value="">Todos os bairros registrados</option>
+            <option value="aldeota">Aldeota</option>
+            <option value="meireles">Meireles</option>
+            <option value="centro">Centro</option>
+            <option value="benfica">Benfica</option>
           </select>
-          <button id="perfilBtn">Perfil</button>
+          <select name="estilo" id="filter-estilo">
+            <option value="">Todos os estilos usados</option>
+            <option value="fineline">Fineline</option>
+            <option value="old-school">Old School</option>
+            <option value="aquarela">Aquarela</option>
+            <option value="preto-cinza">Preto & Cinza</option>
+          </select>
+          <div class="filter-toggle">
+            <input type="checkbox" id="filter-vegano" name="vegano" />
+            <label for="filter-vegano">Material Vegano</label>
+            <a href="https://tattoolandia.com.br/veganas/#Marcas_de_Tinta_de_Tatuagem_Veganas"><img src="./pics/search.png" /></a>
+          </button>
+          </div>
         </div>
       </div>
 
-      <div class="topper">
-        <div class="center"></div>
-      </div>
+      <div class="results-section">
+        <h2>Resultados da Pesquisa</h2>
 
-      <div class="botter">
-        <div class="lefter"></div>
-        <div class="righter"></div>
-      </div>
+        <div class="profile-card">
+          <div class="profile-info">
+            <img src="./pics/artist-placeholder.jpeg" alt="Foto do Artista" />
+            <h3>BarbieBl00d</h3>
+            <div class="reviews">
+              <span class="stars">★★★★☆</span>
+              <span class="rating">4.8</span>
+              <span class="review-count">(120 reviews)</span>
+            </div>
+          </div>
+          <div class="profile-posts">
+            <h4>Portfólio Rápido</h4>
+            <div class="posts-carousel">
+              <img src="./pics/post-placeholder-1.jpg" alt="Post 1" />
+              <img src="./pics/post-placeholder-2.jpg" alt="Post 2" />
+              <img src="./pics/post-placeholder-3.jpg" alt="Post 3" />
+              <img src="./pics/style-old-school.jpg" alt="Post 4" />
+              <img src="./pics/style-fineline.jpg" alt="Post 5" />
+            </div>
+          </div>
+        </div>
 
-      <div class="footer">
-        <div class="lefter"></div>
-        <div class="righter">
-          <div>Fale conosco!</div>
-          <div><a>tattooFinder@gmail.com</a></div>
+        <div class="profile-card">
+          <div class="profile-info">
+            <img src="./pics/artist-placeholder-2.jpg" alt="Foto do Artista" />
+            <h3>Outro Artista</h3>
+            <div class="reviews">
+              <span class="stars">★★★★★</span>
+              <span class="rating">5.0</span>
+              <span class="review-count">(85 reviews)</span>
+            </div>
+          </div>
+          <div class="profile-posts">
+            <h4>Portfólio Rápido</h4>
+            <div class="posts-carousel">
+              <img src="./pics/style-aquarela.jpg" alt="Post 1" />
+              <img src="./pics/style-geometrico.jpg" alt="Post 2" />
+              <img src="./pics/style-preto-cinza.jpg" alt="Post 3" />
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <script>
-      const perfilBtn = document.getElementById("perfilBtn");
-      perfilBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        slideTransition("./frontEnd/account.html");
-      });
-    </script>
+    <div class="footer">
+      <div class="lefter"></div>
+      <div class="righter">
+        <div>Fale conosco!</div>
+        <div><a>tattooFinder@gmail.com</a></div>
+      </div>
+    </div>
   </body>
-
 </html>
