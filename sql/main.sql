@@ -1,84 +1,100 @@
-create schema tf_db;
-use tf_db;
+-- Apaga o schema se ele já existir, para garantir um ambiente limpo
+DROP SCHEMA IF EXISTS tf_db;
 
-create table usuario(
-id_usuario int not null auto_increment primary key,
-email varchar(20) not null
-senha varchar(20) not null,
+-- Cria o schema e o seleciona
+CREATE SCHEMA tf_db;
+USE tf_db;
+
+-- Tabela de usuários base
+CREATE TABLE usuario(
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL
 );
 
-create table cliente(
-id_cliente int not null auto_increment primary key,
-nome varchar(20) not null,
-cidade varchar(20) not null,
-id_usuario int not null,
-foreign key (id_usuario) references usuario(id_usuario)
+-- Tabela de tatuadores, com referência ao usuário
+CREATE TABLE tatuador(
+    id_tatuador INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    descricao VARCHAR(255) NULL,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
-create table telefone_cliente(
-id_cliente int not null primary key,
-numero varchar(20) not null,
-foreign key (id_cliente) references cliente(id_cliente)
+-- Tabela de clientes, com referência ao usuário
+CREATE TABLE cliente(
+    id_cliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    cidade VARCHAR(50) NOT NULL,
+    id_usuario INT NOT NULL,
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
 
-create table mensagem(
-id_mensagem int not null auto_increment primary key,
-titulo varchar(20) not null,
-data_publicacao date not null,
-descricao varchar(100) not null,
-id_cliente int not null,
-foreign key (id_cliente) references cliente(id_cliente)
+-- Tabela de telefones do cliente (permite múltiplos números)
+CREATE TABLE telefone_cliente(
+    id_cliente INT NOT NULL,
+    numero VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id_cliente, numero),
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
 );
 
-create table feedabck(
-id_feedback int not null auto_increment primary key,
-titulo varchar(20) not null,
-data_publicacao date not null,
-descricao varchar(100) not null,
-nota_avaliativa int not null,
-id_cliente int not null,
-id_tatuador int not null,
-foreign key (id_cliente) references cliente(id_cliente),
-foreign key (id_tatuador) references tatuador(id_tatuador)
+-- Tabela de telefones do tatuador (permite múltiplos números)
+CREATE TABLE telefone_tatuador(
+    id_tatuador INT NOT NULL,
+    numero VARCHAR(20) NOT NULL,
+    PRIMARY KEY (id_tatuador, numero),
+    FOREIGN KEY (id_tatuador) REFERENCES tatuador(id_tatuador) ON DELETE CASCADE
 );
 
-create table tatuador(
-id_tatuador int not null auto_increment primary key,
-descricao varchar(100) null,
-nome varchar(20) not null,
-cidade varchar(20) not null,
-id_usuario int not null,
-foreign key (id_usuario) references usuario(id_usuario)
+-- Tabela de publicações feitas por tatuadores
+CREATE TABLE publicacao(
+    id_publicacao INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(50) NOT NULL,
+    data_publicacao DATE NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    id_tatuador INT NOT NULL,
+    FOREIGN KEY (id_tatuador) REFERENCES tatuador(id_tatuador) ON DELETE CASCADE
 );
 
-create table telefone_tatuador(
-id_tatuador int not null primary key,
-numero varchar(20) not null,
-foreign key (id_tatuador) references tatuador(id_tatuador)
+-- Tabela de tags criadas por tatuadores
+CREATE TABLE tag(
+    id_tag INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    id_tatuador INT NOT NULL,
+    FOREIGN KEY (id_tatuador) REFERENCES tatuador(id_tatuador) ON DELETE CASCADE
 );
 
-create table publicacao(
-id_publicacao int not null auto_increment primary key,
-titulo varchar(20) not null,
-data_publicacao date not null,
-descricao varchar(100) not null,
-id_tatuador int not null,
-foreign key (id_tatuador) references tatuador(id_tatuador)
+-- Tabela de associação entre publicações e tags
+CREATE TABLE publicacao_tag(
+    id_publicacao INT NOT NULL,
+    id_tag INT NOT NULL,
+    q_publicacao INT NOT NULL, -- Mantendo a coluna como no original, embora o propósito não seja 100% claro
+    PRIMARY KEY (id_publicacao, id_tag),
+    FOREIGN KEY (id_publicacao) REFERENCES publicacao(id_publicacao) ON DELETE CASCADE,
+    FOREIGN KEY (id_tag) REFERENCES tag(id_tag) ON DELETE CASCADE
 );
 
-create table tag(
-id_tag int not null auto_increment primary key,
-nome varchar(20) not null,
-descricao varchar(100) not null,
-id_tatuador int not null,
-foreign key (id_tatuador) references tatuador(id_tatuador)
+-- Tabela de feedbacks de clientes para tatuadores
+CREATE TABLE feedback(
+    id_feedback INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(50) NOT NULL,
+    data_publicacao DATE NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    nota_avaliativa INT NOT NULL,
+    id_cliente INT NOT NULL,
+    id_tatuador INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
+    FOREIGN KEY (id_tatuador) REFERENCES tatuador(id_tatuador) ON DELETE CASCADE
 );
 
-create table publicacao_tag(
-id_publicacao int not null,
-id_tag int not null,
-q_publicacao int not null,
-primary key (id_publicacao,id_tag),
-foreign key (id_publicacao) references publicacao(id_publicacao),
-foreign key (id_tag) references tag(id_tag)
-)
+-- Tabela de mensagens (mantida conforme estrutura original, caso seja usada no futuro)
+CREATE TABLE mensagem(
+    id_mensagem INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(50) NOT NULL,
+    data_publicacao DATE NOT NULL,
+    descricao VARCHAR(255) NOT NULL,
+    id_cliente INT NOT NULL,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE
+);

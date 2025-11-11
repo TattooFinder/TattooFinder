@@ -1,6 +1,4 @@
-from app import db
-from app.models.cliente_model import Cliente
-from app.models.telefone_cliente_model import TelefoneCliente
+from app.db import execute_query, fetch_one
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
@@ -11,57 +9,40 @@ cliente_bp = Blueprint("cliente", __name__, url_prefix="/cliente")
 def edit_cliente(cliente_id):
     """
     Edits a client's profile.
-    ---
-    parameters:
-      - name: cliente_id
-        in: path
-        type: integer
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            nome:
-              type: string
-            cidade:
-              type: string
-    responses:
-      200:
-        description: Profile updated successfully
-      400:
-        description: Invalid data
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Client not found
     """
     current_user_id = get_jwt_identity()
-    cliente = Cliente.query.get_or_404(cliente_id)
+    
+    query_auth = "SELECT id_usuario FROM cliente WHERE id_cliente = %s"
+    cliente_auth = fetch_one(query_auth, (cliente_id,))
+    
+    if not cliente_auth:
+        return jsonify({"error": "Cliente não encontrado"}), 404
 
-    if cliente.id_usuario != current_user_id:
+    if cliente_auth['id_usuario'] != current_user_id:
         return jsonify({"error": "Não autorizado"}), 403
 
     data = request.json
-
     if not data:
         return jsonify({"error": "Dados inválidos"}), 400
 
+    update_fields = []
+    params = []
+    
     if "nome" in data:
-        cliente.nome = data["nome"]
+        update_fields.append("nome = %s")
+        params.append(data["nome"])
     
     if "cidade" in data:
-        cliente.cidade = data["cidade"]
+        update_fields.append("cidade = %s")
+        params.append(data["cidade"])
 
-    db.session.commit()
+    if not update_fields:
+        return jsonify({"error": "Nenhum campo para atualizar"}), 400
+
+    query_update = f"UPDATE cliente SET {', '.join(update_fields)} WHERE id_cliente = %s"
+    params.append(cliente_id)
+    
+    execute_query(query_update, tuple(params))
 
     return jsonify({"message": "Perfil atualizado com sucesso!"}), 200
 
@@ -70,41 +51,16 @@ def edit_cliente(cliente_id):
 def add_telefone_cliente(cliente_id):
     """
     Adds a phone number to a client's profile.
-    ---
-    parameters:
-      - name: cliente_id
-        in: path
-        type: integer
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-      - name: body
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            numero:
-              type: string
-    responses:
-      201:
-        description: Phone number added successfully
-      400:
-        description: Invalid phone number
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Client not found
     """
     current_user_id = get_jwt_identity()
-    cliente = Cliente.query.get_or_404(cliente_id)
+    
+    query_auth = "SELECT id_usuario FROM cliente WHERE id_cliente = %s"
+    cliente_auth = fetch_one(query_auth, (cliente_id,))
 
-    if cliente.id_usuario != current_user_id:
+    if not cliente_auth:
+        return jsonify({"error": "Cliente não encontrado"}), 404
+
+    if cliente_auth['id_usuario'] != current_user_id:
         return jsonify({"error": "Não autorizado"}), 403
 
     data = request.json
@@ -112,9 +68,8 @@ def add_telefone_cliente(cliente_id):
     if not data or not data.get("numero"):
         return jsonify({"error": "Número de telefone inválido"}), 400
 
-    telefone = TelefoneCliente(id_cliente=cliente.id_cliente, numero=data["numero"])
-    db.session.add(telefone)
-    db.session.commit()
+    query_insert = "INSERT INTO telefone_cliente (id_cliente, numero) VALUES (%s, %s)"
+    execute_query(query_insert, (cliente_id, data["numero"]))
 
     return jsonify({"message": "Telefone adicionado com sucesso!"}), 201
 
@@ -123,39 +78,19 @@ def add_telefone_cliente(cliente_id):
 def delete_telefone_cliente(cliente_id, numero):
     """
     Deletes a phone number from a client's profile.
-    ---
-    parameters:
-      - name: cliente_id
-        in: path
-        type: integer
-        required: true
-      - name: numero
-        in: path
-        type: string
-        required: true
-      - name: Authorization
-        in: header
-        type: string
-        required: true
-        description: Bearer token
-    responses:
-      200:
-        description: Phone number deleted successfully
-      401:
-        description: Unauthorized
-      403:
-        description: Forbidden
-      404:
-        description: Client or phone number not found
     """
     current_user_id = get_jwt_identity()
-    cliente = Cliente.query.get_or_404(cliente_id)
+    
+    query_auth = "SELECT id_usuario FROM cliente WHERE id_cliente = %s"
+    cliente_auth = fetch_one(query_auth, (cliente_id,))
 
-    if cliente.id_usuario != current_user_id:
+    if not cliente_auth:
+        return jsonify({"error": "Cliente não encontrado"}), 404
+
+    if cliente_auth['id_usuario'] != current_user_id:
         return jsonify({"error": "Não autorizado"}), 403
 
-    telefone = TelefoneCliente.query.filter_by(id_cliente=cliente_id, numero=numero).first_or_404()
-    db.session.delete(telefone)
-    db.session.commit()
+    query_delete = "DELETE FROM telefone_cliente WHERE id_cliente = %s AND numero = %s"
+    execute_query(query_delete, (cliente_id, numero))
 
     return jsonify({"message": "Telefone removido com sucesso!"}), 200
