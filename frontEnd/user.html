@@ -4,46 +4,255 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="./stylesUser.css" />
+    <link rel="stylesheet" href="user.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
     </style>
   </head>
 
   <body>
-    <div class="content">
-      <div class="header">
-        <div class="lefter">
-          <button>Logo</button>
-          <button>Informações</button>
-          <button>Suporte</button>
-          <button>Estilos</button>
-        </div>
-        <div class="center">
-          <button>Pesquisar</button>
-        </div>
-        <div class="righter">
-          <select name="linguas" id="linguas">
-            <option value="Português">Português (Brasil)</option>
-            <option value="Ingles">Inglês(Canada)</option>
-            <option value="Espanhol">Espanhol(Mexico)</option>
-          </select>
-          <button>Entrar</button>
-          <button>Criar</button>
-        </div>
+    <div class="header">
+      <div class="lefter">
+        <a href="../index.html"><button>Início</button></a>
+        <a href="search.html"><button>Pesquisar</button></a>
       </div>
-      <div class="topper">
-        <div class="lefter"></div>
-        <div class="righter"></div>
-      </div>
-      <div class="botter">
-        <div class="lefter"></div>
-        <div class="righter"></div>
-      </div>
-      <div class="footer">
-        <div class="lefter"></div>
-        <div class="righter"></div>
+      <div class="righter">
+        <button id="logoutButton">Sair</button>
       </div>
     </div>
+    <main id="user-profile" class="profile-container">
+      <!-- O perfil do usuário será carregado aqui -->
+    </main>
+
+    <!-- Formulário de Edição (escondido por padrão) -->
+    <div id="edit-form-container" class="profile-container" style="display: none;">
+      <h2>Editar Perfil</h2>
+      <form id="edit-form">
+        <div class="input-group">
+          <label for="edit-nome">Nome:</label>
+          <input type="text" id="edit-nome" required />
+        </div>
+        <div class="input-group">
+          <label for="edit-cidade">Cidade:</label>
+          <input type="text" id="edit-cidade" required />
+        </div>
+        <!-- Campo extra para tatuadores -->
+        <div id="edit-descricao-group" class="input-group" style="display: none;">
+          <label for="edit-descricao">Descrição:</label>
+          <textarea id="edit-descricao"></textarea>
+        </div>
+        <div id="options">
+          <button type="submit">Salvar Alterações</button>
+          <button type="button" id="cancel-edit">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const profileContainer = document.getElementById("user-profile");
+        const editFormContainer = document.getElementById("edit-form-container");
+        const editForm = document.getElementById("edit-form");
+        let currentUserData = {};
+
+        // Função para buscar e exibir o perfil do usuário
+        function fetchAndDisplayProfile() {
+          fetch("/user/profile") // Não precisa mais de 'Authorization' header
+            .then(response => {
+              if (response.status === 401) {
+                window.location.href = "/"; // Redireciona para a raiz (login) se não autorizado
+                return Promise.reject('Não autorizado');
+              }
+              return response.json();
+            })
+            .then(data => {
+              if (data.error) {
+                alert(data.error);
+                return;
+              }
+              displayProfile(data);
+            })
+            .catch(error => {
+              if (error !== 'Não autorizado') {
+                console.error("Erro ao buscar perfil:", error);
+              }
+            });
+        }
+
+        function displayProfile(data) {
+          currentUserData = data;
+          let profileHtml = `<h1>Perfil de ${data.nome}</h1>`;
+          profileHtml += `<p><strong>Email:</strong> ${data.email}</p>`;
+          profileHtml += `<p><strong>Cidade:</strong> ${data.cidade}</p>`;
+
+          if (data.role === 'tatuador') {
+            profileHtml += `<p><strong>Descrição:</strong> ${data.descricao || 'N/A'}</p>`;
+            profileHtml += `
+              <div class="publications-section">
+                <h2>Minhas Publicações</h2>
+                <div id="publications-list"></div>
+                <h3>Criar Nova Publicação</h3>
+                <form id="create-publication-form">
+                  <div class="input-group">
+                    <label for="pub-titulo">Título:</label>
+                    <input type="text" id="pub-titulo" required />
+                  </div>
+                  <div class="input-group">
+                    <label for="pub-descricao">Descrição:</label>
+                    <textarea id="pub-descricao" required></textarea>
+                  </div>
+                  <button type="submit">Criar</button>
+                </form>
+              </div>
+            `;
+          }
+          
+          profileHtml += `<br><button id="edit-profile-btn">Editar Perfil</button>`;
+          profileContainer.innerHTML = profileHtml;
+
+          if (data.role === 'tatuador') {
+            loadPublications(data.id_tatuador);
+            document.getElementById('create-publication-form').addEventListener('submit', createPublication);
+          }
+
+          document.getElementById("edit-profile-btn").addEventListener("click", showEditForm);
+        }
+        
+        function loadPublications(tatuadorId) {
+          fetch(`/tatuador/${tatuadorId}`)
+            .then(res => res.json())
+            .then(data => {
+              const publicationsList = document.getElementById('publications-list');
+              publicationsList.innerHTML = '';
+              if (data.publicacoes && data.publicacoes.length > 0) {
+                data.publicacoes.forEach(pub => {
+                  const pubDiv = document.createElement('div');
+                  pubDiv.className = 'publication-item';
+                  pubDiv.innerHTML = `
+                    <h4>${pub.titulo}</h4>
+                    <p>${pub.descricao}</p>
+                    <button class="delete-pub-btn" data-id="${pub.id_publicacao}">Excluir</button>
+                  `;
+                  publicationsList.appendChild(pubDiv);
+                });
+
+                document.querySelectorAll('.delete-pub-btn').forEach(button => {
+                  button.addEventListener('click', deletePublication);
+                });
+              } else {
+                publicationsList.innerHTML = '<p>Você ainda não tem publicações.</p>';
+              }
+            });
+        }
+
+        function createPublication(e) {
+          e.preventDefault();
+          const titulo = document.getElementById('pub-titulo').value;
+          const descricao = document.getElementById('pub-descricao').value;
+
+          fetch('/publicacao', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ titulo, descricao })
+          })
+          .then(res => res.json())
+          .then(result => {
+            if (result.message) {
+              alert(result.message);
+              document.getElementById('create-publication-form').reset();
+              loadPublications(currentUserData.id_tatuador);
+            } else {
+              alert(result.error || 'Erro ao criar publicação.');
+            }
+          });
+        }
+
+        function deletePublication(e) {
+          const pubId = e.target.dataset.id;
+          if (!confirm('Tem certeza que deseja excluir esta publicação?')) {
+            return;
+          }
+
+          fetch(`/publicacao/${pubId}`, { method: 'DELETE' })
+          .then(res => res.json())
+          .then(result => {
+            if (result.message) {
+              alert(result.message);
+              loadPublications(currentUserData.id_tatuador);
+            } else {
+              alert(result.error || 'Erro ao excluir publicação.');
+            }
+          });
+        }
+
+        function showEditForm() {
+          profileContainer.style.display = "none";
+          editFormContainer.style.display = "block";
+          document.getElementById("edit-nome").value = currentUserData.nome;
+          document.getElementById("edit-cidade").value = currentUserData.cidade;
+          if (currentUserData.role === 'tatuador') {
+            document.getElementById("edit-descricao-group").style.display = "block";
+            document.getElementById("edit-descricao").value = currentUserData.descricao || '';
+          }
+        }
+
+        function hideEditForm() {
+          profileContainer.style.display = "block";
+          editFormContainer.style.display = "none";
+        }
+
+        document.getElementById("cancel-edit").addEventListener("click", hideEditForm);
+
+        editForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const updatedData = {
+            nome: document.getElementById("edit-nome").value,
+            cidade: document.getElementById("edit-cidade").value,
+          };
+          let url = '';
+          if (currentUserData.role === 'tatuador') {
+            updatedData.descricao = document.getElementById("edit-descricao").value;
+            url = `/tatuador/${currentUserData.id_tatuador}/edit`;
+          } else {
+            url = `/cliente/${currentUserData.id_cliente}/edit`;
+          }
+
+          fetch(url, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedData)
+          })
+          .then(response => response.json())
+          .then(result => {
+            if (result.message) {
+              alert(result.message);
+              currentUserData.nome = updatedData.nome;
+              currentUserData.cidade = updatedData.cidade;
+              if (currentUserData.role === 'tatuador') {
+                currentUserData.descricao = updatedData.descricao;
+              }
+              hideEditForm();
+              displayProfile(currentUserData);
+            } else {
+              alert(result.error || "Erro ao atualizar perfil.");
+            }
+          })
+          .catch(error => {
+            console.error("Erro ao atualizar perfil:", error);
+            alert("Não foi possível atualizar o perfil.");
+          });
+        });
+
+        document.getElementById("logoutButton").addEventListener("click", () => {
+          fetch('/user/logout', { method: 'POST' })
+            .then(() => {
+              window.location.href = "/";
+            });
+        });
+
+        // Inicia o carregamento do perfil
+        fetchAndDisplayProfile();
+      });
+    </script>
   </body>
 </html>

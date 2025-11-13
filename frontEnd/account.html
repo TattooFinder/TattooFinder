@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Inicial</title>
-    <link rel="stylesheet" href="./account.css" />
+    <link rel="stylesheet" href="/frontEnd/account.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -78,6 +78,15 @@
               type="text"
               id="clientNome"
               placeholder="Seu nome"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="clientCidade">Cidade:</label>
+            <input
+              type="text"
+              id="clientCidade"
+              placeholder="Sua cidade"
               required
             />
           </div>
@@ -280,16 +289,64 @@
         .addEventListener("submit", (e) => {
           e.preventDefault();
           if (!validarSenhas(clientSenha.value, clientConfirmar.value)) return;
-          alert("Cadastro de cliente enviado com sucesso!");
-          show(home);
+          
+          const nome = document.getElementById("clientNome").value;
+          const cidade = document.getElementById("clientCidade").value;
+          const email = document.getElementById("clientEmail").value;
+          const senha = document.getElementById("clientSenha").value;
+
+          fetch("/user/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ nome, cidade, email, senha, role: "cliente" }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message) {
+                alert("Cadastro de cliente enviado com sucesso!");
+                show(home);
+              } else {
+                alert(data.error || "Erro ao cadastrar cliente.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Erro ao cadastrar cliente.");
+            });
         });
       document
         .getElementById("registerArtistForm")
         .addEventListener("submit", (e) => {
           e.preventDefault();
           if (!validarSenhas(artistSenha.value, artistConfirmar.value)) return;
-          alert("Cadastro de tatuador enviado com sucesso!");
-          show(home);
+
+          const nome = document.getElementById("artistNome").value;
+          const cidade = document.getElementById("artistCidade").value;
+          const email = document.getElementById("artistEmail").value;
+          const senha = document.getElementById("artistSenha").value;
+
+          fetch("/user/register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ nome, cidade, email, senha, role: "tatuador" }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.message) {
+                alert("Cadastro de tatuador enviado com sucesso!");
+                show(home);
+              } else {
+                alert(data.error || "Erro ao cadastrar tatuador.");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Erro ao cadastrar tatuador.");
+            });
         });
       document.getElementById("loginForm").addEventListener("submit", (e) => {
         e.preventDefault();
@@ -297,8 +354,27 @@
         const senha = loginSenha.value;
         if (!email || !senha) return alert("Preencha todos os campos!");
         if (!email.includes("@")) return alert("Email inválido!");
-        alert("Login realizado com sucesso!");
-        show(home);
+
+        fetch("/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, senha }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.message) { // Verifica a mensagem de sucesso
+              // Não é mais necessário salvar o token, o navegador cuida disso com cookies.
+              window.location.href = "/index.html"; // Redireciona para o dashboard
+            } else {
+              alert(data.error || "Erro ao fazer login.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            alert("Erro ao fazer login.");
+          });
       });
       document.getElementById("forgotLink").addEventListener("click", () => {
         const emailLogin = document.getElementById("loginEmail").value || "";

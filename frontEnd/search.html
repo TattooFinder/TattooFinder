@@ -4,8 +4,8 @@
     <meta charset="UTF--8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Pesquisa</title>
-    <link rel="stylesheet" href="./stylesIndex.css" />
-    <link rel="stylesheet" href="./search.css" />
+
+    <link rel="stylesheet" href="/frontEnd/search.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -22,7 +22,7 @@
             placeholder="Pesquisar"
           />
           <button type="submit">
-            <img src="./pics/search.png" />
+            <img src="/frontEnd/pics/search.png" />
           </button>
         </form>
       </div>
@@ -33,7 +33,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="./account.html"><button>Perfil</button></a>
+        <a href="./user.html"><button>Perfil</button></a>
       </div>
     </div>
 
@@ -53,13 +53,6 @@
             <option value="centro">Centro</option>
             <option value="benfica">Benfica</option>
           </select>
-          <select name="estilo" id="filter-estilo">
-            <option value="">Todos os estilos usados</option>
-            <option value="fineline">Fineline</option>
-            <option value="old-school">Old School</option>
-            <option value="aquarela">Aquarela</option>
-            <option value="preto-cinza">Preto & Cinza</option>
-          </select>
           <div class="filter-toggle">
             <input type="checkbox" id="filter-vegano" name="vegano" />
             <label for="filter-vegano">Material Vegano</label>
@@ -74,7 +67,7 @@
 
         <div class="profile-card">
           <div class="profile-info">
-            <img src="./pics/artist-placeholder.jpeg" alt="Foto do Artista" />
+            <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Foto do Artista" />
             <h3>BarbieBl00d</h3>
             <div class="reviews">
               <span class="stars">★★★★☆</span>
@@ -85,18 +78,18 @@
           <div class="profile-posts">
             <h4>Portfólio Rápido</h4>
             <div class="posts-carousel">
-              <img src="./pics/post-placeholder-1.jpg" alt="Post 1" />
-              <img src="./pics/post-placeholder-2.jpg" alt="Post 2" />
-              <img src="./pics/post-placeholder-3.jpg" alt="Post 3" />
-              <img src="./pics/style-old-school.jpg" alt="Post 4" />
-              <img src="./pics/style-fineline.jpg" alt="Post 5" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 1" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 2" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 3" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 4" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 5" />
             </div>
           </div>
         </div>
 
         <div class="profile-card">
           <div class="profile-info">
-            <img src="./pics/artist-placeholder-2.jpg" alt="Foto do Artista" />
+            <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Foto do Artista" />
             <h3>Outro Artista</h3>
             <div class="reviews">
               <span class="stars">★★★★★</span>
@@ -107,9 +100,9 @@
           <div class="profile-posts">
             <h4>Portfólio Rápido</h4>
             <div class="posts-carousel">
-              <img src="./pics/style-aquarela.jpg" alt="Post 1" />
-              <img src="./pics/style-geometrico.jpg" alt="Post 2" />
-              <img src="./pics/style-preto-cinza.jpg" alt="Post 3" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 1" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 2" />
+              <img src="/frontEnd/pics/artist-placeholder.jpeg" alt="Post 3" />
             </div>
           </div>
         </div>
@@ -123,5 +116,86 @@
         <div><a>tattooFinder@gmail.com</a></div>
       </div>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const resultsSection = document.querySelector(".results-section");
+        const searchParams = new URLSearchParams(window.location.search);
+        const query = searchParams.get("q") || "";
+        const bairro = searchParams.get("bairro") || "";
+        const estilo = searchParams.get("estilo") || "";
+
+        let searchUrl = `/tatuador/search?`;
+        if (query) searchUrl += `&nome=${query}`;
+        if (bairro) searchUrl += `&cidade=${bairro}`;
+        // Estilo não é um campo de busca no backend, então não é usado aqui.
+
+        fetch(searchUrl)
+          .then((response) => response.json())
+          .then((tatuadores) => {
+            resultsSection.innerHTML = "<h2>Resultados da Pesquisa</h2>"; // Limpa os resultados estáticos
+            if (tatuadores.length === 0) {
+              resultsSection.innerHTML += "<p>Nenhum tatuador encontrado.</p>";
+              return;
+            }
+            tatuadores.forEach((tatuador) => {
+              const profileCard = document.createElement("div");
+              profileCard.className = "profile-card";
+
+              // Fetch feedback for each artist
+              fetch(`/tatuador/${tatuador.id_tatuador}/feedback`)
+                .then(res => res.json())
+                .then(feedbacks => {
+                  const media = feedbacks.length > 0 ? feedbacks.reduce((acc, f) => acc + f.nota_avaliativa, 0) / feedbacks.length : 0;
+
+                  function generateStars(rating) {
+                    const maxStars = 5;
+                    let stars = '';
+                    for (let i = 1; i <= maxStars; i++) {
+                      stars += i <= rating ? '★' : '☆';
+                    }
+                    return stars;
+                  }
+
+                  profileCard.innerHTML = `
+                    <div class="profile-info">
+                      <img src="./pics/artist-placeholder.jpeg" alt="Foto do Artista" />
+                      <h3>${tatuador.nome}</h3>
+                      <div class="reviews">
+                        <span class="stars">${generateStars(media)}</span>
+                        <span class="rating">${media.toFixed(1)}</span>
+                        <span class="review-count">(${feedbacks.length} reviews)</span>
+                      </div>
+                    </div>
+                    <div class="profile-posts">
+                      <h4>Portfólio Rápido</h4>
+                      <div class="posts-carousel">
+                        <!-- Publicações serão carregadas aqui -->
+                      </div>
+                    </div>
+                  `;
+                  resultsSection.appendChild(profileCard);
+
+                  // Fetch publications
+                  fetch(`/tatuador/${tatuador.id_tatuador}`)
+                    .then(res => res.json())
+                    .then(data => {
+                      const postsCarousel = profileCard.querySelector('.posts-carousel');
+                      if(data.publicacoes && data.publicacoes.length > 0){
+                        data.publicacoes.forEach(pub => {
+                          // Supondo que as publicações tenham uma URL de imagem
+                          const img = document.createElement('img');
+                          img.src = pub.imagem_url || './pics/post-placeholder-1.jpg'; // Usando placeholder
+                          img.alt = pub.titulo;
+                          postsCarousel.appendChild(img);
+                        });
+                      } else {
+                        postsCarousel.innerHTML = "<p>Nenhuma publicação encontrada.</p>";
+                      }
+                    });
+                });
+            });
+          });
+      });
+    </script>
   </body>
 </html>
