@@ -1,17 +1,60 @@
 from app.db import execute_query, fetch_one
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies, set_access_cookies
 
 user_bp = Blueprint("user", __name__, url_prefix="/user")
+
+@user_bp.route("/logout", methods=["POST"])
+def logout():
+    """
+    Logs a user out by unsetting the JWT cookie.
+    """
+    response = jsonify({"message": "Logout bem-sucedido!"})
+    unset_access_cookies(response)
+    return response
+
+
+@user_bp.route("/profile", methods=["GET"])
+@jwt_required()
+def profile():
+    """
+    Gets the profile of the current user. (MODO DE TESTE SEM BANCO DE DADOS)
+    """
+    # --- INÍCIO DA SIMULAÇÃO ---
+    # A lógica de banco de dados foi comentada para permitir testes de frontend.
+    # current_user_id = get_jwt_identity()
+    
+    # query_cliente = "SELECT 'cliente' as role, c.id_cliente, c.nome, c.cidade, u.email FROM cliente c JOIN usuario u ON c.id_usuario = u.id WHERE c.id_usuario = %s"
+    # user_profile = fetch_one(query_cliente, (current_user_id,))
+
+    # if not user_profile:
+    #     query_tatuador = "SELECT 'tatuador' as role, t.id_tatuador, t.nome, t.cidade, t.descricao, u.email FROM tatuador t JOIN usuario u ON t.id_usuario = u.id WHERE t.id_usuario = %s"
+    #     user_profile = fetch_one(query_tatuador, (current_user_id,))
+
+    # if not user_profile:
+    #     return jsonify({"error": "Usuário não encontrado"}), 404
+
+    # Criamos dados falsos para simular a resposta do banco
+    mock_user_profile = {
+        "role": "tatuador",
+        "id_tatuador": 101,
+        "nome": "Tatuador de Teste",
+        "cidade": "Cidade Fictícia",
+        "descricao": "Esta é uma descrição de um tatuador para fins de teste. A bio pode ser longa.",
+        "email": "teste.tatuador@exemplo.com"
+    }
+
+    return jsonify(mock_user_profile), 200
+    # --- FIM DA SIMULAÇÃO ---
+
 
 @user_bp.route("/login", methods=["POST"])
 def login():
     """
-    Logs a user in and returns a JWT token.
+    Logs a user in and returns a JWT token as a cookie.
     """
     data = request.json
-
     if not data or not data.get("email") or not data.get("senha"):
         return jsonify({"error": "Email ou senha inválidos"}), 400
 
@@ -21,8 +64,10 @@ def login():
     if not user or not check_password_hash(user['senha'], data["senha"]):
         return jsonify({"error": "Email ou senha inválidos"}), 401
 
-    access_token = create_access_token(identity=user['id'])
-    return jsonify(access_token=access_token)
+    access_token = create_access_token(identity=str(user['id']))
+    response = jsonify(message="Login bem-sucedido!")
+    set_access_cookies(response, access_token)
+    return response
 
 @user_bp.route("/register", methods=["POST"])
 def register():
