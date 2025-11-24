@@ -7,8 +7,12 @@ body {
   display: flex;
   flex-direction: column;
   font-family: "Poppins", sans-serif;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #ffffff;
+}
+
+.midder, .profile-container, .search-main-content {
+  flex: 1; 
 }
 
 a {

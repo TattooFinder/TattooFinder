@@ -1,0 +1,393 @@
+/* =========================================
+   ARTIST.CSS - Estilos da Página de Perfil
+   ========================================= */
+
+/* Ajuste Global para o Footer:
+   Garante que o corpo tenha no mínimo a altura da tela.
+   Isso evita que o footer suba em telas grandes ou conteúdos pequenos.
+*/
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container Principal */
+.profile-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1; /* Empurra o footer para baixo */
+}
+
+/* =========================================
+   1. HEADER DO ARTISTA E CAPA
+   ========================================= */
+
+.artist-header {
+  position: relative;
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  /* Espaço superior para não colar no menu principal do site */
+  margin-top: 20px; 
+  padding: 0 20px; /* Margem de segurança lateral */
+}
+
+/* Foto de Capa */
+.cover-photo {
+  width: 100%;
+  height: 220px; /* Altura fixa para a capa */
+  background-color: #333; /* Cor de fundo caso a imagem falhe */
+  background-image: url('./frontEnd/pics/cover-placeholder.jpg'); /* Substitua pela sua imagem padrão */
+  background-size: cover;
+  background-position: center;
+  border-radius: 12px; /* Cantos arredondados */
+}
+
+/* Wrapper: Segura a foto de perfil e as informações */
+.artist-details-wrapper {
+  display: flex;
+  align-items: flex-start; /* Alinha itens ao topo */
+  padding: 0 10px;
+  gap: 30px;
+  position: relative;
+  /* IMPORTANTE: Não usamos margin negativa aqui para evitar bugs de sobreposição no header */
+}
+
+/* =========================================
+   2. FOTO DE PERFIL
+   ========================================= */
+
+.profile-pic-container {
+  flex-shrink: 0;
+}
+
+.profile-pic-container img{
+  max-width: 250px;
+  max-height: 250px;
+}
+
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%; /* Círculo perfeito */
+  border: 5px solid #ffffff; /* Borda branca grossa para destacar da capa */
+  object-fit: cover;
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Sombra para dar profundidade */
+}
+
+/* =========================================
+   3. INFORMAÇÕES DO ARTISTA
+   ========================================= */
+
+.artist-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 15px; 
+  min-width: 300px;
+}
+
+/* Bloco Nome e Localização */
+.name-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.name-section h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1b1b1b;
+  margin: 0;
+  line-height: 1.2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Ícone de Verificado */
+.verified-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.location {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Biografia */
+.bio {
+  font-size: 1rem;
+  color: #4d4d4d;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  max-width: 650px;
+}
+
+/* Tags de Estilo */
+.artist-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.tag {
+  background-color: #ffffff;
+  border: 1px solid #dcdcdc;
+  color: #555;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+
+.tag:hover {
+  border-color: #1b1b1b;
+  color: #1b1b1b;
+}
+
+/* =========================================
+   4. BOTÕES DE AÇÃO
+   ========================================= */
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-primary {
+  background-color: #1b1b1b;
+  color: #ffffff;
+  border: 1px solid #1b1b1b;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #1b1b1b;
+  border: 1px solid #ccc;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: #1b1b1b;
+  background-color: #f9f9f9;
+}
+
+.artist-stats {
+  display: flex;
+  gap: 30px;
+  padding-top: 15px; 
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #1b1b1b;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #666;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.stat-label.stars {
+  color: #f39c12; /* Cor amarela/laranja para estrelas */
+  font-size: 1rem;
+}
+.stat-sub {
+  font-size: 0.75rem;
+  color: #999;
+}
+
+/* Divisor Horizontal Simples */
+.divider {
+  border: 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 30px 40px;
+}
+
+/* =========================================
+   6. PORTFÓLIO (GRID)
+   ========================================= */
+
+.portfolio-section {
+  padding: 0 40px;
+}
+
+.portfolio-section h2, 
+.reviews-section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1b1b1b;
+  margin-bottom: 25px;
+}
+
+.portfolio-grid {
+  display: grid;
+  /* Cria colunas automáticas com largura mínima de 220px */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+  gap: 15px;
+}
+
+.gallery-item {
+  aspect-ratio: 1 / 1; /* Garante que sejam quadrados perfeitos */
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  background-color: #f0f0f0;
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cobre todo o quadrado sem distorcer */
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.05); /* Zoom suave ao passar o mouse */
+}
+
+/* =========================================
+   7. AVALIAÇÕES (REVIEWS)
+   ========================================= */
+
+.reviews-section {
+  padding: 20px 40px;
+  max-width: 800px;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.review-card {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.reviewer-name {
+  font-weight: 700;
+  color: #1b1b1b;
+}
+
+.review-stars {
+  color: #f39c12;
+  letter-spacing: 2px;
+}
+
+.review-text {
+  color: #4d4d4d;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0 0 10px 0;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.view-more-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* =========================================
+   8. RESPONSIVIDADE (Mobile/Tablet)
+   ========================================= */
+
+@media (max-width: 900px) {
+  .artist-details-wrapper {
+    flex-wrap: wrap; /* Permite quebrar linha */
+    justify-content: center; /* Centraliza */
+  }
+  
+  .artist-info {
+    width: 100%;
+    padding-top: 10px;
+  }
+
+  /* Estatísticas vão para baixo e ganham borda */
+  .artist-stats {
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .action-buttons {
+    flex-direction: column; /* Botões empilhados no celular */
+    width: 100%;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%; /* Botões ocupam largura total */
+    justify-content: center;
+  }
+
+  .portfolio-section, 
+  .reviews-section,
+  .artist-details-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .artist-header {
+    padding: 0 10px; /* Reduz margem lateral no mobile */
+  }
+}

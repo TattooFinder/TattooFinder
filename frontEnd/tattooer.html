@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tattoo Finder - Perfil do Artista</title>
+    <link rel="stylesheet" href="./tattooer.css" />
+    <link rel="stylesheet" href="../styles.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="lefter">
+        <a href="../index.html"><button>Início</button></a>
+        <form id="searchForm" action="./search.html" method="get">
+          <input
+            type="search"
+            id="searchQuery"
+            name="q"
+            placeholder="Pesquisar"
+          />
+          <button type="submit">
+            <img src="./frontEnd/pics/search.png" />
+          </button>
+        </form>
+      </div>
+      <div class="righter">
+        <select name="linguas" id="linguas">
+          <option value="Português">Português (Brasil)</option>
+          <option value="Ingles">Inglês (Canadá)</option>
+          <option value="Espanhol">Espanhol (México)</option>
+        </select>
+        <a href="./user.html"><button>Perfil</button></a>
+      </div>
+    </div>
+
+    <div class="profile-container">
+        <div class="artist-details-wrapper">
+          <div class="profile-pic-container">
+            <img
+              src="./pics/artist-placeholder.jpeg"
+              alt="BarbieBl00d"
+              class="profile-pic"
+            />
+          </div>
+
+          <div class="artist-info">
+            <div class="name-section">
+              <h1>
+                BarbieBl00d
+                <img
+                  src="./frontEnd/pics/verified.png"
+                  class="verified-icon"
+                  alt="Verificado"
+                  title="Artista Verificado"
+                />
+              </h1>
+              <p class="location">📍 Aldeota, Fortaleza - CE</p>
+            </div>
+
+            <p class="bio">
+              Especialista em Blackwork e Fineline. Transformando histórias em
+              arte na pele desde 2018. Amante de traços delicados e composições
+              sombrias. Orçamentos via DM ou botão abaixo.
+            </p>
+
+            <div class="artist-tags">
+              <span class="tag">Blackwork</span>
+              <span class="tag">Fineline</span>
+              <span class="tag">Botânico</span>
+              <span class="tag">Vegano</span>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn-primary">Entrar em Contato / Agendar</button>
+              <button class="btn-secondary">Seguir Artista</button>
+            </div>
+          </div>
+
+          <div class="artist-stats">
+            <div class="stat-box">
+              <span class="stat-number">4.8</span>
+              <span class="stat-label">★★★★☆</span>
+              <span class="stat-sub">(120 Reviews)</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">1.5k</span>
+              <span class="stat-label">Seguidores</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">342</span>
+              <span class="stat-label">Posts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="portfolio-section">
+        <h2>Portfólio</h2>
+        <div class="portfolio-grid">
+          <div class="gallery-item">
+            <img
+              src="./frontEnd/pics/post-placeholder-1.jpg"
+              alt="Tatuagem 1"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./frontEnd/pics/post-placeholder-2.jpg"
+              alt="Tatuagem 2"
+            />
+          </div>
+          <div class="gallery-item">
+            <img
+              src="./frontEnd/pics/post-placeholder-3.jpg"
+              alt="Tatuagem 3"
+            />
+          </div>
+          <div class="gallery-item">
+            <img src="./frontEnd/pics/style-old-school.jpg" alt="Tatuagem 4" />
+          </div>
+          <div class="gallery-item">
+            <img src="./frontEnd/pics/style-fineline.jpg" alt="Tatuagem 5" />
+          </div>
+          <div class="gallery-item">
+            <img src="./frontEnd/pics/style-geometrico.jpg" alt="Tatuagem 6" />
+          </div>
+          <div class="gallery-item">
+            <img src="./frontEnd/pics/style-aquarela.jpg" alt="Tatuagem 7" />
+          </div>
+          <div class="gallery-item">
+            <img src="./frontEnd/pics/style-preto-cinza.jpg" alt="Tatuagem 8" />
+          </div>
+        </div>
+      </div>
+
+      <div class="reviews-section">
+        <h2>Últimas Avaliações</h2>
+        <div class="reviews-list">
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Ana Clara</span>
+              <span class="review-stars">★★★★★</span>
+            </div>
+            <p class="review-text">
+              Amei o trabalho! A mão dela é super leve e o traço ficou perfeito,
+              exatamente como eu imaginava.
+            </p>
+            <span class="review-date">Há 2 dias</span>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <span class="reviewer-name">Carlos Eduardo</span>
+              <span class="review-stars">★★★★☆</span>
+            </div>
+            <p class="review-text">
+              Ótimo estúdio, muito limpo e organizado. A arte ficou incrível, só
+              demorou um pouco para começar.
+            </p>
+            <span class="review-date">Há 1 semana</span>
+          </div>
+        </div>
+        <button class="btn-secondary view-more-btn">
+          Ver todas as avaliações
+        </button>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="lefter"></div>
+      <div class="righter">
+        <div>Fale conosco!</div>
+        <div><a>tattooFinder@gmail.com</a></div>
+      </div>
+    </div>
+  </body>
+</html>

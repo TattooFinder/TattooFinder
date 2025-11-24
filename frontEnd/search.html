@@ -62,16 +62,17 @@
         <h2>Resultados da Pesquisa</h2>
 
         <div class="profile-card">
-          <div class="profile-info">
-            <img src="./pics/artist-placeholder.jpeg"
-              alt="Foto do Artista" />
-            <h3>BarbieBl00d</h3>
-            <div class="reviews">
-              <span class="stars">★★★★☆</span>
-              <span class="rating">4.8</span>
-              <span class="review-count">(120 reviews)</span>
-            </div>
+      <div class="profile-info">
+          <a href="./artist.html?id=${tatuador.id_tatuador}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
+              <img src="./pics/artist-placeholder.jpeg" alt="Foto do Artista" />
+              <h3>${tatuador.nome}</h3>
+          </a>
+          <div class="reviews">
+            <span class="stars">${generateStars(media)}</span>
+            <span class="rating">${media.toFixed(1)}</span>
+            <span class="review-count">(${feedbacks.length} reviews)</span>
           </div>
+        </div>
           <div class="profile-posts">
             <h4>Portfólio Rápido</h4>
             <div class="posts-carousel">

@@ -1,258 +1,325 @@
+/* =========================================
+   USER.CSS - Estilos da Página do Cliente
+   ========================================= */
+
 body {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  background-color: #f9f9f9;
-}
-
-a {
-  text-decoration: none;
-  color: #1b1b1b;
-}
-
-.header {
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  min-height: 65px;
-  z-index: 1000;
   background-color: #ffffff;
-  border-bottom: 1px solid #b6b5b5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 20px;
-  box-sizing: border-box;
-  overflow: hidden;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
 }
 
-.header .lefter,
-.header .righter {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.footer {
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  min-height: 65px;
-  color: #ffffff;
-  background-color: #4d4d4d;
-  border-top: 1px solid #b6b5b5;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 20px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.footer .righter div a {
-  color: #b6b5b5;
-}
-
-button {
-  font-size: 1.8rem;
-  background-color: white;
-  color: #4d4d4d;
-  border: 1px solid #a0a0a0;
-  border-radius: 10px;
-  font-size: 15px;
-  padding: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.25s ease;
-  text-align: center;
-}
-
-.header .righter button:hover,
-.header .lefter button:hover {
-  background-color: #1b1b1b;
-  color: white;
-  transform: translateY(-2px);
-}
-
-#logoutButton {
-  background-color: #e74c3c;
-  border-color: #e74c3c;
-  color: #ffffff;
-}
-#logoutButton:hover {
-  background-color: #c0392b;
-  border-color: #c0392b;
-}
-
+/* Container Principal */
 .profile-container {
   width: 100%;
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+  padding-bottom: 50px;
+}
+
+/* =========================================
+   1. HEADER DO USUÁRIO E CAPA
+   ========================================= */
+
+.user-header {
+  position: relative;
+  margin-bottom: 30px;
   background-color: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e0e0e0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  box-sizing: border-box;
-}
-
-#user-profile h1 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #1b1b1b;
-  margin-top: 0;
-  margin-bottom: 20px;
-}
-
-#user-profile p {
-  font-size: 1.1rem;
-  color: #4d4d4d;
-  line-height: 1.6;
-  margin: 0 0 10px 0;
-}
-
-#user-profile p strong {
-  font-weight: 700;
-  color: #1b1b1b;
-  margin-right: 5px;
-}
-
-#edit-profile-btn {
-  background-color: #1b1b1b;
-  color: #ffffff;
-  border-color: #1b1b1b;
   margin-top: 20px;
-}
-#edit-profile-btn:hover {
-  background-color: #4d4d4d;
-  color: #ffffff;
+  padding: 0 20px;
 }
 
-#edit-form-container h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #1b1b1b;
-  margin-top: 0;
-  margin-bottom: 25px;
+/* Capa (Pode ser mais neutra para usuários) */
+.cover-photo {
+  width: 100%;
+  height: 200px;
+  background-color: #4d4d4d; /* Cinza escuro neutro */
+  /* background-image opcional para usuários */
+  background: linear-gradient(90deg, #4d4d4d 0%, #1b1b1b 100%);
+  border-radius: 12px;
 }
 
-.input-group {
+.user-details-wrapper {
+  display: flex;
+  align-items: flex-start;
+  padding: 0 10px;
+  gap: 30px;
+  position: relative;
+}
+
+/* =========================================
+   2. FOTO DE PERFIL
+   ========================================= */
+
+.profile-pic-container {
+  flex-shrink: 0;
+  z-index: 2;
+
+}
+
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 5px solid #ffffff;
+  object-fit: cover;
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* =========================================
+   3. INFORMAÇÕES DO USUÁRIO
+   ========================================= */
+
+.user-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 20px;
+  padding-top: 15px;
+  min-width: 300px;
 }
 
-.input-group label {
-  font-weight: 600;
-  color: #1b1b1b;
-}
-
-.input-group input[type="text"],
-.input-group textarea {
-  width: 100%;
-  font-size: 1rem;
-  padding: 12px;
-  border: 1px solid #c0c0c0;
-  border-radius: 8px;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-.input-group textarea {
-  min-height: 120px;
-  resize: vertical;
-}
-
-#options {
+.name-section {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.name-section h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1b1b1b;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Estilo específico para o email */
+.email {
+  font-size: 1rem;
+  color: #4d4d4d;
+  margin: 5px 0 0 0;
+  font-weight: 500;
+}
+
+.location {
+  font-size: 0.9rem;
+  color: #888;
+  margin: 5px 0 0 0;
+}
+
+/* =========================================
+   4. BOTÃO DE EDITAR
+   ========================================= */
+
+.action-buttons {
+  display: flex;
   margin-top: 10px;
 }
 
-#options button[type="submit"] {
+.edit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  color: #1b1b1b;
+  border: 1px solid #1b1b1b;
+  padding: 8px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.edit-btn:hover {
   background-color: #1b1b1b;
   color: #ffffff;
-  border-color: #1b1b1b;
 }
-#options button[type="submit"]:hover {
-  background-color: #4d4d4d;
-}
-
-#options #cancel-edit {
-  background-color: #ffffff;
-  color: #4d4d4d;
-  border-color: #a0a0a0;
-}
-#options #cancel-edit:hover {
-  background-color: #f0f0f0;
+.edit-btn:hover img {
+    filter: invert(1); /* Inverte a cor do ícone se for preto */
 }
 
-.publications-section {
-  margin-top: 30px;
-  border-top: 2px solid #f0f0f0;
-  padding-top: 30px;
+/* =========================================
+   5. ESTATÍSTICAS (Opcional)
+   ========================================= */
+
+.user-stats {
+  display: flex;
+  gap: 30px;
+  padding-top: 15px;
 }
 
-.publications-section h2,
-.publications-section h3 {
-  font-weight: 700;
-  color: #1b1b1b;
-  margin-bottom: 20px;
-}
-.publications-section h2 {
-  font-size: 1.8rem;
-}
-.publications-section h3 {
-  font-size: 1.5rem;
-  margin-top: 30px;
-}
-
-#publications-list {
+.stat-box {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-}
-
-.publication-item {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 15px;
-  padding: 15px;
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  text-align: center;
 }
 
-.publication-item h4 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin: 0;
+.stat-number {
+  font-size: 1.2rem;
+  font-weight: 800;
   color: #1b1b1b;
 }
-.publication-item p {
-  font-size: 1rem;
-  margin: 0;
-  color: #4d4d4d;
-  flex-grow: 1;
-  margin: 0 15px;
+
+.stat-label {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  margin-top: 2px;
 }
 
-.delete-pub-btn {
-  background-color: #e74c3c;
-  color: #ffffff;
-  border: none;
-  font-size: 0.8rem;
-  padding: 8px 12px;
-  flex-shrink: 0;
+/* Divisor */
+.divider {
+  border: 0;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 30px 40px;
 }
-.delete-pub-btn:hover {
-  background-color: #c0392b;
+
+/* =========================================
+   6. HISTÓRICO DE AVALIAÇÕES (REVIEW LOG)
+   ========================================= */
+
+.review-log-section {
+  padding: 0 40px;
+  max-width: 900px;
+  margin: 0 auto; /* Centraliza a coluna de reviews */
+}
+
+.review-log-section h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1b1b1b;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Card de Review específico para o Usuário */
+.review-card {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 20px;
+  transition: box-shadow 0.2s ease;
+}
+
+.review-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+/* Bloco do Artista Avaliado (Miniatura + Nome) */
+.reviewed-artist {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviewed-artist img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.artist-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.artist-name {
+  font-size: 0.95rem;
+  color: #4d4d4d;
+}
+
+.artist-name strong {
+  color: #1b1b1b;
+  font-weight: 700;
+}
+
+.review-stars {
+  color: #f39c12;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+
+.review-date {
+  font-size: 0.8rem;
+  color: #999;
+  white-space: nowrap;
+}
+
+.review-text {
+  color: #4d4d4d;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 57px; /* Alinha o texto com o nome do artista (pula a foto) */
+}
+
+/* =========================================
+   7. RESPONSIVIDADE
+   ========================================= */
+
+@media (max-width: 900px) {
+  .user-details-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .user-info {
+    width: 100%;
+    
+    padding-top: 20px;
+  }
+
+  .user-stats {
+    width: 100%;
+    justify-content: center;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .review-log-section {
+    padding: 0 20px;
+  }
+
+  .user-header {
+    padding: 0 10px;
+  }
+
+  .review-text {
+    padding-left: 0; /* Remove indentação no mobile para ganhar espaço */
+    margin-top: 10px;
+  }
+  
+  .review-header {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
