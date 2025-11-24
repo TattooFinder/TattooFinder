@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="user.css" />
+    <title>Tattoo Finder - Meu Perfil</title>
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./user.css" />
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
   </head>
 
@@ -14,245 +15,158 @@
     <div class="header">
       <div class="lefter">
         <a href="../index.html"><button>Início</button></a>
-        <a href="search.html"><button>Pesquisar</button></a>
+        <form id="searchForm" action="./search.html" method="get">
+          <input
+            type="search"
+            id="searchQuery"
+            name="q"
+            placeholder="Pesquisar"
+          />
+          <button type="submit">
+            <img src="./frontEnd/pics/search.png" />
+          </button>
+        </form>
       </div>
       <div class="righter">
-        <button id="logoutButton">Sair</button>
+        <select name="linguas" id="linguas">
+          <option value="Português">Português (Brasil)</option>
+          <option value="Ingles">Inglês (Canadá)</option>
+          <option value="Espanhol">Espanhol (México)</option>
+        </select>
+        <a href="./user.html"
+          ><button style="background-color: #1b1b1b; color: white">
+            Perfil
+          </button></a
+        >
       </div>
     </div>
-    <main id="user-profile" class="profile-container">
-      <!-- O perfil do usuário será carregado aqui -->
-    </main>
 
-    <!-- Formulário de Edição (escondido por padrão) -->
-    <div id="edit-form-container" class="profile-container" style="display: none;">
-      <h2>Editar Perfil</h2>
-      <form id="edit-form">
-        <div class="input-group">
-          <label for="edit-nome">Nome:</label>
-          <input type="text" id="edit-nome" required />
+    <div class="profile-container">
+      <div class="user-header">
+        <div class="user-details-wrapper">
+          <div class="profile-pic-container">
+            <img
+              src="./frontEnd/pics/user-placeholder.jpg"
+              onerror="this.src='https://via.placeholder.com/160'"
+              alt="Foto de Perfil"
+              class="profile-pic"
+            />
+          </div>
+
+          <div class="user-info">
+            <div class="name-section">
+              <h1>João Silva</h1>
+              <p class="email">joaosilva@email.com</p>
+              <p class="location">📍 Fortaleza - CE</p>
+            </div>
+
+            <div class="action-buttons">
+              <button class="btn-secondary edit-btn">
+                <img
+                  src="./frontEnd/pics/edit-icon.png"
+                  alt=""
+                  style="width: 16px; margin-right: 8px"
+                />
+                Editar Perfil
+              </button>
+            </div>
+          </div>
+
+          <div class="user-stats">
+            <div class="stat-box">
+              <span class="stat-number">12</span>
+              <span class="stat-label">Avaliações</span>
+              <span class="stat-sub">Feitas</span>
+            </div>
+            <div class="stat-box">
+              <span class="stat-number">5</span>
+              <span class="stat-label">Artistas</span>
+              <span class="stat-sub">Seguidos</span>
+            </div>
+          </div>
         </div>
-        <div class="input-group">
-          <label for="edit-cidade">Cidade:</label>
-          <input type="text" id="edit-cidade" required />
+      </div>
+
+      <hr class="divider" />
+
+      <div class="review-log-section">
+        <h2>Minhas Avaliações</h2>
+        <div class="reviews-list">
+          <div class="review-card">
+            <div class="review-header">
+              <div class="reviewed-artist">
+                <img
+                  src="./frontEnd/pics/artist-placeholder.jpeg"
+                  alt="BarbieBl00d"
+                />
+                <div class="artist-meta">
+                  <span class="artist-name"
+                    >Avaliou: <strong>BarbieBl00d</strong></span
+                  >
+                  <span class="review-stars">★★★★★</span>
+                </div>
+              </div>
+              <span class="review-date">Há 2 dias</span>
+            </div>
+            <p class="review-text">
+              Trabalho impecável! O estúdio é super limpo e ela foi muito
+              atenciosa com o design. Recomendo demais.
+            </p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="reviewed-artist">
+                <img
+                  src="./frontEnd/pics/artist-placeholder.jpeg"
+                  alt="Outro Artista"
+                />
+                <div class="artist-meta">
+                  <span class="artist-name"
+                    >Avaliou: <strong>InkMaster Z</strong></span
+                  >
+                  <span class="review-stars">★★★★☆</span>
+                </div>
+              </div>
+              <span class="review-date">Há 1 mês</span>
+            </div>
+            <p class="review-text">
+              Gostei muito do resultado final, o traço é fino de verdade. Só o
+              agendamento que demorou um pouco para confirmar.
+            </p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-header">
+              <div class="reviewed-artist">
+                <img
+                  src="./frontEnd/pics/artist-placeholder.jpeg"
+                  alt="Outro Artista"
+                />
+                <div class="artist-meta">
+                  <span class="artist-name"
+                    >Avaliou: <strong>OldSchool Dave</strong></span
+                  >
+                  <span class="review-stars">★★★★★</span>
+                </div>
+              </div>
+              <span class="review-date">Há 3 meses</span>
+            </div>
+            <p class="review-text">
+              Brabo demais! Mandou muito bem na cobertura que eu precisava
+              fazer.
+            </p>
+          </div>
         </div>
-        <!-- Campo extra para tatuadores -->
-        <div id="edit-descricao-group" class="input-group" style="display: none;">
-          <label for="edit-descricao">Descrição:</label>
-          <textarea id="edit-descricao"></textarea>
-        </div>
-        <div id="options">
-          <button type="submit">Salvar Alterações</button>
-          <button type="button" id="cancel-edit">Cancelar</button>
-        </div>
-      </form>
+      </div>
     </div>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const profileContainer = document.getElementById("user-profile");
-        const editFormContainer = document.getElementById("edit-form-container");
-        const editForm = document.getElementById("edit-form");
-        let currentUserData = {};
-
-        // Função para buscar e exibir o perfil do usuário
-        function fetchAndDisplayProfile() {
-          fetch("/user/profile") // Não precisa mais de 'Authorization' header
-            .then(response => {
-              if (response.status === 401) {
-                window.location.href = "/"; // Redireciona para a raiz (login) se não autorizado
-                return Promise.reject('Não autorizado');
-              }
-              return response.json();
-            })
-            .then(data => {
-              if (data.error) {
-                alert(data.error);
-                return;
-              }
-              displayProfile(data);
-            })
-            .catch(error => {
-              if (error !== 'Não autorizado') {
-                console.error("Erro ao buscar perfil:", error);
-              }
-            });
-        }
-
-        function displayProfile(data) {
-          currentUserData = data;
-          let profileHtml = `<h1>Perfil de ${data.nome}</h1>`;
-          profileHtml += `<p><strong>Email:</strong> ${data.email}</p>`;
-          profileHtml += `<p><strong>Cidade:</strong> ${data.cidade}</p>`;
-
-          if (data.role === 'tatuador') {
-            profileHtml += `<p><strong>Descrição:</strong> ${data.descricao || 'N/A'}</p>`;
-            profileHtml += `
-              <div class="publications-section">
-                <h2>Minhas Publicações</h2>
-                <div id="publications-list"></div>
-                <h3>Criar Nova Publicação</h3>
-                <form id="create-publication-form">
-                  <div class="input-group">
-                    <label for="pub-titulo">Título:</label>
-                    <input type="text" id="pub-titulo" required />
-                  </div>
-                  <div class="input-group">
-                    <label for="pub-descricao">Descrição:</label>
-                    <textarea id="pub-descricao" required></textarea>
-                  </div>
-                  <button type="submit">Criar</button>
-                </form>
-              </div>
-            `;
-          }
-          
-          profileHtml += `<br><button id="edit-profile-btn">Editar Perfil</button>`;
-          profileContainer.innerHTML = profileHtml;
-
-          if (data.role === 'tatuador') {
-            loadPublications(data.id_tatuador);
-            document.getElementById('create-publication-form').addEventListener('submit', createPublication);
-          }
-
-          document.getElementById("edit-profile-btn").addEventListener("click", showEditForm);
-        }
-        
-        function loadPublications(tatuadorId) {
-          fetch(`/tatuador/${tatuadorId}`)
-            .then(res => res.json())
-            .then(data => {
-              const publicationsList = document.getElementById('publications-list');
-              publicationsList.innerHTML = '';
-              if (data.publicacoes && data.publicacoes.length > 0) {
-                data.publicacoes.forEach(pub => {
-                  const pubDiv = document.createElement('div');
-                  pubDiv.className = 'publication-item';
-                  pubDiv.innerHTML = `
-                    <h4>${pub.titulo}</h4>
-                    <p>${pub.descricao}</p>
-                    <button class="delete-pub-btn" data-id="${pub.id_publicacao}">Excluir</button>
-                  `;
-                  publicationsList.appendChild(pubDiv);
-                });
-
-                document.querySelectorAll('.delete-pub-btn').forEach(button => {
-                  button.addEventListener('click', deletePublication);
-                });
-              } else {
-                publicationsList.innerHTML = '<p>Você ainda não tem publicações.</p>';
-              }
-            });
-        }
-
-        function createPublication(e) {
-          e.preventDefault();
-          const titulo = document.getElementById('pub-titulo').value;
-          const descricao = document.getElementById('pub-descricao').value;
-
-          fetch('/publicacao', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ titulo, descricao })
-          })
-          .then(res => res.json())
-          .then(result => {
-            if (result.message) {
-              alert(result.message);
-              document.getElementById('create-publication-form').reset();
-              loadPublications(currentUserData.id_tatuador);
-            } else {
-              alert(result.error || 'Erro ao criar publicação.');
-            }
-          });
-        }
-
-        function deletePublication(e) {
-          const pubId = e.target.dataset.id;
-          if (!confirm('Tem certeza que deseja excluir esta publicação?')) {
-            return;
-          }
-
-          fetch(`/publicacao/${pubId}`, { method: 'DELETE' })
-          .then(res => res.json())
-          .then(result => {
-            if (result.message) {
-              alert(result.message);
-              loadPublications(currentUserData.id_tatuador);
-            } else {
-              alert(result.error || 'Erro ao excluir publicação.');
-            }
-          });
-        }
-
-        function showEditForm() {
-          profileContainer.style.display = "none";
-          editFormContainer.style.display = "block";
-          document.getElementById("edit-nome").value = currentUserData.nome;
-          document.getElementById("edit-cidade").value = currentUserData.cidade;
-          if (currentUserData.role === 'tatuador') {
-            document.getElementById("edit-descricao-group").style.display = "block";
-            document.getElementById("edit-descricao").value = currentUserData.descricao || '';
-          }
-        }
-
-        function hideEditForm() {
-          profileContainer.style.display = "block";
-          editFormContainer.style.display = "none";
-        }
-
-        document.getElementById("cancel-edit").addEventListener("click", hideEditForm);
-
-        editForm.addEventListener("submit", (e) => {
-          e.preventDefault();
-          const updatedData = {
-            nome: document.getElementById("edit-nome").value,
-            cidade: document.getElementById("edit-cidade").value,
-          };
-          let url = '';
-          if (currentUserData.role === 'tatuador') {
-            updatedData.descricao = document.getElementById("edit-descricao").value;
-            url = `/tatuador/${currentUserData.id_tatuador}/edit`;
-          } else {
-            url = `/cliente/${currentUserData.id_cliente}/edit`;
-          }
-
-          fetch(url, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedData)
-          })
-          .then(response => response.json())
-          .then(result => {
-            if (result.message) {
-              alert(result.message);
-              currentUserData.nome = updatedData.nome;
-              currentUserData.cidade = updatedData.cidade;
-              if (currentUserData.role === 'tatuador') {
-                currentUserData.descricao = updatedData.descricao;
-              }
-              hideEditForm();
-              displayProfile(currentUserData);
-            } else {
-              alert(result.error || "Erro ao atualizar perfil.");
-            }
-          })
-          .catch(error => {
-            console.error("Erro ao atualizar perfil:", error);
-            alert("Não foi possível atualizar o perfil.");
-          });
-        });
-
-        document.getElementById("logoutButton").addEventListener("click", () => {
-          fetch('/user/logout', { method: 'POST' })
-            .then(() => {
-              window.location.href = "/";
-            });
-        });
-
-        // Inicia o carregamento do perfil
-        fetchAndDisplayProfile();
-      });
-    </script>
+    <div class="footer">
+      <div class="lefter"></div>
+      <div class="righter">
+        <div>Fale conosco!</div>
+        <div><a>tattooFinder@gmail.com</a></div>
+      </div>
+    </div>
   </body>
 </html>
