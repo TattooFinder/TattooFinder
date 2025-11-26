@@ -1,4 +1,3 @@
-DROP SCHEMA IF EXISTS tf_db;
 
 CREATE SCHEMA tf_db;
 USE tf_db;

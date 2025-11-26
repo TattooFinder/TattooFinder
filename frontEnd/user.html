@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Meu Perfil</title>
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
     <link rel="stylesheet" href="./user.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
@@ -23,7 +23,7 @@
             placeholder="Pesquisar"
           />
           <button type="submit">
-            <img src="./frontEnd/pics/search.png" />
+            <img src="./pics/search.png" />
           </button>
         </form>
       </div>
@@ -46,7 +46,7 @@
         <div class="user-details-wrapper">
           <div class="profile-pic-container">
             <img
-              src="./frontEnd/pics/user-placeholder.jpg"
+              src="./pics/user-placeholder.jpg"
               onerror="this.src='https://via.placeholder.com/160'"
               alt="Foto de Perfil"
               class="profile-pic"
@@ -55,15 +55,15 @@
 
           <div class="user-info">
             <div class="name-section">
-              <h1>João Silva</h1>
-              <p class="email">joaosilva@email.com</p>
-              <p class="location">📍 Fortaleza - CE</p>
+              <h1 id="user-name">Carregando...</h1>
+              <p class="email" id="user-email"></p>
+              <p class="location" id="user-location"></p>
             </div>
 
             <div class="action-buttons">
               <button class="btn-secondary edit-btn">
                 <img
-                  src="./frontEnd/pics/edit-icon.png"
+                  src="./pics/edit-icon.png"
                   alt=""
                   style="width: 16px; margin-right: 8px"
                 />
@@ -96,7 +96,7 @@
             <div class="review-header">
               <div class="reviewed-artist">
                 <img
-                  src="./frontEnd/pics/artist-placeholder.jpeg"
+                  src="./pics/artist-placeholder.jpeg"
                   alt="BarbieBl00d"
                 />
                 <div class="artist-meta">
@@ -118,7 +118,7 @@
             <div class="review-header">
               <div class="reviewed-artist">
                 <img
-                  src="./frontEnd/pics/artist-placeholder.jpeg"
+                  src="./pics/artist-placeholder.jpeg"
                   alt="Outro Artista"
                 />
                 <div class="artist-meta">
@@ -140,7 +140,7 @@
             <div class="review-header">
               <div class="reviewed-artist">
                 <img
-                  src="./frontEnd/pics/artist-placeholder.jpeg"
+                  src="./pics/artist-placeholder.jpeg"
                   alt="Outro Artista"
                 />
                 <div class="artist-meta">
@@ -168,5 +168,6 @@
         <div><a>tattooFinder@gmail.com</a></div>
       </div>
     </div>
+    <script src="user.js" defer></script>
   </body>
 </html>

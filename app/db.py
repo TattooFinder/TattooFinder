@@ -1,23 +1,30 @@
 import pymysql
 from pymysql.cursors import DictCursor
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 
 def get_db_connection():
-    """Cria e retorna uma nova conexão com o banco de dados, usando variáveis de ambiente."""
-    return pymysql.connect(
-        host=os.getenv("DB_HOST", "127.0.0.1"),
-        user=os.getenv("DB_USER", "root"),
-        password=os.getenv("DB_PASSWORD", ""),
-        database=os.getenv("DB_NAME", "tf_db"),
-        cursorclass=DictCursor
-    )
+    try:
+        return pymysql.connect(
+            host=os.getenv("DB_HOST"),
+            user=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            database=os.getenv("DB_NAME"),
+            cursorclass=DictCursor
+        )
+    except pymysql.MySQLError as e:
 
+        print(f"Erro ao conectar ao MySQL: {e}")
+
+        raise ConnectionError("Não foi possível estabelecer a conexão com o banco de dados.") from e
 
 
 def execute_query(query, params=None):
-    """
-    Executa uma query que não retorna resultados (INSERT, UPDATE, DELETE).
-    """
+
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
@@ -33,9 +40,7 @@ def execute_query(query, params=None):
 
 
 def fetch_all(query, params=None):
-    """
-    Executa uma query e retorna todos os resultados.
-    """
+
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:
@@ -49,9 +54,7 @@ def fetch_all(query, params=None):
 
 
 def fetch_one(query, params=None):
-    """
-    Executa uma query e retorna o primeiro resultado.
-    """
+
     conn = get_db_connection()
     try:
         with conn.cursor() as cursor:

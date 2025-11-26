@@ -3,7 +3,7 @@ from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, unset_jwt_cookies, set_access_cookies
 
-user_bp = Blueprint("user", __name__, url_prefix="/user")
+user_bp = Blueprint("user", __name__, url_prefix="/api")
 
 @user_bp.route("/logout", methods=["POST"])
 def logout():
@@ -11,7 +11,7 @@ def logout():
     Logs a user out by unsetting the JWT cookie.
     """
     response = jsonify({"message": "Logout bem-sucedido!"})
-    unset_access_cookies(response)
+    unset_jwt_cookies(response)
     return response
 
 
@@ -19,34 +19,21 @@ def logout():
 @jwt_required()
 def profile():
     """
-    Gets the profile of the current user. (MODO DE TESTE SEM BANCO DE DADOS)
+    Gets the profile of the current user.
     """
-    # --- INÍCIO DA SIMULAÇÃO ---
-    # A lógica de banco de dados foi comentada para permitir testes de frontend.
-    # current_user_id = get_jwt_identity()
+    current_user_id = get_jwt_identity()
     
-    # query_cliente = "SELECT 'cliente' as role, c.id_cliente, c.nome, c.cidade, u.email FROM cliente c JOIN usuario u ON c.id_usuario = u.id WHERE c.id_usuario = %s"
-    # user_profile = fetch_one(query_cliente, (current_user_id,))
+    query_cliente = "SELECT 'cliente' as role, c.id, c.nome, c.cidade, u.email FROM cliente c JOIN usuario u ON c.id_usuario = u.id WHERE c.id_usuario = %s"
+    user_profile = fetch_one(query_cliente, (current_user_id,))
 
-    # if not user_profile:
-    #     query_tatuador = "SELECT 'tatuador' as role, t.id_tatuador, t.nome, t.cidade, t.descricao, u.email FROM tatuador t JOIN usuario u ON t.id_usuario = u.id WHERE t.id_usuario = %s"
-    #     user_profile = fetch_one(query_tatuador, (current_user_id,))
+    if not user_profile:
+        query_tatuador = "SELECT 'tatuador' as role, t.id, t.nome, t.cidade, u.email FROM tatuador t JOIN usuario u ON t.id_usuario = u.id WHERE t.id_usuario = %s"
+        user_profile = fetch_one(query_tatuador, (current_user_id,))
 
-    # if not user_profile:
-    #     return jsonify({"error": "Usuário não encontrado"}), 404
+    if not user_profile:
+        return jsonify({"error": "Usuário não encontrado"}), 404
 
-    # Criamos dados falsos para simular a resposta do banco
-    mock_user_profile = {
-        "role": "tatuador",
-        "id_tatuador": 101,
-        "nome": "Tatuador de Teste",
-        "cidade": "Cidade Fictícia",
-        "descricao": "Esta é uma descrição de um tatuador para fins de teste. A bio pode ser longa.",
-        "email": "teste.tatuador@exemplo.com"
-    }
-
-    return jsonify(mock_user_profile), 200
-    # --- FIM DA SIMULAÇÃO ---
+    return jsonify(user_profile), 200
 
 
 @user_bp.route("/login", methods=["POST"])
