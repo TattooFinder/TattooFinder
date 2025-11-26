@@ -25,3 +25,23 @@ def login():
 @main_bp.route("/dashboard")
 def dashboard():
     return render_template("dashboard.html")
+
+
+@main_bp.route("/user")
+def user_page():
+    return render_template("user.html")
+
+
+@main_bp.route("/search")
+def search_page():
+    return render_template("search.html")
+
+
+@main_bp.route("/tattooer")
+def tattooer_page():
+    return render_template("tattooer.html")
+
+
+@main_bp.route("/sobre-contato")
+def about_page():
+    return render_template("sobreContato.html")

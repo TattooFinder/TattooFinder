@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Sobre e Contato - Tattoo Finder</title>
-        <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="{{ url_for('main.static', filename='styles.css') }}">
         <style>
             body {
                 font-family: 'Poppins', sans-serif;
@@ -37,7 +37,7 @@
 
     <body>
         <div class="container">
-            <a href="../index.html">&lt; Voltar para a página inicial</a>
+            <a href="{{ url_for('main.root') }}">&lt; Voltar para a página inicial</a>
 
             <h1>Sobre</h1>
             <h2>O que a Tattoo Finder Representa?</h2>

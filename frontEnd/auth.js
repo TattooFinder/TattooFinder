@@ -136,7 +136,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
     })
     .then((data) => {
       if (data.message) { // Verifica a mensagem de sucesso
-        window.location.href = "user.html"; // Redireciona para a página do usuário
+        window.location.href = "/user"; // Redireciona para a página do usuário
       }
     })
     .catch((error) => {

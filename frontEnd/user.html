@@ -4,8 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Meu Perfil</title>
-    <link rel="stylesheet" href="./styles.css" />
-    <link rel="stylesheet" href="./user.css" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('main.static', filename='styles.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('main.static', filename='user.css') }}"
+    />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -14,8 +20,10 @@
   <body>
     <div class="header">
       <div class="lefter">
-        <a href="../index.html"><button>Início</button></a>
-        <form id="searchForm" action="./search.html" method="get">
+        <a href="{{ url_for('main.root') }}"
+          ><button>Início</button></a
+        >
+        <form id="searchForm" action="{{ url_for('main.search_page') }}" method="get">
           <input
             type="search"
             id="searchQuery"
@@ -23,7 +31,7 @@
             placeholder="Pesquisar"
           />
           <button type="submit">
-            <img src="./pics/search.png" />
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
           </button>
         </form>
       </div>
@@ -33,7 +41,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="./user.html"
+        <a href="{{ url_for('main.user_page') }}"
           ><button style="background-color: #1b1b1b; color: white">
             Perfil
           </button></a
@@ -46,7 +54,7 @@
         <div class="user-details-wrapper">
           <div class="profile-pic-container">
             <img
-              src="./pics/user-placeholder.jpg"
+              src="{{ url_for('main.static', filename='pics/user-placeholder.jpg') }}"
               onerror="this.src='https://via.placeholder.com/160'"
               alt="Foto de Perfil"
               class="profile-pic"
@@ -63,7 +71,7 @@
             <div class="action-buttons">
               <button class="btn-secondary edit-btn" id="editBtn">
                 <img
-                  src="./pics/edit-icon.png"
+                  src="{{ url_for('main.static', filename='pics/edit-icon.png') }}"
                   alt=""
                   style="width: 16px; margin-right: 8px"
                 />
@@ -96,7 +104,7 @@
             <div class="review-header">
               <div class="reviewed-artist">
                 <img
-                  src="./pics/artist-placeholder.jpeg"
+                  src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                   alt="BarbieBl00d"
                 />
                 <div class="artist-meta">
@@ -118,7 +126,7 @@
             <div class="review-header">
               <div class="reviewed-artist">
                 <img
-                  src="./pics/artist-placeholder.jpeg"
+                  src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                   alt="Outro Artista"
                 />
                 <div class="artist-meta">
@@ -140,7 +148,7 @@
             <div class="review-header">
               <div class="reviewed-artist">
                 <img
-                  src="./pics/artist-placeholder.jpeg"
+                  src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                   alt="Outro Artista"
                 />
                 <div class="artist-meta">
@@ -168,10 +176,6 @@
         <div><a>tattooFinder@gmail.com</a></div>
       </div>
     </div>
-<<<<<<< HEAD
-    <script src="user.js" defer></script>
-  </body>
-=======
     <div id="editModal" class="modal-overlay">
       <div class="modal-content">
         <div class="modal-header">
@@ -208,6 +212,5 @@
       </div>
     </div>
     
-    <script src="./user.js"></script>
->>>>>>> 69dc3c874265538bf8612a9eb7704ab1898e8b6b
+    <script src="{{ url_for('main.static', filename='user.js') }}"></script>
 </html>
