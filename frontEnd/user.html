@@ -61,7 +61,7 @@
             </div>
 
             <div class="action-buttons">
-              <button class="btn-secondary edit-btn">
+              <button class="btn-secondary edit-btn" id="editBtn">
                 <img
                   src="./pics/edit-icon.png"
                   alt=""
@@ -168,6 +168,46 @@
         <div><a>tattooFinder@gmail.com</a></div>
       </div>
     </div>
+<<<<<<< HEAD
     <script src="user.js" defer></script>
   </body>
+=======
+    <div id="editModal" class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Editar Perfil</h2>
+          <span class="close-modal">&times;</span>
+        </div>
+        
+        <form id="profileForm">
+          <div class="form-group">
+            <label for="editName">Nome Completo</label>
+            <input type="text" id="editName" name="name" required />
+          </div>
+    
+          <div class="form-group">
+            <label for="editEmail">E-mail</label>
+            <input type="email" id="editEmail" name="email" required />
+          </div>
+    
+          <div class="form-group">
+            <label for="editLocation">Localização</label>
+            <input type="text" id="editLocation" name="location" />
+          </div>
+    
+          <div class="form-group">
+            <label for="editPhoto">URL da Foto (Opcional)</label>
+            <input type="text" id="editPhoto" placeholder="https://..." />
+          </div>
+    
+          <div class="modal-actions">
+            <button type="button" class="btn-cancel" id="cancelBtn">Cancelar</button>
+            <button type="submit" class="btn-save">Salvar Alterações</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <script src="./user.js"></script>
+>>>>>>> 69dc3c874265538bf8612a9eb7704ab1898e8b6b
 </html>
