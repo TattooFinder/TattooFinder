@@ -15,14 +15,60 @@ def logout():
     return response
 
 
-@user_bp.route("/profile", methods=["GET"])
+@user_bp.route("/profile", methods=["GET", "POST"])
 @jwt_required()
 def profile():
     """
-    Gets the profile of the current user.
+    Gets or updates the profile of the current user.
     """
     current_user_id = get_jwt_identity()
-    
+    print(f"--- /api/profile endpoint ---")
+    print(f"User ID from JWT: {current_user_id}")
+    print(f"Request Method: {request.method}")
+
+    if request.method == "POST":
+        data = request.get_json()
+        print(f"POST data received: {data}")
+        
+        query_cliente_check = "SELECT id FROM cliente WHERE id_usuario = %s"
+        is_cliente = fetch_one(query_cliente_check, (current_user_id,))
+        print(f"Checking for 'cliente': {is_cliente}")
+        
+        if is_cliente:
+            print("User identified as 'cliente'. Preparing to update.")
+            query_update = "UPDATE cliente SET nome = %s, cidade = %s WHERE id_usuario = %s"
+            params = (data.get("nome"), data.get("cidade"), current_user_id)
+            print(f"Executing update for cliente with params: {params}")
+            execute_query(query_update, params)
+            
+            if data.get("email"):
+                print("Email found in data. Preparing to update 'usuario' table.")
+                query_update_user = "UPDATE usuario SET email = %s WHERE id = %s"
+                execute_query(query_update_user, (data.get("email"), current_user_id))
+            print("Update for 'cliente' complete.")
+        else:
+            print("User is not 'cliente'. Checking for 'tatuador'.")
+            query_tatuador_check = "SELECT id FROM tatuador WHERE id_usuario = %s"
+            is_tatuador = fetch_one(query_tatuador_check, (current_user_id,))
+            print(f"Checking for 'tatuador': {is_tatuador}")
+
+            if is_tatuador:
+                print("User identified as 'tatuador'. Preparing to update.")
+                query_update = "UPDATE tatuador SET nome = %s, cidade = %s WHERE id_usuario = %s"
+                params = (data.get("nome"), data.get("cidade"), current_user_id)
+                print(f"Executing update for tatuador with params: {params}")
+                execute_query(query_update, params)
+                
+                if data.get("email"):
+                    print("Email found in data. Preparing to update 'usuario' table.")
+                    query_update_user = "UPDATE usuario SET email = %s WHERE id = %s"
+                    execute_query(query_update_user, (data.get("email"), current_user_id))
+                print("Update for 'tatuador' complete.")
+            else:
+                print("User not found as 'cliente' or 'tatuador'.")
+                return jsonify({"error": "Usuário não encontrado"}), 404
+
+    print("Fetching updated profile data for response.")
     query_cliente = "SELECT 'cliente' as role, c.id, c.nome, c.cidade, u.email FROM cliente c JOIN usuario u ON c.id_usuario = u.id WHERE c.id_usuario = %s"
     user_profile = fetch_one(query_cliente, (current_user_id,))
 
@@ -31,8 +77,10 @@ def profile():
         user_profile = fetch_one(query_tatuador, (current_user_id,))
 
     if not user_profile:
-        return jsonify({"error": "Usuário não encontrado"}), 404
-
+        print("Could not fetch profile after operation.")
+        return jsonify({"error": "Usuário não encontrado após a operação"}), 404
+    
+    print(f"Returning profile data: {user_profile}")
     return jsonify(user_profile), 200
 
 
