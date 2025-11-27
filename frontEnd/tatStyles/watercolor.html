@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tattoo Finder - Estilo Aquarela</title>
+    <link rel="stylesheet" href="../../styles.css" />
+    <link rel="stylesheet" href="./tatStyles.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
+    </style>
+  </head>
+
+  <body>
+    <div class="header">
+      <div class="lefter">
+        <a href="../../index.html"><button>Início</button></a>
+        <form id="searchForm" action="../search.html" method="get">
+          <input
+            type="search"
+            id="searchQuery"
+            name="q"
+            placeholder="Pesquisar"
+          />
+          <button type="submit">
+            <img src="../pics/search.png" />
+          </button>
+        </form>
+      </div>
+
+      <div class="righter">
+        <select name="linguas" id="linguas">
+          <option value="Português">Português (Brasil)</option>
+          <option value="Ingles">Inglês (Canadá)</option>
+          <option value="Espanhol">Espanhol (México)</option>
+        </select>
+        <a href="../user.html"><button>Perfil</button></a>
+      </div>
+    </div>
+
+    <div class="style-page-dark-wrapper">
+      <div class="style-page-container midder">
+        <div class="style-content-left">
+          <h1 class="style-title">AQUARELA</h1>
+          <p class="style-description">
+            A tatuagem em estilo
+            <strong>Aquarela</strong> (ou<strong>Watercolor</strong>) é
+            conhecida por sua<strong>vibratilidade</strong>
+            e<strong>fluidez</strong>, imitando o efeito de uma pintura feita
+            com pincel e água. Ela foge dos contornos pretos sólidos,
+            priorizando<strong>manchas de cor translúcidas</strong>, respingos e
+            o <strong>degradê suave</strong> entre os tons. O resultado é uma
+            arte <strong>viva</strong> e <strong>etérea</strong>, que parece
+            estar em movimento na pele. É muito usado para flores, animais e
+            paisagens. A <strong>explosão de cor</strong> é o que mais chama a
+            atenção 🧡
+          </p>
+          <a
+            href="./frontEnd/search.html?style=aquarela"
+            class="style-cta-button"
+          >
+            Clique aqui para achar o tatuador do estilo aquarela mais perto de
+            você!
+          </a>
+        </div>
+
+        <div class="style-image-right">
+          <img
+            src="../pics/watercolor-bg.jpg"
+            alt="Exemplo de tatuagem aquarela no peito e braço"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="lefter"></div>
+      <div class="righter">
+        <div>Fale conosco!</div>
+        <div><a>tattooFinder@gmail.com</a></div>
+      </div>
+    </div>
+  </body>
+</html>
