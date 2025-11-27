@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Perfil do Artista</title>
-    <link rel="stylesheet" href="./tattooer.css" />
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='tattooer.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='styles.css') }}" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -14,8 +14,8 @@
   <body>
     <div class="header">
       <div class="lefter">
-        <a href="../index.html"><button>Início</button></a>
-        <form id="searchForm" action="./search.html" method="get">
+        <a href="{{ url_for('main.root') }}"><button>Início</button></a>
+        <form id="searchForm" action="{{ url_for('main.search_page') }}" method="get">
           <input
             type="search"
             id="searchQuery"
@@ -23,7 +23,7 @@
             placeholder="Pesquisar"
           />
           <button type="submit">
-            <img src="./frontEnd/pics/search.png" />
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
           </button>
         </form>
       </div>
@@ -33,7 +33,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="./user.html"><button>Perfil</button></a>
+        <a href="{{ url_for('main.user_page') }}"><button>Perfil</button></a>
       </div>
     </div>
 
@@ -41,7 +41,7 @@
         <div class="artist-details-wrapper">
           <div class="profile-pic-container">
             <img
-              src="./pics/artist-placeholder.jpeg"
+              src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
               alt="BarbieBl00d"
               class="profile-pic"
             />
@@ -52,7 +52,7 @@
               <h1>
                 BarbieBl00d
                 <img
-                  src="./frontEnd/pics/verified.png"
+                  src="{{ url_for('main.static', filename='pics/verified.png') }}"
                   class="verified-icon"
                   alt="Verificado"
                   title="Artista Verificado"
@@ -105,36 +105,36 @@
         <div class="portfolio-grid">
           <div class="gallery-item">
             <img
-              src="./frontEnd/pics/post-placeholder-1.jpg"
+              src="{{ url_for('main.static', filename='pics/post-placeholder-1.jpg') }}"
               alt="Tatuagem 1"
             />
           </div>
           <div class="gallery-item">
             <img
-              src="./frontEnd/pics/post-placeholder-2.jpg"
+              src="{{ url_for('main.static', filename='pics/post-placeholder-2.jpg') }}"
               alt="Tatuagem 2"
             />
           </div>
           <div class="gallery-item">
             <img
-              src="./frontEnd/pics/post-placeholder-3.jpg"
+              src="{{ url_for('main.static', filename='pics/post-placeholder-3.jpg') }}"
               alt="Tatuagem 3"
             />
           </div>
           <div class="gallery-item">
-            <img src="./frontEnd/pics/style-old-school.jpg" alt="Tatuagem 4" />
+            <img src="{{ url_for('main.static', filename='pics/style-old-school.jpg') }}" alt="Tatuagem 4" />
           </div>
           <div class="gallery-item">
-            <img src="./frontEnd/pics/style-fineline.jpg" alt="Tatuagem 5" />
+            <img src="{{ url_for('main.static', filename='pics/style-fineline.jpg') }}" alt="Tatuagem 5" />
           </div>
           <div class="gallery-item">
-            <img src="./frontEnd/pics/style-geometrico.jpg" alt="Tatuagem 6" />
+            <img src="{{ url_for('main.static', filename='pics/style-geometrico.jpg') }}" alt="Tatuagem 6" />
           </div>
           <div class="gallery-item">
-            <img src="./frontEnd/pics/style-aquarela.jpg" alt="Tatuagem 7" />
+            <img src="{{ url_for('main.static', filename='pics/style-aquarela.jpg') }}" alt="Tatuagem 7" />
           </div>
           <div class="gallery-item">
-            <img src="./frontEnd/pics/style-preto-cinza.jpg" alt="Tatuagem 8" />
+            <img src="{{ url_for('main.static', filename='pics/style-preto-cinza.jpg') }}" alt="Tatuagem 8" />
           </div>
         </div>
       </div>

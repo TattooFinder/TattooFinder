@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Pesquisa</title>
 
-    <link rel="stylesheet" href="./search.css" />
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='search.css') }}" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -15,12 +16,12 @@
   <body>
     <div class="header">
       <div class="lefter">
-        <a href="../index.html"><button>Início</button></a>
-        <form id="searchForm" action="./search.html" method="get">
+        <a href="{{ url_for('main.root') }}"><button>Início</button></a>
+        <form id="searchForm" action="{{ url_for('main.search_page') }}" method="get">
           <input type="search" id="searchQuery" name="q"
             placeholder="Pesquisar" />
           <button type="submit">
-            <img src="./pics/search.png" />
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
           </button>
         </form>
       </div>
@@ -31,7 +32,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="./user.html"><button>Perfil</button></a>
+        <a href="{{ url_for('main.user_page') }}"><button>Perfil</button></a>
       </div>
     </div>
 
@@ -52,59 +53,14 @@
             <label for="filter-vegano">Material Vegano</label>
             <a
               href="https://tattoolandia.com.br/veganas/#Marcas_de_Tinta_de_Tatuagem_Veganas"><img
-                src="./pics/search.png" /></a>
-            </button>
+                src="{{ url_for('main.static', filename='pics/search.png') }}" /></a>
           </div>
         </div>
       </div>
 
       <div class="results-section">
         <h2>Resultados da Pesquisa</h2>
-
-        <div class="profile-card">
-      <div class="profile-info">
-          <a href="./artist.html?id=${tatuador.id_tatuador}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
-              <img src="./pics/artist-placeholder.jpeg" alt="Foto do Artista" />
-              <h3>${tatuador.nome}</h3>
-          </a>
-          <div class="reviews">
-            <span class="stars">${generateStars(media)}</span>
-            <span class="rating">${media.toFixed(1)}</span>
-            <span class="review-count">(${feedbacks.length} reviews)</span>
-          </div>
-        </div>
-          <div class="profile-posts">
-            <h4>Portfólio Rápido</h4>
-            <div class="posts-carousel">
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 1" />
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 2" />
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 3" />
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 4" />
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 5" />
-            </div>
-          </div>
-        </div>
-
-        <div class="profile-card">
-          <div class="profile-info">
-            <img src="./pics/artist-placeholder.jpeg"
-              alt="Foto do Artista" />
-            <h3>Outro Artista</h3>
-            <div class="reviews">
-              <span class="stars">★★★★★</span>
-              <span class="rating">5.0</span>
-              <span class="review-count">(85 reviews)</span>
-            </div>
-          </div>
-          <div class="profile-posts">
-            <h4>Portfólio Rápido</h4>
-            <div class="posts-carousel">
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 1" />
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 2" />
-              <img src="./pics/artist-placeholder.jpeg" alt="Post 3" />
-            </div>
-          </div>
-        </div>
+        <!-- Conteúdo dinâmico inserido aqui -->
       </div>
     </div>
 
@@ -131,7 +87,7 @@
         fetch(searchUrl)
           .then((response) => response.json())
           .then((tatuadores) => {
-            resultsSection.innerHTML = "<h2>Resultados da Pesquisa</h2>"; // Limpa os resultados estáticos
+            resultsSection.innerHTML = "<h2>Resultados da Pesquisa</h2>"; // Limpa os resultados
             if (tatuadores.length === 0) {
               resultsSection.innerHTML += "<p>Nenhum tatuador encontrado.</p>";
               return;
@@ -157,8 +113,10 @@
 
                   profileCard.innerHTML = `
                     <div class="profile-info">
-                      <img src="./pics/artist-placeholder.jpeg" alt="Foto do Artista" />
-                      <h3>${tatuador.nome}</h3>
+                      <a href="/tatuador/${tatuador.id_tatuador}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
+                        <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}" alt="Foto do Artista" />
+                        <h3>${tatuador.nome}</h3>
+                      </a>
                       <div class="reviews">
                         <span class="stars">${generateStars(media)}</span>
                         <span class="rating">${media.toFixed(1)}</span>
@@ -181,9 +139,8 @@
                       const postsCarousel = profileCard.querySelector('.posts-carousel');
                       if (data.publicacoes && data.publicacoes.length > 0) {
                         data.publicacoes.forEach(pub => {
-                          // Supondo que as publicações tenham uma URL de imagem
                           const img = document.createElement('img');
-                          img.src = pub.imagem_url || './pics/post-placeholder-1.jpg'; // Usando placeholder
+                          img.src = pub.imagem_url || "{{ url_for('main.static', filename='pics/post-placeholder-1.jpg') }}";
                           img.alt = pub.titulo;
                           postsCarousel.appendChild(img);
                         });
