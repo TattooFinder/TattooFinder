@@ -20,6 +20,10 @@ a {
   color: #1b1b1b;
 }
 
+.style-grid a {
+
+}
+
 .header {
   top: 0;
   left: 0;
@@ -236,7 +240,7 @@ a {
   min-height: 65px;
   color: #ffffff;
   background-color: #4d4d4d;
-  border-top: 1px solid #b6b5b5;
+  border-top: 1px solid #4d4d4d;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -367,6 +371,7 @@ option {
   background-position: center;
   background-color: #4d4d4d;
   position: relative;
+  background-repeat: no-repeat;
   z-index: 1;
 }
 
@@ -393,35 +398,38 @@ option {
 
 .style-button span {
   font-size: 1.6rem;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 900;
+  color: #ffffff; 
+  -webkit-text-stroke: 1px #000000; 
+  text-shadow: 2px 2px 0px #000000; 
   position: relative;
-  z-index: 3; 
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px  1px 0 #000,
-    1px  1px 0 #000;
+  z-index: 3;
 }
 
-#style-old-school {
-  background-image: url("./frontEnd/pics/style-old-school.jpg");
+#style-blackwork {
+  background-image: url('./frontEnd/pics/blackwork-bg.png');
 }
+
 #style-fineline {
-  background-image: url("./frontEnd/pics/style-fineline.jpg");
+  background-image: url('./frontEnd/pics/fineline-bg.jpg');
 }
+
 #style-aquarela {
-  background-image: url("./frontEnd/pics/style-aquarela.jpg");
+  background-image: url('./frontEnd/pics/watercolor-bg.jpg');
 }
-#style-preto-cinza {
-  background-image: url("./frontEnd/pics/style-preto-cinza.jpg");
+
+#style-oldSchool {
+  background-image: url('./frontEnd/pics/oldSchool-bg.jpg');
 }
+
 #style-geometrico {
-  background-image: url("./frontEnd/pics/style-geometrico.jpg");
+  background-image: url('./frontEnd/pics/geometric-bg.jpg');
 }
-#style-pontilhismo {
-  background-image: url("./frontEnd/pics/style-pontilhismo.jpg");
+
+#style-oriental {
+  background-image: url('./frontEnd/pics/oriental-bg.jpg');
 }
+
 
 @media (max-width: 768px) {
   .style-grid {

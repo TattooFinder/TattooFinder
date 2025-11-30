@@ -246,7 +246,6 @@ select {
   background: #ffffff;
 }
 
-/* animação: as duas “páginas” se movem para a esquerda */
 .page-slide.active {
   transform: translateX(-50%);
 }

@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
   <head>
     <meta charset="UTF--8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Pesquisa</title>
 
-    <link rel="stylesheet" href="{{ url_for('main.static', filename='styles.css') }}" />
-    <link rel="stylesheet" href="{{ url_for('main.static', filename='search.css') }}" />
+    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="./search.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -16,12 +15,20 @@
   <body>
     <div class="header">
       <div class="lefter">
-        <a href="{{ url_for('main.root') }}"><button>Início</button></a>
-        <form id="searchForm" action="{{ url_for('main.search_page') }}" method="get">
-          <input type="search" id="searchQuery" name="q"
-            placeholder="Pesquisar" />
+        <a href="../index.html"><button>Início</button></a>
+        <form
+          id="searchForm"
+          action="{{ url_for('main.search_page') }}"
+          method="get"
+        >
+          <input
+            type="search"
+            id="searchQuery"
+            name="q"
+            placeholder="Pesquisar"
+          />
           <button type="submit">
-            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
+            <img src="./pics/search.png" />
           </button>
         </form>
       </div>
@@ -38,8 +45,12 @@
 
     <div class="search-main-content">
       <div class="filter-section">
-        <input type="search" id="search-bar-large" name="q"
-          placeholder="Pesquise por artista, estúdio, estilo... ou até mesmo as tags que você imaginar!" />
+        <input
+          type="search"
+          id="search-bar-large"
+          name="q"
+          placeholder="Pesquise por artista, estúdio, estilo... ou até mesmo as tags que você imaginar!"
+        />
         <div class="filters-container">
           <select name="bairro" id="filter-bairro">
             <option value="">Todos os bairros registrados</option>
@@ -52,8 +63,9 @@
             <input type="checkbox" id="filter-vegano" name="vegano" />
             <label for="filter-vegano">Material Vegano</label>
             <a
-              href="https://tattoolandia.com.br/veganas/#Marcas_de_Tinta_de_Tatuagem_Veganas"><img
-                src="{{ url_for('main.static', filename='pics/search.png') }}" /></a>
+              href="https://tattoolandia.com.br/veganas/#Marcas_de_Tinta_de_Tatuagem_Veganas"
+              ><img src="./pics/search.png"
+            /></a>
           </div>
         </div>
       </div>
@@ -98,29 +110,39 @@
 
               // Fetch feedback for each artist
               fetch(`/tatuador/${tatuador.id_tatuador}/feedback`)
-                .then(res => res.json())
-                .then(feedbacks => {
-                  const media = feedbacks.length > 0 ? feedbacks.reduce((acc, f) => acc + f.nota_avaliativa, 0) / feedbacks.length : 0;
+                .then((res) => res.json())
+                .then((feedbacks) => {
+                  const media =
+                    feedbacks.length > 0
+                      ? feedbacks.reduce(
+                          (acc, f) => acc + f.nota_avaliativa,
+                          0
+                        ) / feedbacks.length
+                      : 0;
 
                   function generateStars(rating) {
                     const maxStars = 5;
-                    let stars = '';
+                    let stars = "";
                     for (let i = 1; i <= maxStars; i++) {
-                      stars += i <= rating ? '★' : '☆';
+                      stars += i <= rating ? "★" : "☆";
                     }
                     return stars;
                   }
 
                   profileCard.innerHTML = `
                     <div class="profile-info">
-                      <a href="/tatuador/${tatuador.id_tatuador}" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
+                      <a href="/tatuador/${
+                        tatuador.id_tatuador
+                      }" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
                         <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}" alt="Foto do Artista" />
                         <h3>${tatuador.nome}</h3>
                       </a>
                       <div class="reviews">
                         <span class="stars">${generateStars(media)}</span>
                         <span class="rating">${media.toFixed(1)}</span>
-                        <span class="review-count">(${feedbacks.length} reviews)</span>
+                        <span class="review-count">(${
+                          feedbacks.length
+                        } reviews)</span>
                       </div>
                     </div>
                     <div class="profile-posts">
@@ -134,18 +156,22 @@
 
                   // Fetch publications
                   fetch(`/tatuador/${tatuador.id_tatuador}`)
-                    .then(res => res.json())
-                    .then(data => {
-                      const postsCarousel = profileCard.querySelector('.posts-carousel');
+                    .then((res) => res.json())
+                    .then((data) => {
+                      const postsCarousel =
+                        profileCard.querySelector(".posts-carousel");
                       if (data.publicacoes && data.publicacoes.length > 0) {
-                        data.publicacoes.forEach(pub => {
-                          const img = document.createElement('img');
-                          img.src = pub.imagem_url || "{{ url_for('main.static', filename='pics/post-placeholder-1.jpg') }}";
+                        data.publicacoes.forEach((pub) => {
+                          const img = document.createElement("img");
+                          img.src =
+                            pub.imagem_url ||
+                            "{{ url_for('main.static', filename='pics/post-placeholder-1.jpg') }}";
                           img.alt = pub.titulo;
                           postsCarousel.appendChild(img);
                         });
                       } else {
-                        postsCarousel.innerHTML = "<p>Nenhuma publicação encontrada.</p>";
+                        postsCarousel.innerHTML =
+                          "<p>Nenhuma publicação encontrada.</p>";
                       }
                     });
                 });
@@ -154,5 +180,4 @@
       });
     </script>
   </body>
-
 </html>
