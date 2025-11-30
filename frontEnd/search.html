@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Pesquisa</title>
 
-    <link rel="stylesheet" href="../styles.css" />
-    <link rel="stylesheet" href="./search.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='search.css') }}" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -15,7 +15,7 @@
   <body>
     <div class="header">
       <div class="lefter">
-        <a href="../index.html"><button>Início</button></a>
+        <a href="{{ url_for('main.home') }}"><button>Início</button></a>
         <form
           id="searchForm"
           action="{{ url_for('main.search_page') }}"
@@ -28,7 +28,7 @@
             placeholder="Pesquisar"
           />
           <button type="submit">
-            <img src="./pics/search.png" />
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
           </button>
         </form>
       </div>
@@ -64,7 +64,7 @@
             <label for="filter-vegano">Material Vegano</label>
             <a
               href="https://tattoolandia.com.br/veganas/#Marcas_de_Tinta_de_Tatuagem_Veganas"
-              ><img src="./pics/search.png"
+              ><img src="{{ url_for('main.static', filename='pics/search.png') }}"
             /></a>
           </div>
         </div>
