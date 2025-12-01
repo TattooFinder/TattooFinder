@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, redirect, url_for, request, jsonify
-from flask_jwt_extended import create_access_token, set_access_cookies
-from werkzeug.security import check_password_hash
-from app.db import fetch_one
+from flask import Blueprint, render_template, redirect, url_for
+from flask_jwt_extended import jwt_required, get_jwt
+from app.db import fetch_all
 
 main_bp = Blueprint(
     "main",
@@ -10,6 +9,19 @@ main_bp = Blueprint(
     template_folder="../../frontEnd",
     static_folder="../../frontEnd",
 )
+
+
+@main_bp.route("/profile")
+@jwt_required()
+def profile():
+    claims = get_jwt()
+    role = claims.get('role')
+
+    if role == 'tatuador':
+        return redirect(url_for('main.tattooer_page'))
+    
+    # Clientes ou qualquer outro caso vão para a página de usuário padrão
+    return redirect(url_for('main.user_page'))
 
 
 @main_bp.route("/")
@@ -24,7 +36,9 @@ def login():
 
 @main_bp.route("/home")
 def home():
-    return render_template("index.html")
+    query = "SELECT id_tatuador, nome, foto_url FROM tatuador ORDER BY id_tatuador ASC LIMIT 5"
+    artistas_destaque = fetch_all(query)
+    return render_template("index.html", artistas_destaque=artistas_destaque)
 
 
 @main_bp.route("/dashboard")
@@ -45,6 +59,11 @@ def search_page():
 @main_bp.route("/tattooer")
 def tattooer_page():
     return render_template("tattooer.html")
+
+
+@main_bp.route("/tattooer/<int:tatuador_id>")
+def tattooer_page_id(tatuador_id):
+    return render_template("tattooer.html", tatuador_id=tatuador_id)
 
 
 @main_bp.route("/sobre-contato")

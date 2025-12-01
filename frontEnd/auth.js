@@ -49,7 +49,7 @@ document
     const email = document.getElementById("clientEmail").value;
     const senha = document.getElementById("clientSenha").value;
 
-    fetch("/api/register", {
+    fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -86,7 +86,7 @@ document
     const email = document.getElementById("artistEmail").value;
     const senha = document.getElementById("artistSenha").value;
 
-    fetch("/api/register", {
+    fetch("/api/auth/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -119,7 +119,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
   if (!email || !senha) return alert("Preencha todos os campos!");
   if (!email.includes("@")) return alert("Email inválido!");
 
-  fetch("/api/login", {
+  fetch("/api/auth/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -135,8 +135,8 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
         return response.json();
     })
     .then((data) => {
-      if (data.message) { // Verifica a mensagem de sucesso
-        window.location.href = "/home"; // Redireciona para a página do usuário
+      if (data.message) { 
+        window.location.href = "/home";
       }
     })
     .catch((error) => {

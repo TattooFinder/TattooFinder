@@ -35,7 +35,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="{{ url_for('main.user_page') }}"
+        <a href="{{ url_for('main.profile') }}"
           ><button style="background-color: #1b1b1b; color: white">
             Perfil
           </button></a
@@ -194,8 +194,20 @@
           </div>
     
           <div class="form-group">
-            <label for="editPhoto">URL da Foto (Opcional)</label>
-            <input type="text" id="editPhoto" placeholder="https://..." />
+            <label for="editPhoto">Foto de Perfil (Opcional)</label>
+            <div class="file-input-wrapper">
+              <button type="button" class="btn-upload" id="uploadBtn">
+                Escolher arquivo
+              </button>
+              <span class="file-name">Nenhum arquivo selecionado</span>
+              <input
+                type="file"
+                id="editPhoto"
+                name="photo"
+                accept=".png"
+                style="display: none"
+              />
+            </div>
           </div>
     
           <div class="modal-actions">

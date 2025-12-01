@@ -376,3 +376,118 @@ option {
   height: 15px;
   width: 15px;
 }
+/* --- New Styles for Dynamic Search Results --- */
+
+.search-container {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.search-container h1 {
+  margin-bottom: 20px;
+}
+
+#pageSearchForm {
+  display: flex;
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 25px; /* Fully rounded ends */
+  overflow: hidden; /* Keeps children within rounded corners */
+  background-color: #fff;
+}
+#pageSearchForm:focus-within {
+  border-color: #1b1b1b;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+#pageSearchQuery {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  padding: 12px 20px;
+  background-color: transparent;
+}
+
+#pageSearchForm button {
+  background-color: transparent;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#pageSearchForm button:hover {
+    background-color: #f0f0f0;
+}
+
+#pageSearchForm button img {
+  width: 20px;
+  height: 20px;
+}
+
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.artist-card-result {
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.artist-card-result:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.artist-card-result a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.artist-card-result .artist-photo {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background-color: #f0f0f0;
+}
+
+.artist-card-result .artist-info {
+  padding: 15px;
+}
+
+.artist-card-result h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.artist-card-result .location {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.artist-card-result .styles-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.artist-card-result .tag {
+  background-color: #f0f0f0;
+  color: #555;
+  padding: 3px 10px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

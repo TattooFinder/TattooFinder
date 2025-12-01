@@ -17,11 +17,13 @@ document.addEventListener("DOMContentLoaded", async () => {
   const inputEmail = document.getElementById("editEmail");
   const inputLocation = document.getElementById("editLocation");
   const inputPhoto = document.getElementById("editPhoto");
+  const uploadBtn = document.getElementById("uploadBtn");
+  const fileNameSpan = document.querySelector(".file-name");
 
   // Função para carregar dados do perfil
   async function loadProfileData() {
     try {
-      const response = await fetch("/api/profile", {
+      const response = await fetch("/api/perfil", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -40,12 +42,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       const userData = await response.json();
 
       // Preenche os dados na página
-      if (userNameEl) userNameEl.textContent = userData.nome || "Nome não encontrado";
+      if (userNameEl)
+        userNameEl.textContent = userData.nome || "Nome não encontrado";
       if (userEmailEl) userEmailEl.textContent = userData.email || "";
-      if (userLocationEl) userLocationEl.textContent = userData.cidade ? `📍 ${userData.cidade}` : "";
-      // Adicionar lógica para foto de perfil se existir no back-end
-      // if (profilePic && userData.foto_url) profilePic.src = userData.foto_url;
-
+      if (userLocationEl)
+        userLocationEl.textContent = userData.cidade
+          ? `📍 ${userData.cidade}`
+          : "";
+      if (profilePic && userData.foto_url) profilePic.src = userData.foto_url;
     } catch (error) {
       console.error("Erro ao carregar o perfil:", error);
       if (userNameEl) userNameEl.textContent = "Erro ao carregar perfil";
@@ -59,6 +63,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputEmail.value = userEmailEl.textContent;
     inputLocation.value = userLocationEl.textContent.replace("📍 ", "");
     inputPhoto.value = ""; // Limpa o campo de foto
+    fileNameSpan.textContent = "Nenhum arquivo selecionado";
 
     modal.style.display = "flex";
   }
@@ -77,46 +82,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
+  uploadBtn.addEventListener("click", () => {
+    inputPhoto.click();
+  });
+
+  inputPhoto.addEventListener("change", () => {
+    if (inputPhoto.files.length > 0) {
+      fileNameSpan.textContent = inputPhoto.files[0].name;
+    } else {
+      fileNameSpan.textContent = "Nenhum arquivo selecionado";
+    }
+  });
+
   profileForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const updatedData = {
-      nome: inputName.value,
-      email: inputEmail.value,
-      cidade: inputLocation.value,
-      foto_url: inputPhoto.value.trim() || null
-    };
+    const formData = new FormData();
+    formData.append("nome", inputName.value);
+    formData.append("email", inputEmail.value);
+    formData.append("cidade", inputLocation.value);
+
+    if (inputPhoto.files.length > 0) {
+      formData.append("photo", inputPhoto.files[0]);
+    }
 
     try {
-        const response = await fetch("/api/profile", {
-            method: "POST", // ou 'PUT', dependendo da sua API
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(updatedData),
-        });
+      const response = await fetch("/api/perfil", {
+        method: "POST", // ou 'PUT', dependendo da sua API
+        credentials: "include",
+        body: formData, // Envia como multipart/form-data
+      });
 
-        if (!response.ok) {
-            throw new Error("Falha ao atualizar o perfil.");
-        }
+      if (!response.ok) {
+        throw new Error("Falha ao atualizar o perfil.");
+      }
 
-        const result = await response.json();
+      const result = await response.json();
 
-        // Atualiza a página com os novos dados
-        userNameEl.textContent = result.nome;
-        userEmailEl.textContent = result.email;
-        userLocationEl.textContent = `📍 ${result.cidade}`;
-        if (result.foto_url) {
-            profilePic.src = result.foto_url;
-        }
+      // Atualiza a página com os novos dados
+      userNameEl.textContent = result.nome;
+      userEmailEl.textContent = result.email;
+      userLocationEl.textContent = `📍 ${result.cidade}`;
+      if (result.foto_url) {
+        profilePic.src = result.foto_url;
+      }
 
-        closeModal();
-        alert("Perfil atualizado com sucesso!");
-
+      closeModal();
+      alert("Perfil atualizado com sucesso!");
     } catch (error) {
-        console.error("Erro ao atualizar perfil:", error);
-        alert("Ocorreu um erro ao atualizar o perfil. Tente novamente.");
+      console.error("Erro ao atualizar perfil:", error);
+      alert("Ocorreu um erro ao atualizar o perfil. Tente novamente.");
     }
   });
 

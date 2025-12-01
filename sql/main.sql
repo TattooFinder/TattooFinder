@@ -1,4 +1,3 @@
-
 CREATE SCHEMA tf_db;
 USE tf_db;
 
@@ -13,6 +12,7 @@ CREATE TABLE tatuador(
     nome VARCHAR(50) NOT NULL,
     cidade VARCHAR(50) NOT NULL,
     descricao VARCHAR(255) NULL,
+    foto_url VARCHAR(255) NULL,
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );
@@ -21,6 +21,7 @@ CREATE TABLE cliente(
     id_cliente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL,
     cidade VARCHAR(50) NOT NULL,
+    foto_url VARCHAR(255) NULL,
     id_usuario INT NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES usuario(id)
 );

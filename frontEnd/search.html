@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
   <head>
-    <meta charset="UTF--8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Pesquisa</title>
-
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
     <link rel="stylesheet" href="{{ url_for('main.static', filename='search.css') }}" />
     <style>
@@ -16,21 +15,6 @@
     <div class="header">
       <div class="lefter">
         <a href="{{ url_for('main.home') }}"><button>Início</button></a>
-        <form
-          id="searchForm"
-          action="{{ url_for('main.search_page') }}"
-          method="get"
-        >
-          <input
-            type="search"
-            id="searchQuery"
-            name="q"
-            placeholder="Pesquisar"
-          />
-          <button type="submit">
-            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
-          </button>
-        </form>
       </div>
 
       <div class="righter">
@@ -39,40 +23,31 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="{{ url_for('main.user_page') }}"><button>Perfil</button></a>
+        <a href="{{ url_for('main.profile') }}"><button>Perfil</button></a>
       </div>
     </div>
 
     <div class="search-main-content">
-      <div class="filter-section">
-        <input
-          type="search"
-          id="search-bar-large"
-          name="q"
-          placeholder="Pesquise por artista, estúdio, estilo... ou até mesmo as tags que você imaginar!"
-        />
-        <div class="filters-container">
-          <select name="bairro" id="filter-bairro">
-            <option value="">Todos os bairros registrados</option>
-            <option value="aldeota">Aldeota</option>
-            <option value="meireles">Meireles</option>
-            <option value="centro">Centro</option>
-            <option value="benfica">Benfica</option>
-          </select>
-          <div class="filter-toggle">
-            <input type="checkbox" id="filter-vegano" name="vegano" />
-            <label for="filter-vegano">Material Vegano</label>
-            <a
-              href="https://tattoolandia.com.br/veganas/#Marcas_de_Tinta_de_Tatuagem_Veganas"
-              ><img src="{{ url_for('main.static', filename='pics/search.png') }}"
-            /></a>
-          </div>
-        </div>
+      <div class="search-container">
+        <h1>Encontre o Artista Ideal</h1>
+        <form id="pageSearchForm">
+          <input
+            type="search"
+            id="pageSearchQuery"
+            name="q"
+            placeholder="Pesquise por nome, estilo ou cidade..."
+          />
+          <button type="submit">
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
+          </button>
+        </form>
       </div>
 
-      <div class="results-section">
+      <div id="results-section" class="results-section">
         <h2>Resultados da Pesquisa</h2>
-        <!-- Conteúdo dinâmico inserido aqui -->
+        <div id="results-grid" class="results-grid">
+          <!-- Resultados dinâmicos serão inseridos aqui -->
+        </div>
       </div>
     </div>
 
@@ -83,101 +58,7 @@
         <div><a>tattooFinder@gmail.com</a></div>
       </div>
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const resultsSection = document.querySelector(".results-section");
-        const searchParams = new URLSearchParams(window.location.search);
-        const query = searchParams.get("q") || "";
-        const bairro = searchParams.get("bairro") || "";
-        const estilo = searchParams.get("estilo") || "";
-
-        let searchUrl = `/tatuador/search?`;
-        if (query) searchUrl += `&nome=${query}`;
-        if (bairro) searchUrl += `&cidade=${bairro}`;
-        // Estilo não é um campo de busca no backend, então não é usado aqui.
-
-        fetch(searchUrl)
-          .then((response) => response.json())
-          .then((tatuadores) => {
-            resultsSection.innerHTML = "<h2>Resultados da Pesquisa</h2>"; // Limpa os resultados
-            if (tatuadores.length === 0) {
-              resultsSection.innerHTML += "<p>Nenhum tatuador encontrado.</p>";
-              return;
-            }
-            tatuadores.forEach((tatuador) => {
-              const profileCard = document.createElement("div");
-              profileCard.className = "profile-card";
-
-              // Fetch feedback for each artist
-              fetch(`/tatuador/${tatuador.id_tatuador}/feedback`)
-                .then((res) => res.json())
-                .then((feedbacks) => {
-                  const media =
-                    feedbacks.length > 0
-                      ? feedbacks.reduce(
-                          (acc, f) => acc + f.nota_avaliativa,
-                          0
-                        ) / feedbacks.length
-                      : 0;
-
-                  function generateStars(rating) {
-                    const maxStars = 5;
-                    let stars = "";
-                    for (let i = 1; i <= maxStars; i++) {
-                      stars += i <= rating ? "★" : "☆";
-                    }
-                    return stars;
-                  }
-
-                  profileCard.innerHTML = `
-                    <div class="profile-info">
-                      <a href="/tatuador/${
-                        tatuador.id_tatuador
-                      }" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
-                        <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}" alt="Foto do Artista" />
-                        <h3>${tatuador.nome}</h3>
-                      </a>
-                      <div class="reviews">
-                        <span class="stars">${generateStars(media)}</span>
-                        <span class="rating">${media.toFixed(1)}</span>
-                        <span class="review-count">(${
-                          feedbacks.length
-                        } reviews)</span>
-                      </div>
-                    </div>
-                    <div class="profile-posts">
-                      <h4>Portfólio Rápido</h4>
-                      <div class="posts-carousel">
-                        <!-- Publicações serão carregadas aqui -->
-                      </div>
-                    </div>
-                  `;
-                  resultsSection.appendChild(profileCard);
-
-                  // Fetch publications
-                  fetch(`/tatuador/${tatuador.id_tatuador}`)
-                    .then((res) => res.json())
-                    .then((data) => {
-                      const postsCarousel =
-                        profileCard.querySelector(".posts-carousel");
-                      if (data.publicacoes && data.publicacoes.length > 0) {
-                        data.publicacoes.forEach((pub) => {
-                          const img = document.createElement("img");
-                          img.src =
-                            pub.imagem_url ||
-                            "{{ url_for('main.static', filename='pics/post-placeholder-1.jpg') }}";
-                          img.alt = pub.titulo;
-                          postsCarousel.appendChild(img);
-                        });
-                      } else {
-                        postsCarousel.innerHTML =
-                          "<p>Nenhuma publicação encontrada.</p>";
-                      }
-                    });
-                });
-            });
-          });
-      });
-    </script>
+    
+    <script src="{{ url_for('main.static', filename='search.js') }}"></script>
   </body>
 </html>

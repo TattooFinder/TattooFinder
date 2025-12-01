@@ -463,3 +463,29 @@ body {
 .btn-save:hover {
   background-color: #333;
 }
+
+/* Estilos para o input de arquivo customizado */
+.file-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-upload {
+  background-color: #1b1b1b;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-upload:hover {
+  background-color: #333;
+}
+
+.file-name {
+  font-size: 0.9rem;
+  color: #666;
+}

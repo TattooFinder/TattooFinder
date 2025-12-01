@@ -31,7 +31,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="{{ url_for('main.user_page') }}"><button>Perfil</button></a>
+        <a href="{{ url_for('main.profile') }}"><button>Perfil</button></a>
       </div>
     </div>
     <div class="midder">
@@ -53,51 +53,14 @@
       <div class="carousel-container">
         <h2>Artistas em Destaque da Semana</h2>
         <div class="carousel">
-        <div class="artist-card">
-          <a href="{{ url_for('main.tattooer_page') }}"> <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}" alt="Foto do Artista 1" />
-            <p>BarbieBl00d</p>
-          </a>
-        </div>
-
+        {% for artista in artistas_destaque %}
           <div class="artist-card">
-            <a href="#">
-              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
-                alt="Foto do Artista 2" />
-              <p>Artista Sobrenome 2</p>
+            <a href="{{ url_for('main.tattooer_page_id', tatuador_id=artista.id_tatuador) }}">
+              <img src="/{{ artista.foto_url if artista.foto_url else url_for('main.static', filename='pics/artist-placeholder.jpeg') }}" alt="Foto de {{ artista.nome }}" />
+              <p>{{ artista.nome }}</p>
             </a>
           </div>
-
-          <div class="artist-card">
-            <a href="#">
-              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
-                alt="Foto do Artista 3" />
-              <p>Nome Artista 3</p>
-            </a>
-          </div>
-
-          <div class="artist-card">
-            <a href="#">
-              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
-                alt="Foto do Artista 4" />
-              <p>Artista 4</p>
-            </a>
-          </div>
-
-          <div class="artist-card">
-            <a href="#">
-              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
-                alt="Foto do Artista 5" />
-              <p>Nome Artista 5</p>
-            </a>
-          </div>
-
-          <div class="artist-card">
-            <a href="#">
-              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
-                alt="Foto do Artista 6" />
-              <p>Artista 6</p>
-            </a>
-          </div>
+        {% endfor %}
         </div>
         <button id="prev-btn" class="carousel-btn">&lt;</button>
         <button id="next-btn" class="carousel-btn">&gt;</button>
