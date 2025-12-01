@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Perfil do Artista</title>
-    <link rel="stylesheet" href="./tattooer.css" />
-    <link rel="stylesheet" href="../styles.css" />
+    <link rel="stylesheet" href="{{ url_for('main.static', filename='tattooer.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -14,8 +14,8 @@
   <body>
     <div class="header">
       <div class="lefter">
-        <a href="../index.html"><button>Início</button></a>
-        <form id="searchForm" action="./search.html" method="get">
+        <a href="{{ url_for('main.home') }}"><button>Início</button></a>
+        <form id="searchForm" action="{{ url_for('main.search_page') }}" method="get">
           <input
             type="search"
             id="searchQuery"
@@ -23,7 +23,7 @@
             placeholder="Pesquisar"
           />
           <button type="submit">
-            <img src="./pics/search.png" />
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
           </button>
         </form>
       </div>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tattoo Finder - Página principal</title>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&family=Black+Ops+One&display=swap");
     </style>
@@ -16,11 +16,11 @@
     <div class="header">
       <div class="lefter">
         <a><button>Início</button></a>
-        <form id="searchForm" action="./frontEnd/search.html" method="get">
+        <form id="searchForm" action="{{ url_for('main.search_page') }}" method="get">
           <input type="search" id="searchQuery" name="q"
             placeholder="Pesquisar" />
           <button type="submit">
-            <img src="./frontEnd/pics/search.png" />
+            <img src="{{ url_for('main.static', filename='pics/search.png') }}" />
           </button>
         </form>
       </div>
@@ -31,7 +31,7 @@
           <option value="Ingles">Inglês (Canadá)</option>
           <option value="Espanhol">Espanhol (México)</option>
         </select>
-        <a href="./frontEnd/user.html"><button>Perfil</button></a>
+        <a href="{{ url_for('main.user_page') }}"><button>Perfil</button></a>
       </div>
     </div>
     <div class="midder">
@@ -44,7 +44,7 @@
           <em>tatu-sonho</em> em realidade!
         </p>
         <div class="welcome-buttons">
-          <a href="./frontEnd/sobreContato.html"><button
+          <a href="{{ url_for('main.about_page') }}"><button
               class="btn-secondary">Sobre o Tattoo
               Finder</button></a>
         </div>
@@ -54,14 +54,14 @@
         <h2>Artistas em Destaque da Semana</h2>
         <div class="carousel">
         <div class="artist-card">
-          <a href="./frontEnd/tattooer.html"> <img src="./frontEnd/pics/artist-placeholder.jpeg" alt="Foto do Artista 1" />
+          <a href="{{ url_for('main.tattooer_page') }}"> <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}" alt="Foto do Artista 1" />
             <p>BarbieBl00d</p>
           </a>
         </div>
 
           <div class="artist-card">
             <a href="#">
-              <img src="./frontEnd/pics/artist-placeholder.jpeg"
+              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                 alt="Foto do Artista 2" />
               <p>Artista Sobrenome 2</p>
             </a>
@@ -69,7 +69,7 @@
 
           <div class="artist-card">
             <a href="#">
-              <img src="./frontEnd/pics/artist-placeholder.jpeg"
+              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                 alt="Foto do Artista 3" />
               <p>Nome Artista 3</p>
             </a>
@@ -77,7 +77,7 @@
 
           <div class="artist-card">
             <a href="#">
-              <img src="./frontEnd/pics/artist-placeholder.jpeg"
+              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                 alt="Foto do Artista 4" />
               <p>Artista 4</p>
             </a>
@@ -85,7 +85,7 @@
 
           <div class="artist-card">
             <a href="#">
-              <img src="./frontEnd/pics/artist-placeholder.jpeg"
+              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                 alt="Foto do Artista 5" />
               <p>Nome Artista 5</p>
             </a>
@@ -93,7 +93,7 @@
 
           <div class="artist-card">
             <a href="#">
-              <img src="./frontEnd/pics/artist-placeholder.jpeg"
+              <img src="{{ url_for('main.static', filename='pics/artist-placeholder.jpeg') }}"
                 alt="Foto do Artista 6" />
               <p>Artista 6</p>
             </a>
@@ -108,7 +108,7 @@
 
           <div class="post-card">
             <a href="#" class="post-image-link">
-              <img src="./frontEnd/pics/post-placeholder-1.jpg"
+              <img src="{{ url_for('main.static', filename='pics/black_fenix.webp') }}"
                 alt="Título do Post 1">
             </a>
             <div class="post-info">
@@ -125,7 +125,7 @@
 
           <div class="post-card">
             <a href="#" class="post-image-link">
-              <img src="./frontEnd/pics/post-placeholder-2.jpg"
+              <img src="{{ url_for('main.static', filename='pics/fineline-bg.jpg') }}"
                 alt="Título do Post 2">
             </a>
             <div class="post-info">
@@ -142,7 +142,7 @@
 
           <div class="post-card">
             <a href="#" class="post-image-link">
-              <img src="./frontEnd/pics/post-placeholder-3.jpg"
+              <img src="{{ url_for('main.static', filename='pics/dragao-old-school.webp') }}"
                 alt="Título do Post 3">
             </a>
             <div class="post-info">
@@ -164,27 +164,27 @@
         <p>Explore aqui na nossa biblioteca!</p>
 
         <div class="style-grid">
-          <a href="./frontEnd/tatStyles/blackwork.html" class="style-button" id="style-blackwork">
+          <a href="{{ url_for('main.style_page', style_name='blackwork') }}" class="style-button" id="style-blackwork">
             <span>Blackwork</span>
           </a>
 
-          <a href="./frontEnd/tatStyles/fineline.html" class="style-button" id="style-fineline">
+          <a href="{{ url_for('main.style_page', style_name='fineline') }}" class="style-button" id="style-fineline">
             <span>Fineline</span>
           </a>
 
-          <a href="./frontEnd/tatStyles/watercolor.html" class="style-button" id="style-aquarela">
+          <a href="{{ url_for('main.style_page', style_name='watercolor') }}" class="style-button" id="style-aquarela">
             <span>Aquarela</span>
           </a>
 
-          <a href="./frontEnd/tatStyles/oldSchool.html" class="style-button" id="style-oldSchool">
+          <a href="{{ url_for('main.style_page', style_name='oldschool') }}" class="style-button" id="style-oldSchool">
             <span>Old School</span>
           </a>
 
-          <a href="./frontEnd/tatStyles/geometric.html" class="style-button" id="style-geometrico">
+          <a href="{{ url_for('main.style_page', style_name='geometric') }}" class="style-button" id="style-geometrico">
             <span>Geométrico</span>
           </a>
 
-          <a href="./frontEnd/tatStyles/oriental.html" class="style-button" id="style-oriental">
+          <a href="{{ url_for('main.style_page', style_name='oriental') }}" class="style-button" id="style-oriental">
             <span>Oriental</span>
           </a>
         </div>

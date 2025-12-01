@@ -28,9 +28,11 @@ def profile():
 
     if request.method == "POST":
         data = request.get_json()
+        if not data.get("nome") or not data.get("cidade"):
+            return jsonify({"error": "Nome e cidade são obrigatórios"}), 400
         print(f"POST data received: {data}")
         
-        query_cliente_check = "SELECT id FROM cliente WHERE id_usuario = %s"
+        query_cliente_check = "SELECT id_cliente FROM cliente WHERE id_usuario = %s"
         is_cliente = fetch_one(query_cliente_check, (current_user_id,))
         print(f"Checking for 'cliente': {is_cliente}")
         
@@ -48,7 +50,7 @@ def profile():
             print("Update for 'cliente' complete.")
         else:
             print("User is not 'cliente'. Checking for 'tatuador'.")
-            query_tatuador_check = "SELECT id FROM tatuador WHERE id_usuario = %s"
+            query_tatuador_check = "SELECT id_tatuador FROM tatuador WHERE id_usuario = %s"
             is_tatuador = fetch_one(query_tatuador_check, (current_user_id,))
             print(f"Checking for 'tatuador': {is_tatuador}")
 
@@ -69,11 +71,11 @@ def profile():
                 return jsonify({"error": "Usuário não encontrado"}), 404
 
     print("Fetching updated profile data for response.")
-    query_cliente = "SELECT 'cliente' as role, c.id, c.nome, c.cidade, u.email FROM cliente c JOIN usuario u ON c.id_usuario = u.id WHERE c.id_usuario = %s"
+    query_cliente = "SELECT 'cliente' as role, c.id_cliente as id, c.nome, c.cidade, u.email FROM cliente c JOIN usuario u ON c.id_usuario = u.id WHERE c.id_usuario = %s"
     user_profile = fetch_one(query_cliente, (current_user_id,))
 
     if not user_profile:
-        query_tatuador = "SELECT 'tatuador' as role, t.id, t.nome, t.cidade, u.email FROM tatuador t JOIN usuario u ON t.id_usuario = u.id WHERE t.id_usuario = %s"
+        query_tatuador = "SELECT 'tatuador' as role, t.id_tatuador as id, t.nome, t.cidade, u.email FROM tatuador t JOIN usuario u ON t.id_usuario = u.id WHERE t.id_usuario = %s"
         user_profile = fetch_one(query_tatuador, (current_user_id,))
 
     if not user_profile:
@@ -144,4 +146,8 @@ def register():
         query_insert_tatuador = "INSERT INTO tatuador (nome, cidade, id_usuario) VALUES (%s, %s, %s)"
         execute_query(query_insert_tatuador, (data["nome"], data["cidade"], user_id))
     
-    return jsonify({"message": "Usuário cadastrado com sucesso!"}), 201
+    # Login automático após o cadastro
+    access_token = create_access_token(identity=str(user_id))
+    response = jsonify({"message": "Usuário cadastrado com sucesso!"})
+    set_access_cookies(response, access_token)
+    return response, 201
