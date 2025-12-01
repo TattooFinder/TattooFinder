@@ -146,4 +146,8 @@ def register():
         query_insert_tatuador = "INSERT INTO tatuador (nome, cidade, id_usuario) VALUES (%s, %s, %s)"
         execute_query(query_insert_tatuador, (data["nome"], data["cidade"], user_id))
     
-    return jsonify({"message": "Usuário cadastrado com sucesso!"}), 201
+    # Login automático após o cadastro
+    access_token = create_access_token(identity=str(user_id))
+    response = jsonify({"message": "Usuário cadastrado com sucesso!"})
+    set_access_cookies(response, access_token)
+    return response, 201
